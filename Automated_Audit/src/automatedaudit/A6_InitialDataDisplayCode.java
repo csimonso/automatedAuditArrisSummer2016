@@ -92,7 +92,7 @@ public class A6_InitialDataDisplayCode {
         /* Loop through the list of Encoder devices */
         for(int i = 0; i < encList.size(); i++){
             /* Initialize a new Encoder data object from the Encoder list */
-            Encoder encData = (Encoder) encList.get(i);
+            A7_Encoder encData = (A7_Encoder) encList.get(i);
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.displayDataENC("Name: " + 
                     encData.getName(), encData.getEncNumber());

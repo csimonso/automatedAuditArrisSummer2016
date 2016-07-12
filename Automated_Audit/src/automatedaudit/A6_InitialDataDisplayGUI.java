@@ -254,6 +254,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     /**
      * Method to create Labels for the Encoder data.
      * @param encInput The data to be displayed
+     * @param encNumber The specific encoder number
      * @return The new label created
      */
     public JLabel displayDataENC(String encInput, int encNumber){
@@ -273,7 +274,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                 @Override
                 public void mouseClicked(MouseEvent ev){
                     /* Creates a new Encdisplay object */
-                    Encoder encData = new Encoder(fileLocation);
+                    A7_Encoder encData = new A7_Encoder(fileLocation);
                     /* Function call to display the Encoder data */
                     encData.displayExpandedENC(encList, encNumber);
                 }

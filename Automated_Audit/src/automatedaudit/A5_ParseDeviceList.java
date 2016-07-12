@@ -106,7 +106,7 @@ public class A5_ParseDeviceList {
                     
                 case "Encoder"://device is a encoder
                     encNumber++;//increments Encoder Number
-                    Encoder encoderData = new Encoder(mainFolderLocation);
+                    A7_Encoder encoderData = new A7_Encoder(mainFolderLocation);
                     encoderData.setEncNumber(encNumber);//sets encoder number
                     encoderData.setType(type);//sets type to encoder
                     encoderData.setPositionID(positionID);//sets positionID
