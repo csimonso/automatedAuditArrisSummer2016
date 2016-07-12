@@ -36,6 +36,7 @@ public class A5_ParseDeviceList {
     private String name;
     private int semNumber;
     private int tmxNumber;
+    private int encNumber;
     private final LinkedList tmxList;
     private final LinkedList semList;
     private final LinkedList encoderList;
@@ -99,16 +100,19 @@ public class A5_ParseDeviceList {
                     semData.setPositionID(positionID);//sets SEM positionID
                     semData.setName(name);//sets SEM name
                     semData.setAddress(address);//sets SEM IP address
-                    semData.parseSemFile(mainFolderLocation);
+                    semData.parseSemFile(mainFolderLocation);//parses SEM file
                     semList.add(semData);//adds device to LinkedList
                     break;
                     
                 case "Encoder"://device is a encoder
-                    Encoder encoderData = new Encoder();
+                    encNumber++;//increments Encoder Number
+                    Encoder encoderData = new Encoder(mainFolderLocation);
+                    encoderData.setEncNumber(encNumber);//sets encoder number
                     encoderData.setType(type);//sets type to encoder
                     encoderData.setPositionID(positionID);//sets positionID
                     encoderData.setName(name);//sets encoder name
                     encoderData.setAddress(address);//sets encoder IP address
+                    encoderData.parseEncFile();//parses encoder file
                     encoderList.add(encoderData);//adds device to LinkedList
                     break;
                     
@@ -120,11 +124,13 @@ public class A5_ParseDeviceList {
         display.displaySEM(semList);
         /* Function call to display TMX data on GUI */
         display.displayTMX(tmxList);
-        
+        /* Function call to display Encoder data on GUI */
+        display.displayENC(encoderList);
+        /*
         for(int i = 0; i < encoderList.size(); i++){
             Encoder eData = (Encoder) encoderList.get(i);
             display.displayENC(eData, encoderList);
-        }   
+        } */  
     }
     
     /**

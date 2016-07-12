@@ -86,19 +86,30 @@ public class A6_InitialDataDisplayCode {
     
     /**
      * Method to display relevant Encoder data.
-     * @param encData The data to be displayed.
      * @param encList The Linked List of all encoders
      */
-    public void displayENC(Encoder encData, LinkedList encList){
-        JLabel nameLabel;
-        JLabel typeLabel;
-        JLabel addressLabel;
+    public void displayENC(LinkedList encList){
+        /* Loop through the list of Encoder devices */
+        for(int i = 0; i < encList.size(); i++){
+            /* Initialize a new Encoder data object from the Encoder list */
+            Encoder encData = (Encoder) encList.get(i);
+            /* Create new labels with each piece of data */
+            JLabel nameLabel = display.displayDataENC("Name: " + 
+                    encData.getName(), encData.getEncNumber());
+            JLabel typeLabel = display.displayDataENC("Type: " + 
+                    encData.getType(), 0);
+            JLabel addressLabel = display.displayDataENC("Address: " + 
+                    encData.getAddress(), 0);
+            JLabel roleLabel = display.displayDataENC("Role: " + 
+                    encData.getRole(), 0);
+            /* Function call to create a panel for the encoders */
+            display.createEncPanel(nameLabel, typeLabel, addressLabel, roleLabel);
+        }
         
-        nameLabel = display.displayDataENC("Name: " + encData.getName());
-        typeLabel = display.displayDataENC("Type: " + encData.getType());
-        addressLabel = display.displayDataENC("Address: " + encData.getAddress());
-        
-        display.createEncPanel(nameLabel, typeLabel, addressLabel);
+        /* Function call to set the Encoder data border */
+        display.setEncBorder("Encoder Data (" + encList.size() + " Total)");
+        /* Function call to set the Encoder Linked List */
+        display.setEncList(encList);
     }
     
     /**

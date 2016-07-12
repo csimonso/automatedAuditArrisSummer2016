@@ -28,6 +28,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
 
     private LinkedList semList;
     private LinkedList tmxList;
+    private LinkedList encList;
     String fileLocation;
     String selection;
     
@@ -89,9 +90,9 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                         .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                         .addGap(131, 131, 131))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -121,10 +122,10 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 210, Short.MAX_VALUE))
+                .addGap(0, 320, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(617, 638));
+        setSize(new java.awt.Dimension(571, 748));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -255,11 +256,29 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
      * @param encInput The data to be displayed
      * @return The new label created
      */
-    public JLabel displayDataENC(String encInput){
+    public JLabel displayDataENC(String encInput, int encNumber){
         /* Creates an initializes a new label */
         JLabel newLabel = new JLabel();
         /* Sets the text of the new label */
         newLabel.setText(encInput);
+        
+        /* Makes the label clickable for the "name" variable */
+        if(encNumber >= 1){
+            /* Adds a mouse listener to label */
+            newLabel.addMouseListener(new MouseAdapter(){
+                /**
+                 * Method to allow the "name" label to be clicked.
+                 * @param ev The mouse click event
+                 */
+                @Override
+                public void mouseClicked(MouseEvent ev){
+                    /* Creates a new Encdisplay object */
+                    Encoder encData = new Encoder(fileLocation);
+                    /* Function call to display the Encoder data */
+                    encData.displayExpandedENC(encList, encNumber);
+                }
+            });
+        }
         /* Makes new label visible */
         newLabel.setVisible(true);
         /* Returns the new label created */
@@ -271,8 +290,10 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
      * @param name The device name label
      * @param type The device type label
      * @param address The device address label
+     * @param role The device role
      */
-    public void createEncPanel(JLabel name, JLabel type, JLabel address){
+    public void createEncPanel(JLabel name, JLabel type, JLabel address, 
+            JLabel role){
         /* Creates and initializes a new panel */
         JPanel newPanel = new JPanel();
         /* Sets the layout of the panel */
@@ -282,6 +303,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         newPanel.add(name);
         newPanel.add(type);
         newPanel.add(address);
+        newPanel.add(role);
         
         /* Adds the panel to the display */
         displayPanelENC.add(newPanel);
@@ -325,6 +347,25 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         /* Sets the border text */
         displayPanelSEM.setBorder(title);
     }  
+    
+    /**
+     * Encoder Linked List Setter.
+     * @param eList The Encoder Linked List
+     */
+    public void setEncList(LinkedList eList){
+        this.encList = eList;
+    }
+    
+    /**
+     * Encoder Border Setter.
+     * @param borderName The Encoder Border Name
+     */
+    public void setEncBorder(String borderName){
+        /* Creates and initializes a new Titled Border */
+        TitledBorder title = BorderFactory.createTitledBorder(borderName);
+        /* Sets the border text */
+        displayPanelENC.setBorder(title);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel displayPanelENC;
