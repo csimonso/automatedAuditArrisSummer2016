@@ -24,9 +24,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,7 +46,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="printButton" min="-2" pref="81" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="backButton" min="-2" pref="81" max="-2" attributes="0"/>
@@ -55,8 +54,16 @@
                   <Component id="exitButton" min="-2" pref="81" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="opModeLabelInput" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="deviceLabel" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -67,34 +74,31 @@
                                   <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
                                   <Component id="siteLabel" min="-2" pref="84" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="siteLabelInput" pref="101" max="32767" attributes="0"/>
+                                  <Component id="siteLabelInput" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="deviceLabel" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="elementGroupLabel" min="-2" pref="84" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="elementGroupLabelInput" min="-2" pref="80" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="elementGroupLabel" min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="elementGroupLabelInput" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="deviceLabel" min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="deviceLabel" min="-2" pref="23" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="opModeLabelInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="addressLabel" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       <Component id="addressLabelInput" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -105,13 +109,13 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="printButton" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="backButton" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="exitButton" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -132,85 +136,97 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="redundancyGroupLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="versionLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="opModeLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="bootLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="autoBootLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="multiControllerLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="controllerPortLabel" max="32767" attributes="0"/>
-                                  <Component id="roleLabel" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="controllerPortLabelInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="autoBootLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="roleLabelInput" alignment="1" pref="113" max="32767" attributes="0"/>
-                                  <Component id="redundancyGroupLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="versionLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="opModeLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="bootLabelInput" max="32767" attributes="0"/>
-                                  <Component id="multiControllerLabelInput" alignment="1" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Component id="versionLabel" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Component id="gpsOffsetLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="messageInsertModeLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="copyProtectionSourceLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="psiLossTimeoutLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="commandTimeoutLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="timeSourceLabel" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="dectectPsiLossLabel" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="commandTimeoutLabel" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="semPortLabel" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="encryptionAlgorithmLabel" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="encryptionAlgorithmLabelInput" max="32767" attributes="0"/>
-                                  <Component id="commandTimeoutLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="semPortLabelInput" max="32767" attributes="0"/>
-                                  <Component id="detectPsiLossLabelInput" max="32767" attributes="0"/>
+                                  <Component id="dectectPsiLossLabel" alignment="1" min="-2" pref="114" max="-2" attributes="0"/>
+                                  <Component id="encryptionAlgorithmLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="autoBootLabel" alignment="1" min="-2" pref="114" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="emmDataLabel" alignment="0" pref="144" max="32767" attributes="0"/>
-                                  <Component id="dectectPsiLossLabel1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="encryptionAlgorithmLabel1" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="commandTimeoutLabelInput1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="detectPsiLossLabelInput1" max="32767" attributes="0"/>
-                                  <Component id="encryptionAlgorithmLabelInput1" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="emmDataLabel" min="-2" pref="144" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="commandTimeoutLabelInput1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="multiControllerLabel" min="-2" pref="146" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                      <Component id="multiControllerLabelInput" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                              <Component id="semPortLabel" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="controllerPortLabel" max="32767" attributes="0"/>
+                                          <Component id="redundancyGroupLabel" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="redundancyGroupLabelInput" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="controllerPortLabelInput" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                                          <Component id="semPortLabelInput" min="-2" pref="111" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="pidRemappingLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="copyProtectionSourceLabel" max="32767" attributes="0"/>
-                                  <Component id="gpsOffsetLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="messageInsertModeLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="timeSourceLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="asiTransportIndexLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="highSpeedLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="inputFailureAlarmLabel" max="32767" attributes="0"/>
-                                  <Component id="clockRateLabel" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="copyProtectionSourceLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="pidRemappingLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="messageInsertLabelInput" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="autoBootLabelInput" max="32767" attributes="0"/>
+                                  <Component id="commandTimeoutLabelInput" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="encryptionAlgorithmLabelInput" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="copyProtectionSourceLabelInput" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="psiLossTimeoutLabelInput" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="messageInsertLabelInput" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="detectPsiLossLabelInput" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="gpsOffsetLabelInput" alignment="1" max="32767" attributes="0"/>
                                   <Component id="timeSourceLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="gpsOffsetLabelInput" pref="113" max="32767" attributes="0"/>
-                                  <Component id="asiTransportIndexLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="highSpeedLabelInput" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="inputFailureAlarmLabelInput" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="clockRateDropDown" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="versionLabelInput" alignment="1" pref="112" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="pidRemappingLabel" max="32767" attributes="0"/>
+                                          <Component id="bootLabel" max="32767" attributes="0"/>
+                                          <Component id="inputFailureAlarmLabel" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="asiTransportIndexLabel" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="highSpeedLabel" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="bootLabelInput" max="32767" attributes="0"/>
+                                          <Component id="pidRemappingLabelInput" max="32767" attributes="0"/>
+                                          <Component id="inputFailureAlarmLabelInput" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="asiTransportIndexLabelInput" alignment="0" pref="112" max="32767" attributes="0"/>
+                                          <Component id="highSpeedLabelInput" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="clockRateLabel" min="-2" pref="114" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="clockRateDropDown" min="-2" pref="115" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -222,167 +238,100 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Group type="103" groupAlignment="1" attributes="0">
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                                  <Component id="copyProtectionSourceLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                  <Component id="copyProtectionSourceLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Component id="pidRemappingLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                  <Component id="pidRemappingLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                              <Component id="messageInsertModeLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="messageInsertLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="timeSourceLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="timeSourceLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="gpsOffsetLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="gpsOffsetLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="asiTransportIndexLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="asiTransportIndexLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="highSpeedLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="highSpeedLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="inputFailureAlarmLabel" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="inputFailureAlarmLabelInput" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="clockRateDropDown" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="clockRateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="versionLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="redundancyGroupLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="redundancyGroupLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="emmDataLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                          <Component id="commandTimeoutLabelInput1" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="dectectPsiLossLabel1" min="-2" pref="24" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="detectPsiLossLabelInput1" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="timeSourceLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="controllerPortLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="controllerPortLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="encryptionAlgorithmLabel1" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="encryptionAlgorithmLabelInput1" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="gpsOffsetLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="semPortLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="semPortLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="commandTimeoutLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="multiControllerLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="multiControllerLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="commandTimeoutLabelInput1" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Group type="103" groupAlignment="1" attributes="0">
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                                  <Group type="102" alignment="1" attributes="0">
-                                                                      <Group type="103" groupAlignment="1" attributes="0">
-                                                                          <Component id="roleLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                          <Component id="roleLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                      </Group>
-                                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                                          <Component id="redundancyGroupLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                          <Component id="redundancyGroupLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                      </Group>
-                                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                                      <Component id="versionLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <Component id="versionLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                              <Component id="opModeLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="opModeLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="bootLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="bootLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="autoBootLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="autoBootLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="multiControllerLabel" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                          <Component id="multiControllerLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="controllerPortLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                          <Component id="controllerPortLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="semPortLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                                  <Component id="semPortLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="commandTimeoutLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="commandTimeoutLabelInput" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="dectectPsiLossLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="detectPsiLossLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="versionLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="timeSourceLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="gpsOffsetLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="commandTimeoutLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="encryptionAlgorithmLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="encryptionAlgorithmLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="bootLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="bootLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="messageInsertModeLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="messageInsertLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="pidRemappingLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="pidRemappingLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="encryptionAlgorithmLabel" min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="encryptionAlgorithmLabelInput" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="copyProtectionSourceLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="copyProtectionSourceLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="inputFailureAlarmLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="inputFailureAlarmLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="psiLossTimeoutLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="psiLossTimeoutLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="asiTransportIndexLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="asiTransportIndexLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="dectectPsiLossLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="highSpeedLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="highSpeedLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="detectPsiLossLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="clockRateLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="clockRateDropDown" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                      <Component id="autoBootLabel" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                      <Component id="autoBootLabelInput" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="emmDataLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="roleLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Role:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="redundancyGroupLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -401,15 +350,6 @@
                 <Property name="text" type="java.lang.String" value="Version:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="opModeLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Op. Mode:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="bootLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -417,15 +357,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="Boot Method:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="autoBootLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Auto Boot:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="multiControllerLabel">
@@ -455,16 +386,6 @@
                 <Property name="text" type="java.lang.String" value="SEM Port:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="roleLabelInput">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="Primary/Secondary"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="redundancyGroupLabelInput">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -485,16 +406,6 @@
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="opModeLabelInput">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="Operating Mode"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="bootLabelInput">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -502,16 +413,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="text" type="java.lang.String" value="Boot Method"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="autoBootLabelInput">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="True/False"/>
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
@@ -545,15 +446,6 @@
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="commandTimeoutLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Command Timeout:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="dectectPsiLossLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -582,16 +474,6 @@
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="detectPsiLossLabelInput">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="True/False"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="encryptionAlgorithmLabelInput">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -611,15 +493,6 @@
                 <Property name="text" type="java.lang.String" value="PID Remapping:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="copyProtectionSourceLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Copy Protection Src:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="gpsOffsetLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -627,15 +500,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="GPS UTC Offset:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="messageInsertModeLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Message Insert Mode:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="timeSourceLabel">
@@ -672,16 +536,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="Input Failure Alarm:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="copyProtectionSourceLabelInput">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="Source"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="pidRemappingLabelInput">
@@ -759,47 +613,14 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="EMM Data"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="dectectPsiLossLabel1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="33" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="EMPTY"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="encryptionAlgorithmLabel1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="EMPTY"/>
+                <Property name="text" type="java.lang.String" value="Click for EMM Data"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="commandTimeoutLabelInput1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="detectPsiLossLabelInput1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="encryptionAlgorithmLabelInput1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -829,6 +650,91 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="Clock Rate:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="copyProtectionSourceLabelInput">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="Source"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="copyProtectionSourceLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="Copy Protection Src:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="messageInsertModeLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="Message Insert Mode:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="commandTimeoutLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="Command Timeout:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="psiLossTimeoutLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="PSI Loss Timeout:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="psiLossTimeoutLabelInput">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="Loss time"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="autoBootLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="AutoBoot:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="autoBootLabelInput">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="True/False"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="detectPsiLossLabelInput">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="True/False"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -918,6 +824,13 @@
         <Component class="javax.swing.JLabel" name="siteLabelInput">
           <Properties>
             <Property name="text" type="java.lang.String" value="Site"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="opModeLabelInput">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Operating Mode"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
       </SubComponents>

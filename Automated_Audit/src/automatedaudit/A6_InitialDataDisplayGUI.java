@@ -26,11 +26,8 @@ import javax.swing.border.TitledBorder;
  */
 public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
 
-    private LinkedList semList;
-    private LinkedList tmxList;
-    private LinkedList encList;
+    private LinkedList semList, tmxList, encList;
     String fileLocation;
-    String selection;
     
     /**
      * Creates new form DataDisplay
@@ -39,9 +36,9 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     public A6_InitialDataDisplayGUI(String location) {
         /* Initializes components */
         initComponents();
-        /* Sets teh file location */
+        /* Sets the file location */
         fileLocation = location;
-        
+
         /* Sets the layouts of each panel */
         displayPanelTMX.setLayout(new BoxLayout(displayPanelTMX, Y_AXIS));
         displayPanelSEM.setLayout(new BoxLayout(displayPanelSEM, Y_AXIS));

@@ -20,9 +20,7 @@ import java.util.Scanner;
  */
 public class A4_MUX implements A0_VirtualIdentifiers {
     
-    private String name;
-    private String address;
-    private String version;
+    private String name, address, version;
     private final String fileLocation;
     private final Path filePath;
     

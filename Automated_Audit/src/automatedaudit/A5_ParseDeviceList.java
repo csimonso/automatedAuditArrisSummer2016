@@ -22,24 +22,12 @@ import java.util.LinkedList;
  */
 public class A5_ParseDeviceList {
     
-    private final String positionsFileLocation;
+    private final String positionsFileLocation, mainFolderLocation;
     private final Path filePath;
-    private final String mainFolderLocation;
-    private Scanner scan;
-    private Scanner pID;
-    private Scanner data;
-    private String line;
-    private String device;
-    private String type;
-    private String positionID;
-    private String address;
-    private String name;
-    private int semNumber;
-    private int tmxNumber;
-    private int encNumber;
-    private final LinkedList tmxList;
-    private final LinkedList semList;
-    private final LinkedList encoderList;
+    private Scanner scan, pID, data;
+    private String line, device, type, positionID, address, name;
+    private int semNumber, tmxNumber, encNumber;
+    private final LinkedList tmxList, semList, encoderList;
     
     /**
      * Class constructor that creates a file path for the ~positions file.

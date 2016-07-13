@@ -22,24 +22,11 @@ import java.util.Scanner;
 public class A7_TMX implements A0_EquipmentIdentifiers {
 
     private final String fileLocation;
-    private String type;
-    private String name;
-    private String address;
-    private String role;
-    private String positionID;
-    private String site;
-    private String elementGroup;
-    private String redundancyGroup;
-    private String encoderGroup;
-    private String backupDevice;
-    private String primaryDevice;
-    private String version;
-    private String osVersion;
-    private String tmxFileLocation;
+    private String type, name, address, role, positionID, site, version, line;
+    private String elementGroup, redundancyGroup, encoderGroup;
+    private String backupDevice, primaryDevice, osVersion, tmxFileLocation;
     private Path tmxFilePath;
-    private Scanner tmxScan;
-    private String line;
-    private Scanner tmxData;
+    private Scanner tmxScan, tmxData;
     private int tmxNumber;
     private A8_ExpandedTmxUI expTmxUI;
     

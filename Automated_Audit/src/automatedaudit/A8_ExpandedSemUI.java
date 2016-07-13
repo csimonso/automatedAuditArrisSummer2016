@@ -7,6 +7,8 @@
 package automatedaudit;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -19,12 +21,14 @@ import java.util.ArrayList;
 public class A8_ExpandedSemUI extends javax.swing.JFrame {
 
     private A6_InitialDataDisplayGUI prevDisplay;
+    private A8_ExpandedSemUI currDisplay;
        
     /**
      * Creates new form ExpandedSemUI
      */
     public A8_ExpandedSemUI() {
         initComponents();
+        
     }
 
     /**
@@ -38,39 +42,28 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        roleLabel = new javax.swing.JLabel();
         redundancyGroupLabel = new javax.swing.JLabel();
         versionLabel = new javax.swing.JLabel();
-        opModeLabel = new javax.swing.JLabel();
         bootLabel = new javax.swing.JLabel();
-        autoBootLabel = new javax.swing.JLabel();
         multiControllerLabel = new javax.swing.JLabel();
         controllerPortLabel = new javax.swing.JLabel();
         semPortLabel = new javax.swing.JLabel();
-        roleLabelInput = new javax.swing.JLabel();
         redundancyGroupLabelInput = new javax.swing.JLabel();
         versionLabelInput = new javax.swing.JLabel();
-        opModeLabelInput = new javax.swing.JLabel();
         bootLabelInput = new javax.swing.JLabel();
-        autoBootLabelInput = new javax.swing.JLabel();
         multiControllerLabelInput = new javax.swing.JLabel();
         controllerPortLabelInput = new javax.swing.JLabel();
         semPortLabelInput = new javax.swing.JLabel();
-        commandTimeoutLabel = new javax.swing.JLabel();
         dectectPsiLossLabel = new javax.swing.JLabel();
         encryptionAlgorithmLabel = new javax.swing.JLabel();
         commandTimeoutLabelInput = new javax.swing.JLabel();
-        detectPsiLossLabelInput = new javax.swing.JLabel();
         encryptionAlgorithmLabelInput = new javax.swing.JLabel();
         pidRemappingLabel = new javax.swing.JLabel();
-        copyProtectionSourceLabel = new javax.swing.JLabel();
         gpsOffsetLabel = new javax.swing.JLabel();
-        messageInsertModeLabel = new javax.swing.JLabel();
         timeSourceLabel = new javax.swing.JLabel();
         asiTransportIndexLabel = new javax.swing.JLabel();
         highSpeedLabel = new javax.swing.JLabel();
         inputFailureAlarmLabel = new javax.swing.JLabel();
-        copyProtectionSourceLabelInput = new javax.swing.JLabel();
         pidRemappingLabelInput = new javax.swing.JLabel();
         messageInsertLabelInput = new javax.swing.JLabel();
         timeSourceLabelInput = new javax.swing.JLabel();
@@ -79,13 +72,18 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         highSpeedLabelInput = new javax.swing.JLabel();
         inputFailureAlarmLabelInput = new javax.swing.JLabel();
         emmDataLabel = new javax.swing.JLabel();
-        dectectPsiLossLabel1 = new javax.swing.JLabel();
-        encryptionAlgorithmLabel1 = new javax.swing.JLabel();
         commandTimeoutLabelInput1 = new javax.swing.JLabel();
-        detectPsiLossLabelInput1 = new javax.swing.JLabel();
-        encryptionAlgorithmLabelInput1 = new javax.swing.JLabel();
         clockRateDropDown = new javax.swing.JComboBox<>();
         clockRateLabel = new javax.swing.JLabel();
+        copyProtectionSourceLabelInput = new javax.swing.JLabel();
+        copyProtectionSourceLabel = new javax.swing.JLabel();
+        messageInsertModeLabel = new javax.swing.JLabel();
+        commandTimeoutLabel = new javax.swing.JLabel();
+        psiLossTimeoutLabel = new javax.swing.JLabel();
+        psiLossTimeoutLabelInput = new javax.swing.JLabel();
+        autoBootLabel = new javax.swing.JLabel();
+        autoBootLabelInput = new javax.swing.JLabel();
+        detectPsiLossLabelInput = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         deviceLabel = new javax.swing.JLabel();
         exitButton = new javax.swing.JButton();
@@ -96,14 +94,11 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         elementGroupLabelInput = new javax.swing.JLabel();
         siteLabel = new javax.swing.JLabel();
         siteLabelInput = new javax.swing.JLabel();
+        opModeLabelInput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-
-        roleLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        roleLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        roleLabel.setText("Role:");
 
         redundancyGroupLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         redundancyGroupLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -113,17 +108,9 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         versionLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         versionLabel.setText("Version:");
 
-        opModeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        opModeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        opModeLabel.setText("Op. Mode:");
-
         bootLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         bootLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         bootLabel.setText("Boot Method:");
-
-        autoBootLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        autoBootLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        autoBootLabel.setText("Auto Boot:");
 
         multiControllerLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         multiControllerLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -137,11 +124,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         semPortLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         semPortLabel.setText("SEM Port:");
 
-        roleLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        roleLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        roleLabelInput.setText("Primary/Secondary");
-        roleLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         redundancyGroupLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         redundancyGroupLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         redundancyGroupLabelInput.setText("Group Name");
@@ -152,20 +134,10 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         versionLabelInput.setText("Host App Version");
         versionLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        opModeLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        opModeLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        opModeLabelInput.setText("Operating Mode");
-        opModeLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         bootLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bootLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         bootLabelInput.setText("Boot Method");
         bootLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        autoBootLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        autoBootLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        autoBootLabelInput.setText("True/False");
-        autoBootLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         multiControllerLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         multiControllerLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -182,10 +154,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         semPortLabelInput.setText("Port Number");
         semPortLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        commandTimeoutLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        commandTimeoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        commandTimeoutLabel.setText("Command Timeout:");
-
         dectectPsiLossLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         dectectPsiLossLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         dectectPsiLossLabel.setText("Detect PSI Loss:");
@@ -199,11 +167,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         commandTimeoutLabelInput.setText("Time");
         commandTimeoutLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        detectPsiLossLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        detectPsiLossLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        detectPsiLossLabelInput.setText("True/False");
-        detectPsiLossLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         encryptionAlgorithmLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         encryptionAlgorithmLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         encryptionAlgorithmLabelInput.setText("Algorithm Type");
@@ -213,17 +176,9 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         pidRemappingLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         pidRemappingLabel.setText("PID Remapping:");
 
-        copyProtectionSourceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        copyProtectionSourceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        copyProtectionSourceLabel.setText("Copy Protection Src:");
-
         gpsOffsetLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         gpsOffsetLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         gpsOffsetLabel.setText("GPS UTC Offset:");
-
-        messageInsertModeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        messageInsertModeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        messageInsertModeLabel.setText("Message Insert Mode:");
 
         timeSourceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         timeSourceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -240,11 +195,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         inputFailureAlarmLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         inputFailureAlarmLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         inputFailureAlarmLabel.setText("Input Failure Alarm:");
-
-        copyProtectionSourceLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        copyProtectionSourceLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        copyProtectionSourceLabelInput.setText("Source");
-        copyProtectionSourceLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         pidRemappingLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         pidRemappingLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -282,28 +232,13 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         inputFailureAlarmLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         emmDataLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        emmDataLabel.setForeground(new java.awt.Color(0, 51, 255));
         emmDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        emmDataLabel.setText("EMM Data");
-
-        dectectPsiLossLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        dectectPsiLossLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dectectPsiLossLabel1.setText("EMPTY");
-
-        encryptionAlgorithmLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        encryptionAlgorithmLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        encryptionAlgorithmLabel1.setText("EMPTY");
+        emmDataLabel.setText("Click for EMM Data");
 
         commandTimeoutLabelInput1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         commandTimeoutLabelInput1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         commandTimeoutLabelInput1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        detectPsiLossLabelInput1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        detectPsiLossLabelInput1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        detectPsiLossLabelInput1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        encryptionAlgorithmLabelInput1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        encryptionAlgorithmLabelInput1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        encryptionAlgorithmLabelInput1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         clockRateDropDown.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         clockRateDropDown.setMaximumRowCount(0);
@@ -311,6 +246,46 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         clockRateLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         clockRateLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         clockRateLabel.setText("Clock Rate:");
+
+        copyProtectionSourceLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        copyProtectionSourceLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        copyProtectionSourceLabelInput.setText("Source");
+        copyProtectionSourceLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        copyProtectionSourceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        copyProtectionSourceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        copyProtectionSourceLabel.setText("Copy Protection Src:");
+
+        messageInsertModeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        messageInsertModeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        messageInsertModeLabel.setText("Message Insert Mode:");
+
+        commandTimeoutLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        commandTimeoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        commandTimeoutLabel.setText("Command Timeout:");
+
+        psiLossTimeoutLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        psiLossTimeoutLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        psiLossTimeoutLabel.setText("PSI Loss Timeout:");
+
+        psiLossTimeoutLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        psiLossTimeoutLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        psiLossTimeoutLabelInput.setText("Loss time");
+        psiLossTimeoutLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        autoBootLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        autoBootLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        autoBootLabel.setText("AutoBoot:");
+
+        autoBootLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        autoBootLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        autoBootLabelInput.setText("True/False");
+        autoBootLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        detectPsiLossLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        detectPsiLossLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        detectPsiLossLabelInput.setText("True/False");
+        detectPsiLossLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -320,187 +295,158 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(versionLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(opModeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bootLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(autoBootLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(multiControllerLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(controllerPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(roleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(4, 4, 4)
+                        .addGap(17, 17, 17)
+                        .addComponent(versionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(psiLossTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(timeSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(autoBootLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(roleLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(versionLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(opModeLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bootLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(semPortLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(encryptionAlgorithmLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(commandTimeoutLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(semPortLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(detectPsiLossLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(31, 31, 31)
+                            .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(autoBootLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(emmDataLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(dectectPsiLossLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(encryptionAlgorithmLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(118, 118, 118)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(detectPsiLossLabelInput1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(encryptionAlgorithmLabelInput1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(emmDataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(multiControllerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(semPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(controllerPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(semPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pidRemappingLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(timeSourceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(asiTransportIndexLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(highSpeedLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputFailureAlarmLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(clockRateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(4, 4, 4)
+                            .addComponent(autoBootLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(commandTimeoutLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(encryptionAlgorithmLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(copyProtectionSourceLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(psiLossTimeoutLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(messageInsertLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(detectPsiLossLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(gpsOffsetLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(timeSourceLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(versionLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(copyProtectionSourceLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pidRemappingLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(messageInsertLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(timeSourceLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gpsOffsetLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(asiTransportIndexLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(highSpeedLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inputFailureAlarmLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(clockRateDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(pidRemappingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bootLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(inputFailureAlarmLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(asiTransportIndexLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(highSpeedLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bootLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pidRemappingLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(inputFailureAlarmLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(asiTransportIndexLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                    .addComponent(highSpeedLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(clockRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addComponent(copyProtectionSourceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(pidRemappingLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(pidRemappingLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(messageInsertLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(timeSourceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(timeSourceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(gpsOffsetLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(asiTransportIndexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(versionLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(timeSourceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(controllerPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(gpsOffsetLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(semPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(semPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(commandTimeoutLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(multiControllerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(versionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(timeSourceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(encryptionAlgorithmLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bootLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bootLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(messageInsertLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pidRemappingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pidRemappingLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(copyProtectionSourceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputFailureAlarmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputFailureAlarmLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(psiLossTimeoutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(psiLossTimeoutLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(asiTransportIndexLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(asiTransportIndexLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(highSpeedLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(highSpeedLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(highSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(highSpeedLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(detectPsiLossLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputFailureAlarmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputFailureAlarmLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(clockRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(emmDataLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dectectPsiLossLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(detectPsiLossLabelInput1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(encryptionAlgorithmLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(encryptionAlgorithmLabelInput1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                    .addComponent(roleLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                    .addComponent(roleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(versionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addComponent(versionLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(opModeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(opModeLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(bootLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(bootLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(autoBootLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(autoBootLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(multiControllerLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(controllerPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(semPortLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(semPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(commandTimeoutLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(detectPsiLossLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(encryptionAlgorithmLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(clockRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(autoBootLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(autoBootLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(emmDataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 23, Short.MAX_VALUE))))
         );
 
         backButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -552,21 +498,31 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
 
         siteLabelInput.setText("Site");
 
+        opModeLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        opModeLabelInput.setText("Operating Mode");
+        opModeLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(opModeLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(deviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -576,24 +532,23 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                                 .addGap(194, 194, 194)
                                 .addComponent(siteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(siteLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                                .addComponent(siteLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(221, 221, 221)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(elementGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(elementGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(elementGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(elementGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(opModeLabelInput)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -609,7 +564,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                     .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -617,9 +572,8 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -703,12 +657,47 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     public void setPrevDisplay(A6_InitialDataDisplayGUI pDisplay) {
         prevDisplay = pDisplay;
     }
+    
+    /**
+     * Makes EMM data text click-able as well function call to run it
+     * @param name The EMM Name
+     * @param outputPid The EMM Output PID
+     * @param caSysId The EMM CA System ID
+     * @param providerId The EMM Provider ID
+     * @param consumerStream The EMM Consumer Stream Boolean
+     */
+    public void emmDisplay(String name, String outputPid, 
+            String caSysId, String providerId, String consumerStream){
+        /* Adds a mouse listener to make text click-able */
+        emmDataLabel.addMouseListener(new MouseAdapter(){
+            /**
+             * Method to create a mouse click event
+             * @param ev The mouse click event
+             */
+            @Override
+            public void mouseClicked(MouseEvent ev){
+                /* Creates and initializes a new EMM Dialog Display */
+                A9_EmmDisplay emmDialog = new A9_EmmDisplay(currDisplay);
+                /* Sets all the displays labels */
+                emmDialog.setNameLabel(name);
+                emmDialog.setOutputPidLabel(outputPid);
+                emmDialog.setCaSystemIdLabel(caSysId);
+                emmDialog.setProviderIdLabel(providerId);
+                emmDialog.setConsumerStreamLabel(consumerStream);
+                /* Function call to run the display */
+                emmDialog.runEmmDisplay();
+            }
+        });
+    }
+    
+    
     /**
      * Device Label Setter.
      * @param device The Device
+     * @param role The Device Role
      */
-    public void setDeviceLabel(String device){
-        deviceLabel.setText(device);
+    public void setDeviceLabel(String device, String role){
+        deviceLabel.setText(device + " (" + role + ")");
     }
     /**
      * Device Element Group Label Setter.
@@ -724,13 +713,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     public void setSiteLabel(String site){
         siteLabelInput.setText(site);
     }
-    /**
-     * Device Role Label Setter
-     * @param role The Device Role
-     */
-    public void setRoleLabel(String role){
-        roleLabelInput.setText(role);
-    }
+    
     /**
      * Device Redundancy Group Label Setter.
      * @param redundancyGroup The Device Redundancy Group
@@ -823,6 +806,13 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         gpsOffsetLabelInput.setText(gpsOffset);
     }
     /**
+     * Device PSI Loss Timeout Label Setter.
+     * @param lossTimeout The Device PSI Loss Timeout
+     */
+    public void setPsiLossTimeoutLabel(String lossTimeout){
+        psiLossTimeoutLabelInput.setText(lossTimeout);
+    }
+    /**
      * Device ASI Transport Index Label Setter.
      * @param transportIndex The Device ASI Transport Index
      */
@@ -830,7 +820,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         asiTransportIndexLabelInput.setText(transportIndex);
     }
     /**
-     * Adds Clock Rates To The Clock Rate Dropdown Menu.
+     * Adds Clock Rates To The Clock Rate Drop down Menu.
      * @param clockRate The Device Clock Rate List
      */
     public void setClockRateDropDown(ArrayList clockRate){
@@ -950,17 +940,13 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     private javax.swing.JLabel copyProtectionSourceLabel;
     private javax.swing.JLabel copyProtectionSourceLabelInput;
     private javax.swing.JLabel dectectPsiLossLabel;
-    private javax.swing.JLabel dectectPsiLossLabel1;
     private javax.swing.JLabel detectPsiLossLabelInput;
-    private javax.swing.JLabel detectPsiLossLabelInput1;
     private javax.swing.JLabel deviceLabel;
     private javax.swing.JLabel elementGroupLabel;
     private javax.swing.JLabel elementGroupLabelInput;
     private javax.swing.JLabel emmDataLabel;
     private javax.swing.JLabel encryptionAlgorithmLabel;
-    private javax.swing.JLabel encryptionAlgorithmLabel1;
     private javax.swing.JLabel encryptionAlgorithmLabelInput;
-    private javax.swing.JLabel encryptionAlgorithmLabelInput1;
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel gpsOffsetLabel;
     private javax.swing.JLabel gpsOffsetLabelInput;
@@ -974,15 +960,14 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     private javax.swing.JLabel messageInsertModeLabel;
     private javax.swing.JLabel multiControllerLabel;
     private javax.swing.JLabel multiControllerLabelInput;
-    private javax.swing.JLabel opModeLabel;
     private javax.swing.JLabel opModeLabelInput;
     private javax.swing.JLabel pidRemappingLabel;
     private javax.swing.JLabel pidRemappingLabelInput;
     private javax.swing.JButton printButton;
+    private javax.swing.JLabel psiLossTimeoutLabel;
+    private javax.swing.JLabel psiLossTimeoutLabelInput;
     private javax.swing.JLabel redundancyGroupLabel;
     private javax.swing.JLabel redundancyGroupLabelInput;
-    private javax.swing.JLabel roleLabel;
-    private javax.swing.JLabel roleLabelInput;
     private javax.swing.JLabel semPortLabel;
     private javax.swing.JLabel semPortLabelInput;
     private javax.swing.JLabel siteLabel;

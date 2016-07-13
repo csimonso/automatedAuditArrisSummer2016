@@ -22,42 +22,18 @@ import java.util.Scanner;
  */
 public class A7_SEM implements A0_EquipmentIdentifiers {
     
-    private int semNumber;
-    private String name;
-    private String address;
-    private String version;
-    private String role;
-    private String type;
-    private String positionID;
-    private String operatingMode;
-    private String bootMethod;
-    private String autoBoot;
-    private String multiController;
-    private String fileLocation;
-    private String controllerPort;
-    private String semPort;
-    private String commandTimeout;
-    private String detectPsiLoss;
-    private String psiLossTimeout;
-    private String encryptionAlgorithm;
-    private String copyProtectionSource;
-    private String pidRemapping;
-    private String messageInsertMode;
-    private String timeSource;
-    private String gpsUtcOffset;
-    private String asiMonitorTransportIndex;
-    private String highSpeedMode;
-    private String redundancyGroup;
-    private String elementGroup;
-    private String site;
-    private String inputFailureAlarm;
+    private int semNumber, clockRateNumber;
+    private String name, address, version, role,type, site, fileLocation, line;
+    private String positionID, operatingMode, bootMethod, autoBoot;
+    private String multiController, controllerPort, semPort, commandTimeout;
+    private String detectPsiLoss, psiLossTimeout, encryptionAlgorithm;
+    private String copyProtectionSource, pidRemapping, messageInsertMode;
+    private String timeSource, gpsUtcOffset, asiMonitorTransportIndex;
+    private String highSpeedMode, redundancyGroup, elementGroup, inputFailureAlarm;
+    private String emmName, emmOutputPid, emmCaSysId, emmProviderId, emmConsumerStream;
     private ArrayList clockRate;
-    private String line;
-    private ArrayList emmData;
-    private int clockRateNumber;
     private Path filePath;
-    private Scanner scan;
-    private Scanner data;
+    private Scanner scan, data;
     private A8_ExpandedSemUI expSemUI;
     
     /**
@@ -85,7 +61,7 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
             /* Checks if SEM in list matches specified SEM device */
             if(sData.getSemNumber() == semNumber){
                 /* Sets all the device labels for the expanded UI */
-                expSemUI.setDeviceLabel(sData.getName());
+                expSemUI.setDeviceLabel(sData.getName(), sData.getRole());
                 expSemUI.setAddressLabel(sData.getAddress());
                 expSemUI.setAsiTransportIndexLabel(sData.getAsiMonitorTransportIndex());
                 expSemUI.setAutoBootLabel(sData.getAutoBoot());
@@ -104,20 +80,26 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                 expSemUI.setOpModeLabel(sData.getOperatingMode());
                 expSemUI.setPidRemappingLabel(sData.getPidRemapping());
                 expSemUI.setRedundancyGroupLabel(sData.getRedundancyGroup());
-                expSemUI.setRoleLabel(sData.getRole());
+                expSemUI.setPsiLossTimeoutLabel(sData.getPsiLossTimeout());
                 expSemUI.setSiteLabel(sData.getSite());
                 expSemUI.setSemPortLabel(sData.getSemPort());
                 expSemUI.setTimeSourceLabel(sData.getTimeSource());
                 expSemUI.setVersionLabel(sData.getVersion());
-                expSemUI.setClockRateDropDown(sData.getClockRate());  
+                expSemUI.setClockRateDropDown(sData.getClockRate());
+                expSemUI.emmDisplay(sData.getEmmName(), 
+                        sData.getEmmOutputPid(), sData.getEmmCaSystemId(), 
+                        sData.getEmmProviderId(), sData.getEmmConsumerStream());
             }
         }
         /* Makes display visible */
         expSemUI.setVisible(true);
-        //expandedDisplay.setPrevDisplay(prevDisplay);
-       // prevDisplay.setVisible(false);
     }
     
+    /**
+     * Method to parse through the specified SEM device
+     * @param inputLocation The file location
+     * @throws IOException If error occurs
+     */
     public void parseSemFile(String inputLocation) throws IOException{
         
         /* Concats the SEM file location to the main folders location*/
@@ -128,7 +110,6 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
         scan = new Scanner(filePath);
         /* Initializes the arrayList */
         clockRate = new ArrayList();
-        emmData = new ArrayList();
         /* Initializes the clock rate counter */
         clockRateNumber = 0;
         
@@ -144,33 +125,35 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                 data.next();
                 role = data.next();//sets role
             }
+            else if(line.contains("EMMStream.Name")){
+                /* Initializes scanner to next "=" */
+                data = new Scanner(line).useDelimiter("=");
+                data.next();
+                this.emmName = data.next();//sets EMM Name
+            }
             else if(line.contains("EMMStream.OutputPID")){
                 /* Initializes scanner to next "=" */
                 data = new Scanner(line).useDelimiter("=");
                 data.next();
-                /* Adds to emm data list */
-                emmData.add("Output ID: " + data.next());
+                emmOutputPid = data.next();//sets EMM Output ID
             }
             else if(line.contains("EMMStream.CaSystemID")){
                 /* Initializes scanner to next "=" */
                 data = new Scanner(line).useDelimiter("=");
                 data.next();
-                /* Adds to emm data list */
-                emmData.add("Ca System ID: " + data.next());
+                emmCaSysId = data.next();//sets EMM CA System ID
             }
             else if(line.contains("EMMStream.EmmProviderID")){
                 /* Initializes scanner to next "=" */
                 data = new Scanner(line).useDelimiter("=");
                 data.next();
-                /* Adds to emm data list */
-                emmData.add("Provider ID: " + data.next());
+                emmProviderId = data.next();//sets EMM Provider ID
             }
             else if(line.contains("EMMStream.IsConsumerStream")){
                 /* Initializes scanner to next "=" */
                 data = new Scanner(line).useDelimiter("=");
                 data.next();
-                /* Adds to emm data list */
-                emmData.add("Consumer Stream: " + data.next());
+                emmConsumerStream = data.next();//sets EMM Consumer Stream
             }
             else if(line.contains("ClockRate")){
                 /* Initializes scanner to next "=" */
@@ -316,19 +299,51 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     }
     
     /**
-     * SEM EMM Data List Getter.
-     * @return The SEM EMM Data
-     */
-    public ArrayList getEmmData(){
-        return emmData;
-    }
-    
-    /**
      * SEM Clock Rate List Getter.
      * @return The SEM Clock Rate List
      */
     public ArrayList getClockRate(){
         return clockRate;
+    }
+    
+    /**
+     * EMM Name Getter.
+     * @return The EMM Name
+     */
+    public String getEmmName(){
+        return emmName;
+    }
+    
+    /**
+     * EMM Output PID Getter.
+     * @return The EMM Output PID
+     */
+    public String getEmmOutputPid(){
+        return emmOutputPid;
+    }
+    
+    /**
+     * EMM CA System ID Getter.
+     * @return The EMM CA System ID
+     */
+    public String getEmmCaSystemId(){
+        return emmCaSysId;
+    }
+    
+    /**
+     * EMM Provider ID Getter.
+     * @return The EMM Provider ID
+     */
+    public String getEmmProviderId(){
+        return emmProviderId;
+    }
+    
+    /**
+     * EMM Consumer Stream Getter.
+     * @return The EMM Consumer Stream Boolean
+     */
+    public String getEmmConsumerStream(){
+        return emmConsumerStream;
     }
     
     /**

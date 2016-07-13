@@ -20,8 +20,7 @@ import java.util.logging.Logger;
  */
 public class A2_MainUI extends javax.swing.JFrame {
 
-    private String userInput;
-    private String fileFolder;
+    private String userInput, fileFolder;
     
     /**
      * Creates new form MainUI

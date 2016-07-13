@@ -22,24 +22,13 @@ import java.util.Scanner;
 public class A7_Encoder implements A0_EquipmentIdentifiers{
     
     private int encNumber;
-    private String name;
-    private String address;
-    private String version;
-    private String role;
-    private String type;
-    private String site;
-    private String positionID;
-    private String elementGroup;
-    private String redundancyGroup;
-    private String encoderGroup;
-    private String primaryDevice;
+    private String name, address, version, role, type, site, positionID;
+    private String elementGroup, redundancyGroup, encoderGroup;
+    private String primaryDevice, encFileLocation, line;
     private final String mainFileLocation;
-    private String encFileLocation;
-    private String line;
     private A8_ExpandedEncUI expEncUI;
     private Path encFilePath;
-    private Scanner encScan;
-    private Scanner encData;
+    private Scanner encScan, encData;
     
     /**
      * Class constructor that sets the main file folder location
