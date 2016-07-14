@@ -9,6 +9,7 @@ package automatedaudit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.LinkedList;
 
@@ -27,7 +28,9 @@ public class A5_ParseDeviceList {
     private Scanner scan, pID, data;
     private String line, device, type, positionID, address, name;
     private int semNumber, tmxNumber, encNumber;
-    private final LinkedList tmxList, semList, encoderList;
+    private final LinkedList<A7_SEM> semList;
+    private final LinkedList<A7_TMX> tmxList;
+    private final LinkedList<A7_Encoder> encoderList;
     
     /**
      * Class constructor that creates a file path for the ~positions file.
@@ -42,9 +45,9 @@ public class A5_ParseDeviceList {
         filePath = Paths.get(positionsFileLocation);
         
         /* Initializes each Linked List for the devices*/
-        tmxList = new LinkedList();
-        semList = new LinkedList();
-        encoderList = new LinkedList();
+        tmxList = new LinkedList<>();
+        semList = new LinkedList<>();
+        encoderList = new LinkedList<>();
     }
     
     /**
@@ -72,35 +75,62 @@ public class A5_ParseDeviceList {
                     tmxNumber++;//increments TMX number
                     A7_TMX tmxData = new A7_TMX(mainFolderLocation);
                     tmxData.setTmxNumber(tmxNumber);//sets TMX number
+                    tmxData.setDevice(device);//sets device to TMX
                     tmxData.setType(type);//sets type to TMX
                     tmxData.setPositionID(positionID);//sets TMX positionID
                     tmxData.setName(name);//sets TMX name
                     tmxData.setAddress(address);//sets TMX IP address
                     tmxData.parseTmxFile();//parses the TMX device file
-                    tmxList.add(tmxData);//adds device to LinkedList
+                    
+                    /* Sets the priority number */
+                    if(tmxData.getRole().equals("Primary")){
+                        tmxData.setPriorityNumber(1);//device is primary
+                    }
+                    else tmxData.setPriorityNumber(2);//device is backup
+                    
+                    /* Adds device to linked list */
+                    tmxList.add(tmxData);
                     break;
                     
                 case "SEM"://device is a SEM
                     semNumber++;//increments SEM number
                     A7_SEM semData = new A7_SEM(mainFolderLocation);
                     semData.setSemNumber(semNumber);//sets SEM number
+                    semData.setDevice(device);//sets device to SEM
                     semData.setType(type);//sets type to SEM
                     semData.setPositionID(positionID);//sets SEM positionID
                     semData.setName(name);//sets SEM name
                     semData.setAddress(address);//sets SEM IP address
                     semData.parseSemFile(mainFolderLocation);//parses SEM file
-                    semList.add(semData);//adds device to LinkedList
+                    
+                    /* Sets the priority number */
+                    if(semData.getRole().equals("Primary")){
+                        semData.setPriorityNumber(1);//device is primary
+                    }
+                    else semData.setPriorityNumber(2);//device is backup
+                    
+                    /* Adds device to linked list */
+                    semList.add(semData);
                     break;
                     
                 case "Encoder"://device is a encoder
                     encNumber++;//increments Encoder Number
                     A7_Encoder encoderData = new A7_Encoder(mainFolderLocation);
                     encoderData.setEncNumber(encNumber);//sets encoder number
+                    encoderData.setDevice(device);//sets device to encoder
                     encoderData.setType(type);//sets type to encoder
                     encoderData.setPositionID(positionID);//sets positionID
                     encoderData.setName(name);//sets encoder name
                     encoderData.setAddress(address);//sets encoder IP address
                     encoderData.parseEncFile();//parses encoder file
+                    
+                    /* Sets the priority number */
+                    if(encoderData.getRole().equals("Primary")){
+                        encoderData.setPriorityNumber(1);//device is primary
+                    }
+                    else encoderData.setPriorityNumber(2);//device is backup
+                    
+                    /* Adds device to linked list */
                     encoderList.add(encoderData);//adds device to LinkedList
                     break;
                     
@@ -108,17 +138,43 @@ public class A5_ParseDeviceList {
                     break;
             }
         }
+        /* Sorts SEM list by role */
+        Collections.sort(semList, (A7_SEM a, A7_SEM b) -> {
+            if(a.getPriorityNumber() < b.getPriorityNumber()){
+                return -1;
+            }
+            if(a.getPriorityNumber() > b.getPriorityNumber()){
+                return 1;
+            }
+            return 0;
+        });
+        /* Sorts TMX list by role */
+        Collections.sort(tmxList, (A7_TMX a, A7_TMX b) -> {
+            if(a.getPriorityNumber() < b.getPriorityNumber()){
+                return -1;
+            }
+            if(a.getPriorityNumber() > b.getPriorityNumber()){
+                return 1;
+            }
+            return 0;
+        });
+        /* Sorts Encoder list by role */
+        Collections.sort(encoderList, (A7_Encoder a, A7_Encoder b) -> {
+            if(a.getPriorityNumber() < b.getPriorityNumber()){
+                return -1;
+            }
+            if(a.getPriorityNumber() > b.getPriorityNumber()){
+                return 1;
+            }
+            return 0;
+        });
+        
         /* Function call to display SEM data on GUI */
         display.displaySEM(semList);
         /* Function call to display TMX data on GUI */
         display.displayTMX(tmxList);
         /* Function call to display Encoder data on GUI */
-        display.displayENC(encoderList);
-        /*
-        for(int i = 0; i < encoderList.size(); i++){
-            Encoder eData = (Encoder) encoderList.get(i);
-            display.displayENC(eData, encoderList);
-        } */  
+        display.displayENC(encoderList); 
     }
     
     /**

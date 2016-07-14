@@ -6,6 +6,7 @@
  */
 package automatedaudit;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +27,9 @@ import javax.swing.border.TitledBorder;
  */
 public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
 
+    private final A8_ExpandedSemUI expandedSemUI;
+    private final A8_ExpandedTmxUI expandedTmxUI;
+    private final A8_ExpandedEncUI expandedEncUI;
     private LinkedList semList, tmxList, encList;
     String fileLocation;
     
@@ -38,11 +42,14 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         initComponents();
         /* Sets the file location */
         fileLocation = location;
+        expandedSemUI = new A8_ExpandedSemUI(this);
+        expandedTmxUI = new A8_ExpandedTmxUI(this);
+        expandedEncUI = new A8_ExpandedEncUI(this);
 
         /* Sets the layouts of each panel */
-        displayPanelTMX.setLayout(new BoxLayout(displayPanelTMX, Y_AXIS));
-        displayPanelSEM.setLayout(new BoxLayout(displayPanelSEM, Y_AXIS));
-        displayPanelENC.setLayout(new GridLayout(0, 2, 5, 5));
+        displayPanelTMX.setLayout(new GridLayout(0, 2, 5, 5));
+        displayPanelSEM.setLayout(new GridLayout(0, 2, 5, 5));
+        displayPanelENC.setLayout(new GridLayout(0, 4, 4, 3));
         displayPanelMUX.setLayout(new BoxLayout(displayPanelMUX, Y_AXIS));
     }
 
@@ -80,55 +87,53 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(displayPanelMUX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                        .addGap(131, 131, 131))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                     .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addGap(49, 49, 49))
+                .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 320, Short.MAX_VALUE))
+                .addGap(0, 31, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(571, 748));
+        setSize(new java.awt.Dimension(398, 421));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * Method to run the GUI.
-     */
+     */ 
     public void runProgram() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -182,86 +187,25 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     }
     
     /**
-     * Method to create Labels for the TMX data.
-     * @param tmxInput The data to be displayed
-     * @param tmxNumber The specific TMX number
-     */
-    public void displayDataTMX(String tmxInput, int tmxNumber){
-        /* Creates a new label */
-        JLabel newLabel = new JLabel();
-        /* Sets the new label's text */
-        newLabel.setText(tmxInput);
-        
-        /* Checks if the label is device name in order to make it clickable */
-        if(tmxNumber >= 1) {
-            newLabel.addMouseListener(new MouseAdapter(){
-                /**
-                 * Method to allow the "name" label to be clicked.
-                 * @param ev The Mouse Click Event
-                 */
-               @Override
-               public void mouseClicked(MouseEvent ev){
-                   /* Creates a and initializes a new TMX object */
-                   A7_TMX tmxData = new A7_TMX(fileLocation);
-                   /* Function call to display the expanded TMX display */
-                   tmxData.displayExpandedTMX(tmxList, tmxNumber);
-               } 
-            });
-
-        }
-        /* Adds the new label to the panel */
-        displayPanelTMX.add(newLabel);
-        /* Makes label visible */
-        newLabel.setVisible(true);
-    }
-    
-    /**
-     * Method to create Labels for the SEM data.
-     * @param semInput The data to be displayed
-     * @param semNumber The specific SEM number
-     */
-    public void displayDataSEM(String semInput, int semNumber) {
-        /* Creates and initializes a new label */
-        JLabel newLabel = new JLabel();
-        /* Sets the text for the new label */
-        newLabel.setText(semInput);
-        /* Makes the label clickable for the "name" variable */
-        if(semNumber >= 1){
-            /* Adds a mouse listener to label */
-            newLabel.addMouseListener(new MouseAdapter(){
-                /**
-                 * Method to allow the "name" label to be clicked.
-                 * @param ev The mouse click event
-                 */
-                @Override
-                public void mouseClicked(MouseEvent ev){
-                    /* Creates a new SEMdisplay object */
-                    A7_SEM semData = new A7_SEM(fileLocation);
-                    /* Function call to display the SEM data that was clicked */
-                    semData.displayExpandedSEM(semList, semNumber);
-                }
-            });
-        }
-        /* Adds label to the panel */
-        displayPanelSEM.add(newLabel);
-        /* Makes label visible */
-        newLabel.setVisible(true);
-    }
-    
-    /**
-     * Method to create Labels for the Encoder data.
-     * @param encInput The data to be displayed
-     * @param encNumber The specific encoder number
+     * Method to create Labels for the data.
+     * @param input The data to be displayed
+     * @param deviceNumber The specific device number
+     * @param deviceType The type of device
      * @return The new label created
      */
-    public JLabel displayDataENC(String encInput, int encNumber){
+    public JLabel createLabel(String input, int deviceNumber,
+            String deviceType){
         /* Creates an initializes a new label */
         JLabel newLabel = new JLabel();
         /* Sets the text of the new label */
-        newLabel.setText(encInput);
+        newLabel.setText(input);
         
         /* Makes the label clickable for the "name" variable */
-        if(encNumber >= 1){
+        if(deviceNumber >= 1){
+            /* Adds a tool tip to label */
+            newLabel.setToolTipText("Click to view " + input + " data");
+            /* Sets text color to blue */
+            newLabel.setForeground(Color.blue);
             /* Adds a mouse listener to label */
             newLabel.addMouseListener(new MouseAdapter(){
                 /**
@@ -270,10 +214,32 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                  */
                 @Override
                 public void mouseClicked(MouseEvent ev){
-                    /* Creates a new Encdisplay object */
-                    A7_Encoder encData = new A7_Encoder(fileLocation);
-                    /* Function call to display the Encoder data */
-                    encData.displayExpandedENC(encList, encNumber);
+                    /* Checks the device type to ensure labels are place right*/
+                    switch (deviceType) {
+                        case "SEM":
+                            /* Creates a new SEM display object */
+                            A7_SEM semData = new A7_SEM(fileLocation);
+                            /* Function call to display the Encoder data */
+                            semData.displayExpandedSEM(expandedSemUI, semList,
+                                    deviceNumber);
+                            break;
+                        case "TMX":
+                            /* Creates a new Encdisplay object */
+                            A7_TMX tmxData = new A7_TMX(fileLocation);
+                            /* Function call to display the Encoder data */
+                            tmxData.displayExpandedTMX(expandedTmxUI, tmxList, 
+                                    deviceNumber);
+                            break;
+                        case "Encoder":
+                            /* Creates a new Encdisplay object */
+                            A7_Encoder encData = new A7_Encoder(fileLocation);
+                            /* Function call to display the Encoder data */
+                            encData.displayExpandedENC(expandedEncUI, encList,
+                                    deviceNumber);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             });
         }
@@ -289,9 +255,10 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
      * @param type The device type label
      * @param address The device address label
      * @param role The device role
+     * @param deviceType The type of device
      */
-    public void createEncPanel(JLabel name, JLabel type, JLabel address, 
-            JLabel role){
+    public void createPanel(JLabel name, JLabel type, JLabel address, 
+            JLabel role, String deviceType){
         /* Creates and initializes a new panel */
         JPanel newPanel = new JPanel();
         /* Sets the layout of the panel */
@@ -303,12 +270,29 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         newPanel.add(address);
         newPanel.add(role);
         
-        /* Adds the panel to the display */
-        displayPanelENC.add(newPanel);
+        /* Adds the panel to the correct device display */
+        switch (deviceType) {
+            case "TMX":
+                /* Adds the panel to the display */
+                displayPanelTMX.add(newPanel);
+                break;
+            case "SEM":
+                /* Adds the panel to the display */
+                displayPanelSEM.add(newPanel);
+                break;
+            case "Encoder":
+                /* Adds the panel to the display */
+                displayPanelENC.add(newPanel);
+                break;
+            default:
+                break;
+        }
+        
+        this.pack();
         /* Makes the panel visible */
         newPanel.setVisible(true);
     }
-   
+    
     /**
      * TMX Linked List Setter.
      * @param tList The TMX Linked List

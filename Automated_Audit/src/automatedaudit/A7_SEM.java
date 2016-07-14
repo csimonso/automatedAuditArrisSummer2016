@@ -22,19 +22,18 @@ import java.util.Scanner;
  */
 public class A7_SEM implements A0_EquipmentIdentifiers {
     
-    private int semNumber, clockRateNumber;
-    private String name, address, version, role,type, site, fileLocation, line;
-    private String positionID, operatingMode, bootMethod, autoBoot;
-    private String multiController, controllerPort, semPort, commandTimeout;
-    private String detectPsiLoss, psiLossTimeout, encryptionAlgorithm;
-    private String copyProtectionSource, pidRemapping, messageInsertMode;
-    private String timeSource, gpsUtcOffset, asiMonitorTransportIndex;
-    private String highSpeedMode, redundancyGroup, elementGroup, inputFailureAlarm;
-    private String emmName, emmOutputPid, emmCaSysId, emmProviderId, emmConsumerStream;
     private ArrayList clockRate;
     private Path filePath;
     private Scanner scan, data;
-    private A8_ExpandedSemUI expSemUI;
+    private int semNumber, clockRateNumber, priorityNumber;
+    private String name, address, version, role,type, site, fileLocation, line,
+            positionID, operatingMode, bootMethod, autoBoot, device,
+            multiController, controllerPort, semPort, commandTimeout,
+            detectPsiLoss, psiLossTimeout, encryptionAlgorithm,
+            copyProtectionSource, pidRemapping, messageInsertMode,timeSource, 
+            gpsUtcOffset, asiMonitorTransportIndex, highSpeedMode, 
+            redundancyGroup, elementGroup, inputFailureAlarm, emmName, 
+            emmOutputPid, emmCaSysId, emmProviderId, emmConsumerStream;
     
     /**
      * Class constructor that sets the main file folder location
@@ -46,13 +45,12 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     
     /**
      * Method to initialize the SEM expanded display.
+     * @param expSemUI The expanded SEM UI
      * @param semList The List of SEM Devices
      * @param semNumber The Specific SEM Device Number
      */
-    public void displayExpandedSEM(LinkedList semList, int semNumber){
-       
-        /* Initialize a new Expanded SEM UI Display */
-        expSemUI = new A8_ExpandedSemUI();
+    public void displayExpandedSEM(A8_ExpandedSemUI expSemUI, 
+            LinkedList semList, int semNumber){
         
         /* Loop through the SEM list to get the specific SEM data */
         for(int i = 0; i < semList.size(); i++){
@@ -63,19 +61,24 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                 /* Sets all the device labels for the expanded UI */
                 expSemUI.setDeviceLabel(sData.getName(), sData.getRole());
                 expSemUI.setAddressLabel(sData.getAddress());
-                expSemUI.setAsiTransportIndexLabel(sData.getAsiMonitorTransportIndex());
+                expSemUI.setAsiTransportIndexLabel(
+                        sData.getAsiMonitorTransportIndex());
                 expSemUI.setAutoBootLabel(sData.getAutoBoot());
                 expSemUI.setBootMethodLabel(sData.getBootMethod());
                 expSemUI.setCommandTimeoutLabel(sData.getCommandTimeout());
                 expSemUI.setControllerPortLabel(sData.getControllerPort());
-                expSemUI.setCopyProtectionSourceLabel(sData.getCopyProtectionSource());
+                expSemUI.setCopyProtectionSourceLabel(
+                        sData.getCopyProtectionSource());
                 expSemUI.setDetectPsiLossLabel(sData.getDetectPsiLoss());
                 expSemUI.setElementGroupLabel(sData.getElementGroup());
-                expSemUI.setEncryptionAlgorithmLabel(sData.getEncryptionAlgorithm());
+                expSemUI.setEncryptionAlgorithmLabel(
+                        sData.getEncryptionAlgorithm());
                 expSemUI.setGpsOffsetLabel(sData.getGpsUtcOffset());
                 expSemUI.setHighSpeedLabel(sData.getHighSpeedMode());
-                expSemUI.setInputFailureAlarmLabel(sData.getInputFailureAlarm());
-                expSemUI.setMessageInsertModeLabel(sData.getMessageInsertMode());
+                expSemUI.setInputFailureAlarmLabel(
+                        sData.getInputFailureAlarm());
+                expSemUI.setMessageInsertModeLabel(
+                        sData.getMessageInsertMode());
                 expSemUI.setMultiControllerLabel(sData.getMultiController());
                 expSemUI.setOpModeLabel(sData.getOperatingMode());
                 expSemUI.setPidRemappingLabel(sData.getPidRemapping());
@@ -296,6 +299,40 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                 this.highSpeedMode = data.next();//sets high speed mode
             }
         }
+    }
+    
+    /**
+     * SEM Priority Number Setter
+     * @param pNumber The SEM priority number(1-primary, 2-backup)
+     */
+    @Override
+    public void setPriorityNumber(int pNumber){
+        priorityNumber = pNumber;
+    }
+    /**
+     * SEM Priority Number Getter
+     * @return The SEM Priority Number(1-primary, 2-backup)
+     */
+    @Override
+    public int getPriorityNumber(){
+        return priorityNumber;
+    }
+   
+    /**
+     * Setter for the type of device.
+     * @param dev The type of device(SEM)
+     */
+    @Override
+    public void setDevice(String dev){
+        device = dev;
+    }
+    /**
+     * Getter for the type of device.
+     * @return The device type(SEM)
+     */
+    @Override
+    public String getDevice(){
+        return device;
     }
     
     /**
@@ -636,5 +673,4 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public void setPositionID(String positionID) {
         this.positionID = positionID;
     }
-    
 }

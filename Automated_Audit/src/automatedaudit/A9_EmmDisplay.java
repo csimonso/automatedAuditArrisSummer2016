@@ -114,7 +114,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(caSystemIdLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(outputPidLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(outputPidLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                     .addComponent(nameLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(providerIdLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(consumerStreamLabelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -152,10 +152,12 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +166,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
                 .addComponent(dataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closeButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,6 +229,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param name The EMM Name
      */
     public void setNameLabel(String name){
+        /* If input contains data, sets the text to the label */
         if(name != null) {
             nameLabelInput.setText(name);
         }
@@ -240,6 +243,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param outputPid The EMM Output PID
      */
     public void setOutputPidLabel(String outputPid){
+        /* If input contains data, sets the text to the label */
         if(outputPid != null) {
             outputPidLabelInput.setText(outputPid);
         }
@@ -253,6 +257,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param caSystemId The EMM CA System ID
      */
     public void setCaSystemIdLabel(String caSystemId){
+        /* If input contains data, sets the text to the label */
         if(caSystemId != null) {
             caSystemIdLabelInput.setText(caSystemId);
         }
@@ -266,6 +271,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param providerId The EMM Provider ID
      */
     public void setProviderIdLabel(String providerId){
+        /* If input contains data, sets the text to the label */
         if(providerId != null) {
             providerIdLabelInput.setText(providerId);
         }
@@ -279,6 +285,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param consumerStream The EMM Consumer Stream
      */
     public void setConsumerStreamLabel(String consumerStream){
+        /* If input contains data, sets the text to the label */
         if(consumerStream != null){
             /* Sets the label text */
             consumerStreamLabelInput.setText(consumerStream);

@@ -7,8 +7,7 @@
 package automatedaudit;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * This class is used to create the main display UI.  Function calls are also
@@ -48,6 +47,12 @@ public class A2_MainUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Automated Audit", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        mainTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mainTextFieldActionPerformed(evt);
+            }
+        });
 
         mainLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mainLabel.setText("Enter Backup File Location:");
@@ -147,8 +152,17 @@ public class A2_MainUI extends javax.swing.JFrame {
      * @param evt The button action event
      */
     private void mainEnterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainEnterButtonActionPerformed
+        
+        /* Displays error if no file location was entered */
+        if(mainTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No File Entered.  "
+                    + "Please Try Again.");
+            return;
+        }
+        
         /* Gets the text input from the user */
         userInput = mainTextField.getText();
+
         /* Creates a new UnpackTar object to unpack the input file */
         A3_UnpackTar unpackFile = new A3_UnpackTar();
 
@@ -172,10 +186,21 @@ public class A2_MainUI extends javax.swing.JFrame {
             /* Function call to run the display */
             display.runDisplay();
         } catch (IOException ex) {
-            Logger.getLogger(
-                    A2_MainUI.class.getName()).log(Level.SEVERE, null, ex);
+            /* Displays error message if file location is invalid */
+            JOptionPane.showMessageDialog(this, "Invalid File.  "
+                    + "Please Try Again.");
+            /* Clears the text box */
+            mainTextField.setText("");
+            /* Sets the cursor focus back to the text box */
+            mainTextField.requestFocusInWindow();
         }
     }//GEN-LAST:event_mainEnterButtonActionPerformed
+
+    private void mainTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTextFieldActionPerformed
+        if(evt.getSource() == mainTextField){
+            mainEnterButton.doClick();
+        }
+    }//GEN-LAST:event_mainTextFieldActionPerformed
 
     /**
      * Method to run the main program.

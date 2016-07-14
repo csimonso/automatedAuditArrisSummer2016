@@ -6,17 +6,22 @@
 package automatedaudit;
 
 /**
- *
- * @author csimonson
+ * Class to create a display to view the expanded SEM data.
+ * 
+ * @author Christopher Simonson
+ * @version 1.0
+ * @since 
  */
 public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
-    private A6_InitialDataDisplayGUI prevDisplay;
+    private final A6_InitialDataDisplayGUI prevDisplay;
     
     /**
      * Creates new form ExpandedEncUI
+     * @param pDisplay The previous display
      */
-    public A8_ExpandedEncUI() {
+    public A8_ExpandedEncUI(A6_InitialDataDisplayGUI pDisplay) {
+        prevDisplay = pDisplay;
         initComponents();
     }
 
@@ -31,23 +36,14 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        roleLabel = new javax.swing.JLabel();
         redundancyGroupLabel = new javax.swing.JLabel();
         encoderGroupLabel = new javax.swing.JLabel();
-        roleLabelInput = new javax.swing.JLabel();
         redundancyGroupLabelInput = new javax.swing.JLabel();
         encoderGroupLabelInput = new javax.swing.JLabel();
-        Label1 = new javax.swing.JLabel();
-        primaryDeviceLabel = new javax.swing.JLabel();
-        Label2 = new javax.swing.JLabel();
-        primaryDeviceLabelInput = new javax.swing.JLabel();
-        LabelInput1 = new javax.swing.JLabel();
-        LabelInput2 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         deviceLabel = new javax.swing.JLabel();
         exitButton = new javax.swing.JButton();
         addressLabel = new javax.swing.JLabel();
-        printButton = new javax.swing.JButton();
         addressLabelInput = new javax.swing.JLabel();
         elementGroupLabel = new javax.swing.JLabel();
         elementGroupLabelInput = new javax.swing.JLabel();
@@ -58,10 +54,6 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        roleLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        roleLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        roleLabel.setText("Role:");
-
         redundancyGroupLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         redundancyGroupLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         redundancyGroupLabel.setText("Redundancy Group:");
@@ -69,11 +61,6 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         encoderGroupLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         encoderGroupLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         encoderGroupLabel.setText("Encoder Group:");
-
-        roleLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        roleLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        roleLabelInput.setText("Primary/Secondary");
-        roleLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         redundancyGroupLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         redundancyGroupLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -85,90 +72,31 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         encoderGroupLabelInput.setText("Encoder Group");
         encoderGroupLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        Label1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Label1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Label1.setText("EMPTY");
-
-        primaryDeviceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        primaryDeviceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        primaryDeviceLabel.setText("EMPTY");
-
-        Label2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Label2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Label2.setText("EMPTY");
-
-        primaryDeviceLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        primaryDeviceLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        primaryDeviceLabelInput.setText("EMPTY");
-        primaryDeviceLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        LabelInput1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        LabelInput1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LabelInput1.setText("EMPTY");
-        LabelInput1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        LabelInput2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        LabelInput2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        LabelInput2.setText("EMPTY");
-        LabelInput2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(encoderGroupLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(redundancyGroupLabel)
                 .addGap(4, 4, 4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roleLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(Label1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(primaryDeviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Label2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(4, 4, 4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(primaryDeviceLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LabelInput1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LabelInput2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(primaryDeviceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(primaryDeviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Label1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(LabelInput1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(Label2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(LabelInput2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(roleLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(roleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         backButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -196,14 +124,6 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         addressLabel.setText("IP Address:");
         addressLabel.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        printButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        printButton.setText("Print");
-        printButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printButtonActionPerformed(evt);
-            }
-        });
-
         addressLabelInput.setText("Ip address");
 
         elementGroupLabel.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -226,32 +146,27 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(deviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(203, 203, 203))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addressLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(27, 27, 27)
                         .addComponent(elementGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(elementGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(siteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(siteLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siteLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(22, 22, 22)))
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -269,12 +184,11 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                     .addComponent(siteLabelInput))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(330, 330, 330))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,14 +197,14 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -298,16 +212,12 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        this.goBack(prevDisplay);
+        this.goBack();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
-
-    }//GEN-LAST:event_printButtonActionPerformed
 
     /**
      * Method to run the GUI display
@@ -339,7 +249,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new A8_ExpandedEncUI().setVisible(true);
+            new A8_ExpandedEncUI(prevDisplay).setVisible(true);
         });
     }
     
@@ -347,20 +257,13 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
      * Method to bring up the last display.
      * @param prevDisplay The last display
      */
-    private void goBack(A6_InitialDataDisplayGUI prevDisplay){
+    private void goBack(){
         /* Make previous display visible */
         prevDisplay.setVisible(true);
         /* Make current display invisible */
         this.setVisible(false);  
     }
     
-    /**
-     * Previous Display Setter.
-     * @param pDisplay The Previous Display
-     */
-    public void setPrevDisplay(A6_InitialDataDisplayGUI pDisplay) {
-        prevDisplay = pDisplay;
-    }
     /**
      * Device Label Setter.
      * @param device The Device
@@ -374,13 +277,6 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
      */
     public void setAddressLabel(String address){
         addressLabelInput.setText(address);
-    }
-    /**
-     * Device Role Label Setter
-     * @param role The Device Role
-     */
-    public void setRoleLabel(String role){
-        roleLabelInput.setText(role);
     }
     /**
      * Device Site Label Setter.
@@ -410,19 +306,8 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     public void setEncoderGroupLabel(String eGroup){
         encoderGroupLabelInput.setText(eGroup);
     }
-    /**
-     * Primary Device Label Setter.
-     * @param primary The Device Primary
-     */
-    public void setPrimaryDeviceLabel(String primary){
-        primaryDeviceLabelInput.setText(primary);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Label1;
-    private javax.swing.JLabel Label2;
-    private javax.swing.JLabel LabelInput1;
-    private javax.swing.JLabel LabelInput2;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JLabel addressLabelInput;
     private javax.swing.JButton backButton;
@@ -434,13 +319,8 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel primaryDeviceLabel;
-    private javax.swing.JLabel primaryDeviceLabelInput;
-    private javax.swing.JButton printButton;
     private javax.swing.JLabel redundancyGroupLabel;
     private javax.swing.JLabel redundancyGroupLabelInput;
-    private javax.swing.JLabel roleLabel;
-    private javax.swing.JLabel roleLabelInput;
     private javax.swing.JLabel siteLabel;
     private javax.swing.JLabel siteLabelInput;
     // End of variables declaration//GEN-END:variables

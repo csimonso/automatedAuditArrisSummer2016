@@ -17,6 +17,18 @@ package automatedaudit;
 public interface A0_EquipmentIdentifiers {
     
     /**
+     * Setter for the type of device.
+     * @param dev The type of device
+     */
+    public void setDevice(String dev);
+    
+    /**
+     * Getter for the type of device.
+     * @return The device type(
+     */
+    public String getDevice();
+    
+    /**
      * This method is used to get the device name.
      * @return name
      */
@@ -39,6 +51,18 @@ public interface A0_EquipmentIdentifiers {
      * @param address The IP address for the device
      */
     public void setAddress(String address);
+    
+    /**
+     * This method is used to get the device priority number.
+     * @return Priority Number
+     */
+    public int getPriorityNumber();
+    
+    /**
+     * This method is used to set the device priority number.
+     * @param pNumber The Device Priority Number
+     */
+    public void setPriorityNumber(int pNumber);
     
     /**
      * This method is used to get the device version number.

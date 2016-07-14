@@ -23,14 +23,12 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
 
     private final String fileLocation;
     private String type, name, address, role, positionID, site, version, line;
-    private String elementGroup, redundancyGroup, encoderGroup;
+    private String elementGroup, redundancyGroup, encoderGroup, device;
     private String backupDevice, primaryDevice, osVersion, tmxFileLocation;
     private Path tmxFilePath;
     private Scanner tmxScan, tmxData;
-    private int tmxNumber;
-    private A8_ExpandedTmxUI expTmxUI;
+    private int tmxNumber, priorityNumber;
     
-  
     /**
      * Class constructor that sets the main file folder location
      * @param location The main file folder location
@@ -41,13 +39,12 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     
     /**
      * Method to initialize the TMX expanded display.
+     * @param expTmxUI The expanded TMX UI
      * @param tmxList The List of TMX Devices
      * @param tmxNumber The Specific TMX Device Number
      */
-    public void displayExpandedTMX(LinkedList tmxList, int tmxNumber){
-        
-        /* Initialize a new Expanded TMX UI Display */
-        expTmxUI = new A8_ExpandedTmxUI();
+    public void displayExpandedTMX(A8_ExpandedTmxUI expTmxUI, 
+            LinkedList tmxList, int tmxNumber){
         
         /* Loop through the TMX list to get the specific TMX data */
         for(int i = 0; i < tmxList.size(); i++){
@@ -56,9 +53,9 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
             /* Checks if TMX in list matches specified TMX device */
             if( tData.getTmxNumber() == tmxNumber) {
                 /* Sets all the device labels for the expanded UI */
-                expTmxUI.setDeviceLabel(tData.getName());
+                expTmxUI.setDeviceLabel(tData.getName() + "(" +
+                        tData.getRole() + ")");
                 expTmxUI.setAddressLabel(tData.getAddress());
-                expTmxUI.setRoleLabel(tData.getRole());
                 expTmxUI.setSiteLabel(tData.getSite());
                 expTmxUI.setElementGroupLabel(tData.getElementGroup());
                 expTmxUI.setRedundancyGroupLabel(tData.getRedundancyGroup());
@@ -78,7 +75,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * @throws IOException If an error occurs
      */
     public void parseTmxFile() throws IOException{
-        
         /* Concats the TMX file location to the main folders location*/
         tmxFileLocation = fileLocation.concat("config\\" + positionID);
         /* Initializes a file path for the TMX file */
@@ -147,6 +143,40 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                 this.setOsVersion(tmxData.next());//sets os version
             }
         }
+    }
+    
+    /**
+     * TMX Priority Number Setter
+     * @param pNumber The TMX priority number(1-primary, 2-backup)
+     */
+    @Override
+    public void setPriorityNumber(int pNumber){
+        priorityNumber = pNumber;
+    }
+    /**
+     * TMX Priority Number Getter
+     * @return The TMX Priority Number(1-primary, 2-backup)
+     */
+    @Override
+    public int getPriorityNumber(){
+        return priorityNumber;
+    }
+    
+    /**
+     * Setter for the type of device.
+     * @param dev The type of device(TMX)
+     */
+    @Override
+    public void setDevice(String dev){
+        device = dev;
+    }
+    /**
+     * Getter for the type of device.
+     * @return The device type(TMX)
+     */
+    @Override
+    public String getDevice(){
+        return device;
     }
     
     /**

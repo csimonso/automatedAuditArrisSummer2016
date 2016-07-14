@@ -21,12 +21,11 @@ import java.util.Scanner;
  */
 public class A7_Encoder implements A0_EquipmentIdentifiers{
     
-    private int encNumber;
+    private int encNumber, priorityNumber;
     private String name, address, version, role, type, site, positionID;
-    private String elementGroup, redundancyGroup, encoderGroup;
+    private String elementGroup, redundancyGroup, encoderGroup, device;
     private String primaryDevice, encFileLocation, line;
     private final String mainFileLocation;
-    private A8_ExpandedEncUI expEncUI;
     private Path encFilePath;
     private Scanner encScan, encData;
     
@@ -40,13 +39,12 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     
     /**
      * Method to initialize the Encoder expanded display.
+     * @param expEncUI The expanded Encoder UI
      * @param encList The List of Encoder Devices
      * @param encNumber The Specific Encoder Device Number
      */
-    public void displayExpandedENC(LinkedList encList, int encNumber){
-        
-        /* Initialize a new Expanded Encoder UI Display */
-        expEncUI = new A8_ExpandedEncUI();
+    public void displayExpandedENC(A8_ExpandedEncUI expEncUI, 
+            LinkedList encList, int encNumber){
         
         /* Loop through the Encoder list to get the specific Encoder data */
         for(int i = 0; i < encList.size(); i++){
@@ -55,14 +53,13 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
             /* Checks if Encoder in list matches specified Encoder device */
             if( eData.getEncNumber() == encNumber) {
                 /* Sets all the device labels for the expanded UI */
-                expEncUI.setDeviceLabel(eData.getName());
+                expEncUI.setDeviceLabel(eData.getName() + "(" + 
+                        eData.getRole() + ")");
                 expEncUI.setAddressLabel(eData.getAddress());
-                expEncUI.setRoleLabel(eData.getRole());
                 expEncUI.setSiteLabel(eData.getSite());
                 expEncUI.setElementGroupLabel(eData.getElementGroup());
                 expEncUI.setRedundancyGroupLabel(eData.getRedundancyGroup());
                 expEncUI.setEncoderGroupLabel(eData.getEncoderGroup());
-                expEncUI.setPrimaryDeviceLabel(eData.getPrimaryDevice());
             }
         }
         /* Makes Display Visible */
@@ -120,6 +117,40 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                 this.setEncoderGroup(encData.next());//sets encoder group
             }
         }
+    }
+    
+    /**
+     * Encoder Priority Number Setter
+     * @param pNumber The Encoder priority number(1-primary, 2-backup)
+     */
+    @Override
+    public void setPriorityNumber(int pNumber){
+        priorityNumber = pNumber;
+    }
+    /**
+     * Encoder Priority Number Getter
+     * @return The Encoder Priority Number(1-primary, 2-backup)
+     */
+    @Override
+    public int getPriorityNumber(){
+        return priorityNumber;
+    }
+    
+    /**
+     * Setter for the type of device.
+     * @param dev The type of device(Encoder)
+     */
+    @Override
+    public void setDevice(String dev){
+        device = dev;
+    }
+    /**
+     * Getter for the type of device.
+     * @return The device type(Encoder)
+     */
+    @Override
+    public String getDevice(){
+        return device;
     }
     
     /**
