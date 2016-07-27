@@ -6,6 +6,9 @@
  */
 package automatedaudit;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  * Class to create a display to view the expanded TMX data.
  * 
@@ -16,6 +19,8 @@ package automatedaudit;
 public class A8_ExpandedTmxUI extends javax.swing.JFrame {
 
     private final A6_InitialDataDisplayGUI prevDisplay;
+    private A8_ExpandedTmxUI currDisplay;
+    
     
     /**
      * Creates new form ExpandedTmxUI
@@ -41,14 +46,15 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         encoderGroupLabel = new javax.swing.JLabel();
         redundancyGroupLabelInput = new javax.swing.JLabel();
         encoderGroupLabelInput = new javax.swing.JLabel();
-        backupDeviceLabel = new javax.swing.JLabel();
-        primaryDeviceLabel = new javax.swing.JLabel();
+        deviceStatusLabel = new javax.swing.JLabel();
         versionLabel = new javax.swing.JLabel();
         osVersionLabel = new javax.swing.JLabel();
-        primaryDeviceLabelInput = new javax.swing.JLabel();
-        backupDeviceLabelInput = new javax.swing.JLabel();
+        deviceStatusLabelInput = new javax.swing.JLabel();
         versionLabelInput = new javax.swing.JLabel();
         osVersionLabelInput = new javax.swing.JLabel();
+        statGroupLabel = new javax.swing.JLabel();
+        statGroupDropDown = new javax.swing.JComboBox<>();
+        serviceDataLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         deviceLabel = new javax.swing.JLabel();
         exitButton = new javax.swing.JButton();
@@ -81,13 +87,9 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         encoderGroupLabelInput.setText("Encoder Group");
         encoderGroupLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        backupDeviceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        backupDeviceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        backupDeviceLabel.setText("Backup Device:");
-
-        primaryDeviceLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        primaryDeviceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        primaryDeviceLabel.setText("Primary Device:");
+        deviceStatusLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deviceStatusLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        deviceStatusLabel.setText("Primary/Backup ID:");
 
         versionLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         versionLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -97,15 +99,10 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         osVersionLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         osVersionLabel.setText("OS Version:");
 
-        primaryDeviceLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        primaryDeviceLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        primaryDeviceLabelInput.setText("Primary");
-        primaryDeviceLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        backupDeviceLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        backupDeviceLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        backupDeviceLabelInput.setText("Backup");
-        backupDeviceLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        deviceStatusLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        deviceStatusLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        deviceStatusLabelInput.setText("Primary/Backup ID");
+        deviceStatusLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         versionLabelInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         versionLabelInput.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -117,6 +114,15 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         osVersionLabelInput.setText("OS Version");
         osVersionLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
+        statGroupLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        statGroupLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        statGroupLabel.setText("Stat Group List:");
+
+        serviceDataLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        serviceDataLabel.setForeground(new java.awt.Color(0, 51, 255));
+        serviceDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        serviceDataLabel.setText("Service Data");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,29 +131,32 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(backupDeviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(backupDeviceLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(versionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(versionLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(primaryDeviceLabel)
-                            .addComponent(osVersionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(deviceStatusLabel)
+                            .addComponent(osVersionLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(osVersionLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                            .addComponent(primaryDeviceLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(deviceStatusLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(serviceDataLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(redundancyGroupLabel)
-                    .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(redundancyGroupLabel)
+                            .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(statGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statGroupDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -165,15 +174,19 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
                     .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(osVersionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(osVersionLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deviceStatusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deviceStatusLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(statGroupDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(primaryDeviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(primaryDeviceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backupDeviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backupDeviceLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(serviceDataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         backButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -259,12 +272,12 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
                     .addComponent(siteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(siteLabelInput))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(269, 269, 269))
+                .addGap(216, 216, 216))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -279,12 +292,13 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(586, 347));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -323,6 +337,39 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
     }
     
     /**
+     * Makes service data text click-able as well function call to run it
+     * @param tData The TMX data
+     */
+    public void serviceDisplay(A7_TMX tData){
+        
+        if(tData.getDataMap().get("Role").equals("Backup")){
+            serviceDataLabel.setVisible(false);
+        }
+        else {
+            serviceDataLabel.setVisible(true);
+            /* Adds a mouse listener to make text click-able */
+            serviceDataLabel.addMouseListener(new MouseAdapter(){
+                /**
+                * Method to create a mouse click event
+                * @param ev The mouse click event
+                */
+                @Override
+                public void mouseClicked(MouseEvent ev){
+                    /* Creates and initializes a new EMM Dialog Display */
+                    A9_ServiceDisplay serviceDialog = new A9_ServiceDisplay(currDisplay);
+             
+                    serviceDialog.setTableRows(tData);
+                    //serviceDialog.setTableRows(tData.getServiceGroupNumber(), 
+                    //        tData.getServiceMap(), tData.getServiceNumber());
+                
+                    /* Function call to run the display */
+                    serviceDialog.runServiceDisplay();
+                }
+            });
+        }
+    }
+    
+    /**
      * Method to bring up the last display.
      * @param prevDisplay The last display
      */
@@ -331,6 +378,15 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         prevDisplay.setVisible(true);
         /* Make current display invisible */
         this.setVisible(false);  
+    }
+    
+    public void setStatGroupDropDown(A7_TMX tData){
+        statGroupDropDown.removeAllItems();
+        
+        for(int i = 1; i <= tData.getStatGroupList().size(); i++){
+            String key = "StatGroup.Name" + i;
+            statGroupDropDown.addItem((String) tData.getDataMap().get(key));
+        }
     }
     
     /**
@@ -380,14 +436,16 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
      * @param backup The Device Backup
      */
     public void setBackupDeviceLabel(String backup){
-        backupDeviceLabelInput.setText(backup);
+        deviceStatusLabel.setText("Backup Device:");
+        deviceStatusLabelInput.setText(backup);
     }
     /**
      * Primary Device Label Setter.
      * @param primary The Device Primary
      */
     public void setPrimaryDeviceLabel(String primary){
-        primaryDeviceLabelInput.setText(primary);
+        deviceStatusLabel.setText("Primary Device:");
+        deviceStatusLabelInput.setText(primary);
     }
     /**
      * Device APP Version Label Setter.
@@ -409,9 +467,9 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
     private javax.swing.JLabel addressLabel;
     private javax.swing.JLabel addressLabelInput;
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel backupDeviceLabel;
-    private javax.swing.JLabel backupDeviceLabelInput;
     private javax.swing.JLabel deviceLabel;
+    private javax.swing.JLabel deviceStatusLabel;
+    private javax.swing.JLabel deviceStatusLabelInput;
     private javax.swing.JLabel elementGroupLabel;
     private javax.swing.JLabel elementGroupLabelInput;
     private javax.swing.JLabel encoderGroupLabel;
@@ -421,12 +479,13 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel osVersionLabel;
     private javax.swing.JLabel osVersionLabelInput;
-    private javax.swing.JLabel primaryDeviceLabel;
-    private javax.swing.JLabel primaryDeviceLabelInput;
     private javax.swing.JLabel redundancyGroupLabel;
     private javax.swing.JLabel redundancyGroupLabelInput;
+    private javax.swing.JLabel serviceDataLabel;
     private javax.swing.JLabel siteLabel;
     private javax.swing.JLabel siteLabelInput;
+    private javax.swing.JComboBox<String> statGroupDropDown;
+    private javax.swing.JLabel statGroupLabel;
     private javax.swing.JLabel versionLabel;
     private javax.swing.JLabel versionLabelInput;
     // End of variables declaration//GEN-END:variables

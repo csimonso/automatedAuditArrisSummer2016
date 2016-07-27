@@ -6,8 +6,11 @@
  */
 package automatedaudit;
 
+
 import java.io.IOException;
 import javax.swing.JOptionPane;
+
+
 
 /**
  * This class is used to create the main display UI.  Function calls are also
@@ -24,8 +27,9 @@ public class A2_MainUI extends javax.swing.JFrame {
     /**
      * Creates new form MainUI
      */
-    public A2_MainUI() {
+    public A2_MainUI() {      
         initComponents();
+   
     }
 
     /**
@@ -152,14 +156,13 @@ public class A2_MainUI extends javax.swing.JFrame {
      * @param evt The button action event
      */
     private void mainEnterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainEnterButtonActionPerformed
-        
+
         /* Displays error if no file location was entered */
         if(mainTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No File Entered.  "
                     + "Please Try Again.");
             return;
         }
-        
         /* Gets the text input from the user */
         userInput = mainTextField.getText();
 
@@ -189,14 +192,13 @@ public class A2_MainUI extends javax.swing.JFrame {
             /* Displays error message if file location is invalid */
             JOptionPane.showMessageDialog(this, "Invalid File.  "
                     + "Please Try Again.");
-            /* Clears the text box */
-            mainTextField.setText("");
             /* Sets the cursor focus back to the text box */
             mainTextField.requestFocusInWindow();
         }
     }//GEN-LAST:event_mainEnterButtonActionPerformed
 
     private void mainTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTextFieldActionPerformed
+        
         if(evt.getSource() == mainTextField){
             mainEnterButton.doClick();
         }
@@ -235,8 +237,10 @@ public class A2_MainUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new A2_MainUI().setVisible(true);
+            
         });   
     }
+ 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;

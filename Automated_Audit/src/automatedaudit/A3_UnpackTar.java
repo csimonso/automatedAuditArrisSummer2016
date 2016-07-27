@@ -36,7 +36,6 @@ public class A3_UnpackTar {
         entry = (TarArchiveEntry) tarInput.getNextTarEntry();
         /* Sets a string to the file location */
         String newFileDirectory = fileCopyLocation.concat(entry.getName());
-        
         /* Loop to read each entry in the Tar file */
         while((entry = (TarArchiveEntry) tarInput.getNextEntry()) != null){
             

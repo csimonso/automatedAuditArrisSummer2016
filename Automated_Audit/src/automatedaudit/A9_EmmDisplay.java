@@ -169,7 +169,8 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(281, 283));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
@@ -214,7 +215,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
                     System.exit(0);
                 }
             });
-            dialog.setVisible(true);
+            dialog.setVisible(false);
         });
     }
     /**
@@ -229,13 +230,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param name The EMM Name
      */
     public void setNameLabel(String name){
-        /* If input contains data, sets the text to the label */
-        if(name != null) {
-            nameLabelInput.setText(name);
-        }
-        else{
-            nameLabelInput.setText("No Data Found");
-        }
+        nameLabelInput.setText(name);    
     }
     
     /**
@@ -243,13 +238,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param outputPid The EMM Output PID
      */
     public void setOutputPidLabel(String outputPid){
-        /* If input contains data, sets the text to the label */
-        if(outputPid != null) {
-            outputPidLabelInput.setText(outputPid);
-        }
-        else{
-            outputPidLabelInput.setText("No Data Found");
-        }
+        outputPidLabelInput.setText(outputPid);
     }
     
     /**
@@ -257,13 +246,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param caSystemId The EMM CA System ID
      */
     public void setCaSystemIdLabel(String caSystemId){
-        /* If input contains data, sets the text to the label */
-        if(caSystemId != null) {
-            caSystemIdLabelInput.setText(caSystemId);
-        }
-        else{
-            caSystemIdLabelInput.setText("No Data Found");
-        }
+        caSystemIdLabelInput.setText(caSystemId);
     }
     
     /**
@@ -271,13 +254,7 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param providerId The EMM Provider ID
      */
     public void setProviderIdLabel(String providerId){
-        /* If input contains data, sets the text to the label */
-        if(providerId != null) {
-            providerIdLabelInput.setText(providerId);
-        }
-        else{
-            providerIdLabelInput.setText("No Data Found");
-        }
+        providerIdLabelInput.setText(providerId);
     }
     
     /**
@@ -285,20 +262,13 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
      * @param consumerStream The EMM Consumer Stream
      */
     public void setConsumerStreamLabel(String consumerStream){
-        /* If input contains data, sets the text to the label */
-        if(consumerStream != null){
-            /* Sets the label text */
-            consumerStreamLabelInput.setText(consumerStream);
-            /* Sets font color to red if off and green if on */
-            if(consumerStream.equals("true")){
-                consumerStreamLabelInput.setForeground(Color.green);
-            }
-            else {
-                consumerStreamLabelInput.setForeground(Color.red);
-            }
+        consumerStreamLabelInput.setText(consumerStream);
+        /* Sets font color to red if off and green if on */
+        if(consumerStream.equals("true")){
+             consumerStreamLabelInput.setForeground(Color.green);
         }
         else {
-            consumerStreamLabelInput.setText("No Data Found");
+             consumerStreamLabelInput.setForeground(Color.red);
         }
     }
 

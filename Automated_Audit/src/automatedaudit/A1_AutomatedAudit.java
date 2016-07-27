@@ -6,6 +6,7 @@
  */
 package automatedaudit;
 
+
 /**
  * The AutomatedAudit program implements an application that reviews a backup
  * file from the server and outputs all relevant data and information.
@@ -25,6 +26,7 @@ public class A1_AutomatedAudit {
     public static void main(String[] args) {
         /* Creates a new GUI object */
         A2_MainUI run = new A2_MainUI();
+
         /* Function call to run the main GUI display */
         run.runProgram();
         

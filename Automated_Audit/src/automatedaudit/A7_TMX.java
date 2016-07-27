@@ -9,7 +9,10 @@ package automatedaudit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -23,11 +26,27 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
 
     private final String fileLocation;
     private String type, name, address, role, positionID, site, version, line;
-    private String elementGroup, redundancyGroup, encoderGroup, device;
-    private String backupDevice, primaryDevice, osVersion, tmxFileLocation;
+    private String elementGroup, redundancyGroup, encoderGroup, device, service;
+    private String backupDevice, primaryDevice, osVersion, tmxFileLocation, serviceCompNumber;
     private Path tmxFilePath;
-    private Scanner tmxScan, tmxData;
-    private int tmxNumber, priorityNumber;
+    private Scanner tmxScan;
+    private int tmxNumber, priorityNumber, statGroupNumber, serviceGroupNumber,
+            componentGroupNumber, totalComponents;
+    private ArrayList statGroupList, serviceNumber, componentNumber;
+    
+    private final String[] strings = {"Role","Site", "ElementGroup",
+        "RedundancyGroup", "EncoderGroup",  "AppVersion",  "OSVersion", 
+        "Primary", "Backup", "StatGroup", "TMX.Service", "TMX.Component"};
+    private final String[] compStrings = {"Name", "OutputPID", "ComponentType", 
+        "Description", "TranscodeMode", "TranscodeBias", "AudioType", 
+        "Ac3DescPassThru", "DVSAudio", "SourceStreamType"};
+    private final String[] serviceStrings = {"Name", "PmtPID", "BitRate", 
+        "Type", "TargetPcrPid"};
+    
+    
+    private final Map results = new HashMap<>();
+    private final Map serviceResults = new HashMap<>();
+    private final Map componentResults = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
@@ -45,25 +64,33 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      */
     public void displayExpandedTMX(A8_ExpandedTmxUI expTmxUI, 
             LinkedList tmxList, int tmxNumber){
-        
-        /* Loop through the TMX list to get the specific TMX data */
+        /* Loops through the List of TMX to display the correct one */
         for(int i = 0; i < tmxList.size(); i++){
-            /* Creates a new TMX Object from the TMX Object at i */
+            /* Gets the current TMX from the list */
             A7_TMX tData = (A7_TMX) tmxList.get(i);
-            /* Checks if TMX in list matches specified TMX device */
-            if( tData.getTmxNumber() == tmxNumber) {
-                /* Sets all the device labels for the expanded UI */
-                expTmxUI.setDeviceLabel(tData.getName() + "(" +
-                        tData.getRole() + ")");
+            /* Checks if current TMX is the correct one to be displayed */
+            if(tData.getTmxNumber() == tmxNumber){
+                /* Sets the Expanded Display Labels */
+                expTmxUI.setDeviceLabel(tData.getName() + " (" + 
+                        tData.results.get("Role") + ")");
                 expTmxUI.setAddressLabel(tData.getAddress());
-                expTmxUI.setSiteLabel(tData.getSite());
-                expTmxUI.setElementGroupLabel(tData.getElementGroup());
-                expTmxUI.setRedundancyGroupLabel(tData.getRedundancyGroup());
-                expTmxUI.setEncoderGroupLabel(tData.getEncoderGroup());
-                expTmxUI.setBackupDeviceLabel(tData.getBackupDevice());
-                expTmxUI.setPrimaryDeviceLabel(tData.getPrimaryDevice());
-                expTmxUI.setVersionLabel(tData.getVersion());
-                expTmxUI.setOsVersionLabel(tData.getOsVersion());
+                expTmxUI.setSiteLabel( (String) tData.results.get("Site"));
+                expTmxUI.setElementGroupLabel( (String) tData.results.get(
+                        "ElementGroup"));
+                expTmxUI.setRedundancyGroupLabel( (String) tData.results.get(
+                        "RedundancyGroup"));
+                expTmxUI.setEncoderGroupLabel( (String) tData.results.get(
+                        "EncoderGroup"));
+                expTmxUI.setVersionLabel( (String) tData.results.get(
+                        "AppVersion"));
+                expTmxUI.setOsVersionLabel( (String) tData.results.get(
+                        "OSVersion"));
+                /* Sets the Stat Group Drop Down Menu */
+                expTmxUI.setStatGroupDropDown(tData);
+                /* Creates the Service Display Dialog Box */
+                expTmxUI.serviceDisplay(tData);
+                
+                expTmxUI.pack();
             }
         }
         /* Makes Display Visible */
@@ -75,75 +102,131 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * @throws IOException If an error occurs
      */
     public void parseTmxFile() throws IOException{
+        /* Declare Local Variables */
+        String value;
+        String[] splitString;
+        String[] serviceLine;
+        String[] componentLine;
+        
         /* Concats the TMX file location to the main folders location*/
         tmxFileLocation = fileLocation.concat("config\\" + positionID);
         /* Initializes a file path for the TMX file */
         tmxFilePath = Paths.get(tmxFileLocation);
         /* Initializes a scanner for the file */
         tmxScan = new Scanner(tmxFilePath);
-        
-        /* Loop through each line of the TMX file */
+        /* Initializes the Array Lists */
+        statGroupList = new ArrayList();
+        serviceNumber = new ArrayList();
+        componentNumber = new ArrayList();
+        /* Initialize the number variables */
+        statGroupNumber = 0;
+        serviceGroupNumber = 0;
+        componentGroupNumber = 0;
+        totalComponents = 0;
+        /* Loops through each line of the file */
         while(tmxScan.hasNextLine()){
-            /* Sets string to the full line */
+            /* Sets the string to the next line */
             line = tmxScan.nextLine();
-            
-            /* If statements checking if a line matches the data we need */
-            if(line.contains("Role")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setRole(tmxData.next());//sets role
-            }
-            else if(line.contains("Site")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setSite(tmxData.next());//sets site
-            }
-            else if(line.contains("ElementGroup")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setElementGroup(tmxData.next());//sets element group
-            }
-            else if(line.contains("RedundancyGroup")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setRedundancyGroup(tmxData.next());//sets rundant group
-            }
-            else if(line.contains("EncoderGroup")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setEncoderGroup(tmxData.next());//sets encoder group
-            }
-            else if(line.contains("Backup")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setBackupDevice(tmxData.next());//sets backup device
-            }
-            else if(line.contains("Primary")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setPrimaryDevice(tmxData.next());//sets primary device
-            }
-            else if(line.contains("AppVersion")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setVersion(tmxData.next());//sets app version
-            }
-            else if(line.contains("OSVersion")){
-                /* Initializes scanner to next "=" */
-                tmxData = new Scanner(line).useDelimiter("=");
-                tmxData.next();
-                this.setOsVersion(tmxData.next());//sets os version
+            /* Loops through each member of the strings array */
+            for(String sub:strings){
+                /* Checks if the current line is part of the rstrings array */
+                if(line.contains(sub)){
+                    /* Splits the string at the equals sign */
+                    splitString = line.split("=");
+                    /* Checks that there is data after the equals sign */
+                    if(splitString.length > 1){
+                        value = splitString[1];
+                    }
+                    /* If no data, sets value to represent that */
+                    else value = "No Data"; 
+                    /* Checks for Stat Group, Service and Component data */
+                    switch (sub) {
+                        /* Stat Group Data */
+                        case "StatGroup":
+                            /* Sets the Stat Group Name */
+                            if(line.contains("Name")){
+                                statGroupNumber++;//increments count
+                                sub = sub + ".Name" + statGroupNumber;
+                                statGroupList.add(sub);
+                                results.put(sub, value);
+                            }   break;
+                        /* Service Data */
+                        case "TMX.Service":
+                            /* Loops through the Service Strings */
+                            for(String serv:serviceStrings){
+                                /* Checks for a String match */
+                                if(line.contains(serv)){
+                                    /* Splits the current line */
+                                    serviceLine = line.split("\\.");
+                                    /* Adds new Service ID to List */
+                                    if(serv.equals("Name")){
+                                        /* Increment Total Service's */
+                                       
+                                        serviceGroupNumber++;
+                                        serviceNumber.add(serviceLine[2]);
+                                        service = serviceLine[2];
+                                    }
+                                    serv ="Service" + serviceLine[2] + serv;
+                                    serviceResults.put(serv, value);
+                                }
+                            } break;
+                        /* Component Data */  
+                        case "TMX.Component":
+                            /* Loops through the Component Strings */
+                            for(String comp:compStrings){
+                                /* Checks for a String match */
+                                if(line.contains(comp)){
+                                    /* Splits the current line */
+                                    componentLine = line.split("\\.");
+                                    /* Adds new Component ID to List */
+                                    if(comp.equals("Name")){
+                                        
+                                        //componentGroupNumber++;
+                                        componentNumber.add(componentLine[2]);
+                                    }
+                                    comp = service + "Component" + componentLine[2] + comp;
+                                    componentResults.put(comp, value);
+                                    
+                                }
+                            } break;
+                        default:
+                            results.put(sub, value);
+                            break;
+                    }
+                }
             }
         }
+        
     }
+    
+    public Map getDataMap(){
+        return results;
+    }
+    public ArrayList getStatGroupList(){
+        return statGroupList;
+    }
+    public void setStatGroupList(ArrayList list){
+        statGroupList = list;
+    }
+    public Map getServiceMap(){
+        return serviceResults;
+    }
+    public int getServiceGroupNumber(){
+        return serviceGroupNumber;
+    }
+    public ArrayList getServiceNumber(){
+        return serviceNumber;
+    }
+    public Map getComponentMap(){
+        return componentResults;
+    }
+    public int getComponentGroupNumber(){
+        return componentGroupNumber;
+    }
+    public ArrayList getComponentNumber(){
+        return componentNumber;
+    }
+   
     
     /**
      * TMX Priority Number Setter
@@ -235,7 +318,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * TMX AppVersion Getter.
      * @return The TMX AppVersion Number
      */
-    @Override
     public String getVersion() {
         return version;
     }
@@ -244,7 +326,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * TMX AppVersion Setter.
      * @param appVersion The TMX AppVersion Number
      */
-    @Override
     public void setVersion(String appVersion) {
         version = appVersion;
     }
@@ -253,7 +334,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * TMX Role Getter.
      * @return The TMX Role
      */
-    @Override
     public String getRole() {
        return role;
     }
@@ -262,7 +342,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
      * TMX Role Setter.
      * @param role The TMX Role
      */
-    @Override
     public void setRole(String role) {
         this.role = role;
     }

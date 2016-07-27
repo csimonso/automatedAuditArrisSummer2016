@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -22,18 +24,22 @@ import java.util.Scanner;
  */
 public class A7_SEM implements A0_EquipmentIdentifiers {
     
-    private ArrayList clockRate;
+    private ArrayList clockRate, semDataList;
     private Path filePath;
     private Scanner scan, data;
     private int semNumber, clockRateNumber, priorityNumber;
-    private String name, address, version, role,type, site, fileLocation, line,
-            positionID, operatingMode, bootMethod, autoBoot, device,
-            multiController, controllerPort, semPort, commandTimeout,
-            detectPsiLoss, psiLossTimeout, encryptionAlgorithm,
-            copyProtectionSource, pidRemapping, messageInsertMode,timeSource, 
-            gpsUtcOffset, asiMonitorTransportIndex, highSpeedMode, 
-            redundancyGroup, elementGroup, inputFailureAlarm, emmName, 
-            emmOutputPid, emmCaSysId, emmProviderId, emmConsumerStream;
+    private String name, address, type, fileLocation, line, positionID, device;
+    private final String[] strings = new String[]{"Role", "ElementGroup", "Site", 
+        "RedundancyGroup", "HostAppVersion", "InputFailureAlarm", 
+        "OperatingMode", "BootMethod", "AutoBoot", "MultiController",
+        "ControllerPort", "SemPort", "CommandTimeOut", "DetectPsiLoss", 
+        "PsiLossTimeout", "EncryptionAlgorithm", "CopyProtectionSource", 
+        "PidRemapping", "MessageInsertMode", "TimeSource", "GpsUtcOffset", 
+        "AsiMonitorTransportIndex", "HighSpeedMode", "ClockRate", 
+        "EMMStream.Name", "EMMStream.OutputPID", "EMMStream.CaSystemID", 
+        "EMMStream.EmmProviderID", "EMMStream.IsConsumerStream"};
+    private final Map results = new HashMap<>();
+    private Map emmResults = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
@@ -51,7 +57,6 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
      */
     public void displayExpandedSEM(A8_ExpandedSemUI expSemUI, 
             LinkedList semList, int semNumber){
-        
         /* Loop through the SEM list to get the specific SEM data */
         for(int i = 0; i < semList.size(); i++){
             /* Creates a new SEM Object from the SEM Object at i */
@@ -59,39 +64,60 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
             /* Checks if SEM in list matches specified SEM device */
             if(sData.getSemNumber() == semNumber){
                 /* Sets all the device labels for the expanded UI */
-                expSemUI.setDeviceLabel(sData.getName(), sData.getRole());
+                expSemUI.setDeviceLabel(sData.getName() + " (" + 
+                        sData.results.get("Role") + ")");
                 expSemUI.setAddressLabel(sData.getAddress());
                 expSemUI.setAsiTransportIndexLabel(
-                        sData.getAsiMonitorTransportIndex());
-                expSemUI.setAutoBootLabel(sData.getAutoBoot());
-                expSemUI.setBootMethodLabel(sData.getBootMethod());
-                expSemUI.setCommandTimeoutLabel(sData.getCommandTimeout());
-                expSemUI.setControllerPortLabel(sData.getControllerPort());
+                        (String) sData.results.get("AsiMonitorTransportIndex"));
+                expSemUI.setAutoBootLabel((String) sData.results.get(
+                        "AutoBoot"));
+                expSemUI.setBootMethodLabel((String) sData.results.get(
+                        "BootMethod"));
+                expSemUI.setCommandTimeoutLabel((String) sData.results.get(
+                        "CommandTimeOut"));
+                expSemUI.setControllerPortLabel((String) sData.results.get(
+                        "ControllerPort"));
                 expSemUI.setCopyProtectionSourceLabel(
-                        sData.getCopyProtectionSource());
-                expSemUI.setDetectPsiLossLabel(sData.getDetectPsiLoss());
-                expSemUI.setElementGroupLabel(sData.getElementGroup());
+                        (String) sData.results.get("CopyProtectionSource"));
+                expSemUI.setDetectPsiLossLabel((String) sData.results.get(
+                        "DetectPsiLoss"));
+                expSemUI.setElementGroupLabel((String) sData.results.get(
+                        "ElementGroup"));
                 expSemUI.setEncryptionAlgorithmLabel(
-                        sData.getEncryptionAlgorithm());
-                expSemUI.setGpsOffsetLabel(sData.getGpsUtcOffset());
-                expSemUI.setHighSpeedLabel(sData.getHighSpeedMode());
+                        (String) sData.results.get("EncryptionAlgorithm"));
+                expSemUI.setGpsOffsetLabel((String) sData.results.get(
+                        "GpsUtcOffset"));
+                expSemUI.setHighSpeedLabel((String) sData.results.get(
+                        "HighSpeedMode"));
                 expSemUI.setInputFailureAlarmLabel(
-                        sData.getInputFailureAlarm());
+                        (String) sData.results.get("InputFailureAlarm"));
                 expSemUI.setMessageInsertModeLabel(
-                        sData.getMessageInsertMode());
-                expSemUI.setMultiControllerLabel(sData.getMultiController());
-                expSemUI.setOpModeLabel(sData.getOperatingMode());
-                expSemUI.setPidRemappingLabel(sData.getPidRemapping());
-                expSemUI.setRedundancyGroupLabel(sData.getRedundancyGroup());
-                expSemUI.setPsiLossTimeoutLabel(sData.getPsiLossTimeout());
-                expSemUI.setSiteLabel(sData.getSite());
-                expSemUI.setSemPortLabel(sData.getSemPort());
-                expSemUI.setTimeSourceLabel(sData.getTimeSource());
-                expSemUI.setVersionLabel(sData.getVersion());
+                        (String) sData.results.get("MessageInsertMode"));
+                expSemUI.setMultiControllerLabel((String) sData.results.get(
+                        "MultiController"));
+                expSemUI.setOpModeLabel((String) sData.results.get(
+                        "OperatingMode"));
+                expSemUI.setPidRemappingLabel((String) sData.results.get(
+                        "PidRemapping"));
+                expSemUI.setRedundancyGroupLabel((String) sData.results.get(
+                        "RedundancyGroup"));
+                expSemUI.setPsiLossTimeoutLabel((String) sData.results.get(
+                        "PsiLossTimeout"));
+                expSemUI.setSiteLabel((String) sData.results.get("Site"));
+                expSemUI.setSemPortLabel((String) sData.results.get("SemPort"));
+                expSemUI.setTimeSourceLabel((String) sData.results.get(
+                        "TimeSource"));
+                expSemUI.setVersionLabel((String) sData.results.get(
+                        "HostAppVersion"));
+                /* Sets the values in the drop down menu for the ClockRates */
                 expSemUI.setClockRateDropDown(sData.getClockRate());
-                expSemUI.emmDisplay(sData.getEmmName(), 
-                        sData.getEmmOutputPid(), sData.getEmmCaSystemId(), 
-                        sData.getEmmProviderId(), sData.getEmmConsumerStream());
+                /* Function call to create the EMM dialog box */
+                expSemUI.emmDisplay(sData);
+                /* Sets the List of SEM devices */
+                expSemUI.setSemList(semList);
+                /* Sets the specific SEM's data */
+                expSemUI.setSemData(sData);
+                expSemUI.pack();
             }
         }
         /* Makes display visible */
@@ -104,220 +130,113 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
      * @throws IOException If error occurs
      */
     public void parseSemFile(String inputLocation) throws IOException{
-        
         /* Concats the SEM file location to the main folders location*/
         fileLocation = inputLocation.concat("config\\" + positionID);
         /* Initializes a file path for the SEM file */
         filePath = Paths.get(fileLocation);
         /* Initializes a scanner for the file */
         scan = new Scanner(filePath);
-        /* Initializes the arrayList */
+        /* Initializes the arrayLists */
         clockRate = new ArrayList();
+        semDataList = new ArrayList();
         /* Initializes the clock rate counter */
         clockRateNumber = 0;
-        
-        /* Loop through each line of the SEM file */
+        String value;//creates a string to hold all the values
+        /* Loops through each line of the device file */
         while(scan.hasNextLine()){
-            /* Sets string to the full line */
-            line = scan.nextLine();
-            
-            /* If statements checking if a line matches the data we need */
-            if(line.contains("Role")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                role = data.next();//sets role
-            }
-            else if(line.contains("EMMStream.Name")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.emmName = data.next();//sets EMM Name
-            }
-            else if(line.contains("EMMStream.OutputPID")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                emmOutputPid = data.next();//sets EMM Output ID
-            }
-            else if(line.contains("EMMStream.CaSystemID")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                emmCaSysId = data.next();//sets EMM CA System ID
-            }
-            else if(line.contains("EMMStream.EmmProviderID")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                emmProviderId = data.next();//sets EMM Provider ID
-            }
-            else if(line.contains("EMMStream.IsConsumerStream")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                emmConsumerStream = data.next();//sets EMM Consumer Stream
-            }
-            else if(line.contains("ClockRate")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                clockRateNumber++;//increments clock rate number
-                /* Adds to clock rate list */
-                clockRate.add(clockRateNumber + ": " + data.next());
-            }
-            else if(line.contains("ElementGroup")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.elementGroup = data.next();//sets element group
-            }
-            else if(line.contains("Site")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.site = data.next();//sets site
-            }
-            else if(line.contains("RedundancyGroup")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.redundancyGroup = data.next();//sets redundancy group
-            }
-            else if(line.contains("HostAppVersion")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.version = data.next();//sets host app version
-            }
-            else if(line.contains("InputFailureAlarm")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.inputFailureAlarm = data.next();//sets failure alarm
-            }
-            else if(line.contains("OperatingMode")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.operatingMode = data.next();//sets operating mode
-            }
-            else if(line.contains("BootMethod")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.bootMethod = data.next();//sets boot method
-            }
-            else if(line.contains("AutoBoot")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.autoBoot = data.next();//sets autoboot
-            }
-            else if(line.contains("MultiController")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.multiController = data.next();//sets multi controller
-            }
-            else if(line.contains("ControllerPort")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.controllerPort = data.next();//sets controller port
-            }
-            else if(line.contains("SemPort")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.semPort = data.next();//sets sem port
-            }
-            else if(line.contains("CommandTimeOut")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.commandTimeout = data.next();//sets command timeout
-            }
-            else if(line.contains("DetectPsiLoss")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.detectPsiLoss = data.next();
-            }
-            else if(line.contains("PsiLossTimeout")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.psiLossTimeout = data.next();//sets psi loss timeout
-            }
-            else if(line.contains("EncryptionAlgorithm")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.encryptionAlgorithm = data.next();//sets encry algorithm
-            }
-            else if(line.contains("CopyProtectionSource")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.copyProtectionSource = data.next();//sets copy protect src
-            }
-            else if(line.contains("PidRemapping")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.pidRemapping = data.next();//sets pid remapping
-            }
-            else if(line.contains("MessageInsertMode")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.messageInsertMode = data.next();//sets message insert mode
-            }
-            else if(line.contains("TimeSource")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.timeSource = data.next();//sets time source
-            }
-            else if(line.contains("GpsUtcOffset")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.gpsUtcOffset = data.next();//sets gps utc offset
-            }
-            else if(line.contains("AsiMonitorTransportIndex")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.asiMonitorTransportIndex = data.next();//sets transport ind
-            }
-            else if(line.contains("HighSpeedMode")){
-                /* Initializes scanner to next "=" */
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.highSpeedMode = data.next();//sets high speed mode
+            line = scan.nextLine();//gets the next line of the file
+            /* Loops through the array of Strings to see if there is a match */
+            for(String sub:strings){
+                /* Checks if a match is found */
+                if(line.contains(sub)){
+                    /* Initializes scanner object and sets its delimiter */
+                    data = new Scanner(line).useDelimiter("=");
+                    data.next();//moves scanner to the equals sign
+                    /* Sets string equal to the value after the equals sign */
+                    value = data.next();
+                    /* If value is a ClockRate, adds it to the ClockRate List */
+                    if(line.contains("ClockRate")){
+                        clockRateNumber++;
+                        clockRate.add(clockRateNumber + ": " + value);
+                    }
+                    /* If value is EMM data, adds value to EMM Map */
+                    else if(line.contains("EMMStream")){
+                        emmResults.put(sub, value);
+                    }
+                    /* Adds required values to the results Map */
+                    else results.put(sub, value);
+                }  
             }
         }
+
+            
+   /***********IN PROGRESS FOR OUTPUT DATA **********************************         
+            /* Output Configuration Data *
+            else if(line.contains("Transport") && line.contains("Name")){
+                /* Initializes scanner to next "=" *
+                data = new Scanner(line).useDelimiter("=");
+                data.next();
+                this.transportName = data.next();//sets transport name
+            }
+            else if(line.contains("Transport") &&
+                    line.contains("PATInsertionRate")){
+                /* Initializes scanner to next "=" *
+                data = new Scanner(line).useDelimiter("=");
+                data.next();
+                this.transportPatInsertRate = data.next();//sets transport name
+            }
+    /************************************************************************/            
     }
     
     /**
-     * SEM Priority Number Setter
-     * @param pNumber The SEM priority number(1-primary, 2-backup)
+     * SEM Data Map Getter.
+     * @return The specified device's data Map
      */
-    @Override
-    public void setPriorityNumber(int pNumber){
-        priorityNumber = pNumber;
+    public Map getDataMap(){
+        return results;
     }
     /**
-     * SEM Priority Number Getter
-     * @return The SEM Priority Number(1-primary, 2-backup)
+     * SEM EMM Map Getter.
+     * @return The SEM's EMM Data
      */
-    @Override
-    public int getPriorityNumber(){
-        return priorityNumber;
+    public Map getEmmMap(){
+        return emmResults;
     }
-   
+    /**
+     * SEM EMM Map Setter.
+     * @param eMap The Map for the SEM data
+     */
+    public void setEmmMap(Map eMap){
+        emmResults = eMap;
+    }
+    /**
+     * SEM Clock Rate List Getter.
+     * @return The SEM Clock Rate List
+     */
+    public ArrayList getClockRate(){
+        return clockRate;
+    }
+    /**
+     * List of specific SEM data to be used for SEM comparisons
+     * @return List of SEM data
+     */
+    public ArrayList getSemDataList(){
+        return semDataList;
+    }
+    /**
+     * SEM Number Setter.
+     * @param number The SEM Device Number
+     */
+    public void setSemNumber(int number){
+        this.semNumber = number;
+    }
+    /**
+     * SEM Device Number Getter.
+     * @return The SEM Device Number
+     */
+    public int getSemNumber(){
+        return semNumber;
+    }
     /**
      * Setter for the type of device.
      * @param dev The type of device(SEM)
@@ -334,237 +253,37 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public String getDevice(){
         return device;
     }
-    
     /**
-     * SEM Clock Rate List Getter.
-     * @return The SEM Clock Rate List
+     * SEM Type Getter.
+     * @return The SEM Type
      */
-    public ArrayList getClockRate(){
-        return clockRate;
+    @Override
+    public String getType() {
+        return type;
     }
-    
     /**
-     * EMM Name Getter.
-     * @return The EMM Name
+     * SEM Type Setter.
+     * @param type The SEM Type
      */
-    public String getEmmName(){
-        return emmName;
+    @Override
+    public void setType(String type) {
+        this.type = type;
     }
-    
     /**
-     * EMM Output PID Getter.
-     * @return The EMM Output PID
+     * SEM Position ID Getter.
+     * @return The SEM Position ID
      */
-    public String getEmmOutputPid(){
-        return emmOutputPid;
+    @Override
+    public String getPositionID() {
+        return positionID;
     }
-    
     /**
-     * EMM CA System ID Getter.
-     * @return The EMM CA System ID
+     * SEM Position ID Setter.
+     * @param positionID The SEM Position ID
      */
-    public String getEmmCaSystemId(){
-        return emmCaSysId;
-    }
-    
-    /**
-     * EMM Provider ID Getter.
-     * @return The EMM Provider ID
-     */
-    public String getEmmProviderId(){
-        return emmProviderId;
-    }
-    
-    /**
-     * EMM Consumer Stream Getter.
-     * @return The EMM Consumer Stream Boolean
-     */
-    public String getEmmConsumerStream(){
-        return emmConsumerStream;
-    }
-    
-    /**
-     * SEM Operating Mode Getter.
-     * @return The SEM Operating Mode
-     */
-    public String getOperatingMode(){
-        return operatingMode;
-    }
-    
-    /**
-     * SEM Redundancy Group Getter.
-     * @return The SEM Redundancy Group
-     */
-    public String getRedundancyGroup(){
-        return redundancyGroup;
-    }
-    
-    /**
-     * SEM Site Getter.
-     * @return The SEM Site
-     */
-    public String getSite(){
-        return site;
-    }
-    
-    /**
-     * SEM Element Group Getter.
-     * @return The SEM Element Group
-     */
-    public String getElementGroup(){
-        return elementGroup;
-    }
-    
-    /**
-     * SEM Input Failure Alarm Getter.
-     * @return The SEM Input Failure Alarm
-     */
-    public String getInputFailureAlarm(){
-        return inputFailureAlarm;
-    }
-    
-    /**
-     * SEM Boot Method Getter.
-     * @return The SEM Boot Method
-     */
-    public String getBootMethod(){
-        return bootMethod;
-    }
-    
-    /**
-     * SEM AutoBoot Getter.
-     * @return The SEM AutoBoot
-     */
-    public String getAutoBoot(){
-        return autoBoot;
-    }
-    
-    /**
-     * SEM Multi-Controller Getter.
-     * @return The SEM Multi-Controller
-     */
-    public String getMultiController(){
-        return multiController;
-    }
-    
-    /**
-     * SEM Controller Port Getter.
-     * @return The SEM Controller Port
-     */
-    public String getControllerPort(){
-        return controllerPort;
-    }
-    
-    /**
-     * SEM Port Getter.
-     * @return The SEM Port
-     */
-    public String getSemPort(){
-        return semPort;
-    }
-    
-    /**
-     * SEM Command Timeout Getter.
-     * @return The SEM Command Timeout
-     */
-    public String getCommandTimeout(){
-        return commandTimeout;
-    }
-    
-    /**
-     * SEM Detect PSI Loss Getter.
-     * @return The SEM Detect PSI Loss
-     */
-    public String getDetectPsiLoss(){
-        return detectPsiLoss;
-    }
-    
-    /**
-     * SEM PSI Loss Timeout Getter.
-     * @return The SEM PSI Loss Timeout
-     */
-    public String getPsiLossTimeout(){
-        return psiLossTimeout;
-    }
-    
-    /**
-     * SEM Encryption Algorithm Getter.
-     * @return The SEM Encryption Algorithm
-     */
-    public String getEncryptionAlgorithm(){
-        return encryptionAlgorithm;
-    }
-    
-    /**
-     * SEM Copy Protection Source Getter.
-     * @return The SEM Copy Protection Source
-     */
-    public String getCopyProtectionSource(){
-        return copyProtectionSource;
-    }
-    
-    /**
-     * SEM PID Re-mapping Getter.
-     * @return The SEM PID Re-mapping
-     */
-    public String getPidRemapping(){
-        return pidRemapping;
-    }
-    
-    /**
-     * SEM Message Insert Mode Getter.
-     * @return The SEM Message Insert Mode
-     */
-    public String getMessageInsertMode(){
-        return messageInsertMode;
-    }
-    
-    /**
-     * SEM Time Source Getter.
-     * @return The SEM Time Source
-     */
-    public String getTimeSource(){
-        return timeSource;
-    }
-    
-    /**
-     * SEM GPS UTC Offset Getter.
-     * @return The SEM GPS UTC Offset
-     */
-    public String getGpsUtcOffset(){
-        return gpsUtcOffset;
-    }
-    
-    /**
-     * SEM ASI Monitor Transport Index Getter.
-     * @return The SEM ASI Monitor Transport Index
-     */
-    public String getAsiMonitorTransportIndex(){
-        return asiMonitorTransportIndex;
-    }
-    
-    /**
-     * SEM High Speed Mode Getter.
-     * @return The SEM High Speed Mode
-     */
-    public String getHighSpeedMode(){
-        return highSpeedMode;
-    }
-     
-    /**
-     * SEM Number Setter.
-     * @param number The SEM Device Number
-     */
-    public void setSemNumber(int number){
-        this.semNumber = number;
-    }
-    
-    /**
-     * SEM Device Number Getter.
-     * @return The SEM Device Number
-     */
-    public int getSemNumber(){
-        return semNumber;
+    @Override
+    public void setPositionID(String positionID) {
+        this.positionID = positionID;
     }
     /**
      * SEM Name Getter.
@@ -574,7 +293,6 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public String getName() {
         return name;
     }
-
     /**
      * SEM Name Setter.
      * @param name The SEM Name
@@ -583,7 +301,6 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * SEM IP Address Getter.
      * @return The SEM IP Address
@@ -592,7 +309,6 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public String getAddress() {
        return address;
     }
-
     /**
      * SEM IP Address Setter.
      * @param address The SEM IP Address
@@ -601,76 +317,20 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     public void setAddress(String address) {
        this.address = address;
     }
-
     /**
-     * SEM Version Getter.
-     * @return The SEM Version Number
+     * SEM Priority Number Setter
+     * @param pNumber The SEM priority number(1-primary, 2-backup)
      */
     @Override
-    public String getVersion() {
-        return version;
+    public void setPriorityNumber(int pNumber){
+        priorityNumber = pNumber;
     }
-
     /**
-     * SEM Version Setter.
-     * @param version The SEM Version Number
+     * SEM Priority Number Getter
+     * @return The SEM Priority Number(1-primary, 2-backup)
      */
     @Override
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    /**
-     * SEM Role Getter.
-     * @return The SEM Role
-     */
-    @Override
-    public String getRole() {
-       return role;
-    }
-
-    /**
-     * SEM Role Setter.
-     * @param role The SEM Role
-     */
-    @Override
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    /**
-     * SEM Type Getter.
-     * @return The SEM Type
-     */
-    @Override
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * SEM Type Setter.
-     * @param type The SEM Type
-     */
-    @Override
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * SEM Position ID Getter.
-     * @return The SEM Position ID
-     */
-    @Override
-    public String getPositionID() {
-        return positionID;
-    }
-
-    /**
-     * SEM Position ID Setter.
-     * @param positionID The SEM Position ID
-     */
-    @Override
-    public void setPositionID(String positionID) {
-        this.positionID = positionID;
+    public int getPriorityNumber(){
+        return priorityNumber;
     }
 }

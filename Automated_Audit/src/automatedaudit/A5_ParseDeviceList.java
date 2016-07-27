@@ -9,6 +9,7 @@ package automatedaudit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -31,6 +32,7 @@ public class A5_ParseDeviceList {
     private final LinkedList<A7_SEM> semList;
     private final LinkedList<A7_TMX> tmxList;
     private final LinkedList<A7_Encoder> encoderList;
+    private ArrayList statGroupList;
     
     /**
      * Class constructor that creates a file path for the ~positions file.
@@ -43,7 +45,6 @@ public class A5_ParseDeviceList {
         positionsFileLocation = mainFolderLocation.concat("config\\~positions");
         /* Initializes a file path for the ~positions file */
         filePath = Paths.get(positionsFileLocation);
-        
         /* Initializes each Linked List for the devices*/
         tmxList = new LinkedList<>();
         semList = new LinkedList<>();
@@ -58,17 +59,13 @@ public class A5_ParseDeviceList {
     public void scanList(A6_InitialDataDisplayCode display) throws IOException{
         /* Creates new Scanner object of the filePath */
         scan = new Scanner(filePath);
-        
         /* Skips first two lines of "~positions" file which are headers */
         scan.nextLine();
         scan.nextLine();
-        
         /* Loop through "~positions" file parsing each line */
-        while(scan.hasNextLine()) {
-            
+        while(scan.hasNextLine()) { 
             /* Function call to parse data from current line */
             this.parseLine();
-            
             /* Switch statements to set all device information */
             switch (device) {
                 case "TMX"://device is a TMX
@@ -80,18 +77,16 @@ public class A5_ParseDeviceList {
                     tmxData.setPositionID(positionID);//sets TMX positionID
                     tmxData.setName(name);//sets TMX name
                     tmxData.setAddress(address);//sets TMX IP address
-                    tmxData.parseTmxFile();//parses the TMX device file
-                    
-                    /* Sets the priority number */
-                    if(tmxData.getRole().equals("Primary")){
-                        tmxData.setPriorityNumber(1);//device is primary
+                    tmxData.parseTmxFile();//parses the TMX device file 
+                    /* Sets Priority Number of TMX(1-Primary, 2-Backup) */
+                    if(tmxData.getDataMap().get("Role").equals("Primary")){
+                        tmxData.setPriorityNumber(1);//Primary
+                        statGroupList = tmxData.getStatGroupList();
                     }
-                    else tmxData.setPriorityNumber(2);//device is backup
-                    
+                    else tmxData.setPriorityNumber(2);//Backup
                     /* Adds device to linked list */
                     tmxList.add(tmxData);
-                    break;
-                    
+                    break;  
                 case "SEM"://device is a SEM
                     semNumber++;//increments SEM number
                     A7_SEM semData = new A7_SEM(mainFolderLocation);
@@ -102,16 +97,14 @@ public class A5_ParseDeviceList {
                     semData.setName(name);//sets SEM name
                     semData.setAddress(address);//sets SEM IP address
                     semData.parseSemFile(mainFolderLocation);//parses SEM file
-                    
-                    /* Sets the priority number */
-                    if(semData.getRole().equals("Primary")){
-                        semData.setPriorityNumber(1);//device is primary
+                    /* Sets Priority Number of SEM(1-Primary, 2-Backup) */
+                    if(semData.getDataMap().get("Role").equals("Primary")){
+                        semData.setPriorityNumber(1);//Primary
                     }
-                    else semData.setPriorityNumber(2);//device is backup
-                    
+                    else semData.setPriorityNumber(2);//Backup
                     /* Adds device to linked list */
                     semList.add(semData);
-                    break;
+                    break; 
                     
                 case "Encoder"://device is a encoder
                     encNumber++;//increments Encoder Number
@@ -124,7 +117,7 @@ public class A5_ParseDeviceList {
                     encoderData.setAddress(address);//sets encoder IP address
                     encoderData.parseEncFile();//parses encoder file
                     
-                    /* Sets the priority number */
+                    /* Sets the priority number(1-Primary, 2-Backup) */
                     if(encoderData.getRole().equals("Primary")){
                         encoderData.setPriorityNumber(1);//device is primary
                     }
@@ -132,8 +125,7 @@ public class A5_ParseDeviceList {
                     
                     /* Adds device to linked list */
                     encoderList.add(encoderData);//adds device to LinkedList
-                    break;
-                    
+                    break;  
                 case "non-device"://catch all case
                     break;
             }
@@ -168,6 +160,15 @@ public class A5_ParseDeviceList {
             }
             return 0;
         });
+        /* Primary TMX has the Stat Group Configuration. Sets that configuration 
+        to the backup as well since backup will assume the same config. */
+        for(int i = 0; i < tmxList.size(); i++){
+            if(tmxList.get(i).getDataMap().get("Role").equals("Backup")){
+                tmxList.get(i).setStatGroupList(statGroupList);
+            }
+        }
+        
+        
         
         /* Function call to display SEM data on GUI */
         display.displaySEM(semList);
@@ -178,7 +179,7 @@ public class A5_ParseDeviceList {
     }
     
     /**
-     * Method to parse each specific line of the input file.
+     * Method to parse each specific line of the ~positions file.
      */
     private void parseLine(){
         /* Creates a new Scanner object to get the position ID */
@@ -194,7 +195,6 @@ public class A5_ParseDeviceList {
         data = new Scanner(pID.next()).useDelimiter("[|]");
         /* Sets the device type */
         type = data.next();
-        
         /* Sets device for switch statements */
         if(type.matches("SEM")) {
             device = "SEM";
@@ -205,18 +205,15 @@ public class A5_ParseDeviceList {
         else {
             device = type;
         }
-        
         /* Sets the device Ip address */
         address = data.next();
         /* Sets the device name */
         name = data.next();
         /* Reads rest of the current line and saves it as a string */
         line = scan.nextLine();
-        
         /* Checks if a blank space was reached when reading the device name */
         if(line.startsWith(" ")){
             name = name.concat(line);//appends letters/words after space to name
-            
             /* Splits rest of line and sets device name to include any spaces */
             for(String deviceName: name.split("[|]")){
                 name = deviceName;

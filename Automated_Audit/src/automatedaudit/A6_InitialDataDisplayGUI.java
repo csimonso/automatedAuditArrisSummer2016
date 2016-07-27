@@ -6,6 +6,7 @@
  */
 package automatedaudit;
 
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -13,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import static javax.swing.BoxLayout.Y_AXIS;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -33,6 +33,8 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     private LinkedList semList, tmxList, encList;
     String fileLocation;
     
+    A6_InitialDataDisplayGUI currDisplay;
+    
     /**
      * Creates new form DataDisplay
      * @param location The file location
@@ -45,12 +47,11 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         expandedSemUI = new A8_ExpandedSemUI(this);
         expandedTmxUI = new A8_ExpandedTmxUI(this);
         expandedEncUI = new A8_ExpandedEncUI(this);
-
         /* Sets the layouts of each panel */
         displayPanelTMX.setLayout(new GridLayout(0, 2, 5, 5));
         displayPanelSEM.setLayout(new GridLayout(0, 2, 5, 5));
         displayPanelENC.setLayout(new GridLayout(0, 4, 4, 3));
-        displayPanelMUX.setLayout(new BoxLayout(displayPanelMUX, Y_AXIS));
+        displayPanelMUX.setLayout(new GridLayout(3,1));
     }
 
     /**
@@ -67,8 +68,10 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         displayPanelENC = new javax.swing.JPanel();
         displayPanelSEM = new javax.swing.JPanel();
         displayPanelMUX = new javax.swing.JPanel();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setExtendedState(6);
         setSize(new java.awt.Dimension(0, 0));
 
         displayPanelTMX.setBorder(javax.swing.BorderFactory.createTitledBorder("TMX Data"));
@@ -87,15 +90,15 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(displayPanelMUX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(displayPanelENC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                        .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -103,33 +106,51 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(displayPanelMUX, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-                    .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 278, Short.MAX_VALUE)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(398, 421));
+        setSize(new java.awt.Dimension(398, 446));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * Method to run the GUI.
@@ -182,6 +203,8 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         newLabel.setText(muxInput);
         /* Adds the label to the panel */
         displayPanelMUX.add(newLabel);
+        /* Sets the labels alignement */
+        newLabel.setHorizontalAlignment(JLabel.CENTER);
         /* Makes the label visible */
         newLabel.setVisible(true);
     }
@@ -199,7 +222,6 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         JLabel newLabel = new JLabel();
         /* Sets the text of the new label */
         newLabel.setText(input);
-        
         /* Makes the label clickable for the "name" variable */
         if(deviceNumber >= 1){
             /* Adds a tool tip to label */
@@ -224,7 +246,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                                     deviceNumber);
                             break;
                         case "TMX":
-                            /* Creates a new Encdisplay object */
+                            /* Creates a new TMX display object */
                             A7_TMX tmxData = new A7_TMX(fileLocation);
                             /* Function call to display the Encoder data */
                             tmxData.displayExpandedTMX(expandedTmxUI, tmxList, 
@@ -263,13 +285,11 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         JPanel newPanel = new JPanel();
         /* Sets the layout of the panel */
         newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
-        
         /* Adds the labels to the panel */
         newPanel.add(name);
         newPanel.add(type);
         newPanel.add(address);
         newPanel.add(role);
-        
         /* Adds the panel to the correct device display */
         switch (deviceType) {
             case "TMX":
@@ -286,74 +306,64 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                 break;
             default:
                 break;
-        }
-        
+        }  
         this.pack();
         /* Makes the panel visible */
         newPanel.setVisible(true);
     }
     
     /**
-     * TMX Linked List Setter.
-     * @param tList The TMX Linked List
+     * Device Linked List Setter.
+     * @param list The Device Linked List
+     * @param type The type of device
      */
-    public void setTMXList(LinkedList tList){
-        tmxList = tList;
+    public void setList(LinkedList list, String type){
+        switch (type) {
+            case "SEM":
+                semList = list;
+                break;
+            case "TMX":
+                tmxList = list;
+                break;
+            case "ENC":
+                encList = list;
+                break;
+            default:
+                break;
+        }
     } 
     /**
-     * TMX Border Setter.
-     * @param borderName The TMX Border Name
+     * Panel Border Setter.
+     * @param borderName The Border Name
+     * @param type The type of device
      */
-    public void setTmxBorder(String borderName){
+    public void setBorder(String borderName, String type){
         /* Creates and initalizes a new Titled Border */
         TitledBorder title = BorderFactory.createTitledBorder(borderName);
-        /* Sets the border text */
-        displayPanelTMX.setBorder(title);
+        /* Sets the title to the correct border */
+        switch (type) {
+            case "SEM":
+                /* Sets the border text */
+                displayPanelSEM.setBorder(title);
+                break;
+            case "TMX":
+                /* Sets the border text */
+                displayPanelTMX.setBorder(title);
+                break;
+            case "ENC":
+                /* Sets the border text */
+                displayPanelENC.setBorder(title);
+                break;
+            default:
+                break;
+        }
     }
-    
-    /**
-     * SEM Linked List Setter.
-     * @param sList The SEM Linked List
-     */
-    public void setSEMList(LinkedList sList){
-        this.semList = sList;
-    }
-    
-    /**
-     * SEM Border Setter.
-     * @param borderName The SEM Border Name
-     */
-    public void setSemBorder(String borderName){
-        /* Creates and initializes a new Titled Border */
-        TitledBorder title = BorderFactory.createTitledBorder(borderName);
-        /* Sets the border text */
-        displayPanelSEM.setBorder(title);
-    }  
-    
-    /**
-     * Encoder Linked List Setter.
-     * @param eList The Encoder Linked List
-     */
-    public void setEncList(LinkedList eList){
-        this.encList = eList;
-    }
-    
-    /**
-     * Encoder Border Setter.
-     * @param borderName The Encoder Border Name
-     */
-    public void setEncBorder(String borderName){
-        /* Creates and initializes a new Titled Border */
-        TitledBorder title = BorderFactory.createTitledBorder(borderName);
-        /* Sets the border text */
-        displayPanelENC.setBorder(title);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel displayPanelENC;
     private javax.swing.JPanel displayPanelMUX;
     private javax.swing.JPanel displayPanelSEM;
     private javax.swing.JPanel displayPanelTMX;
+    private javax.swing.JButton exitButton;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

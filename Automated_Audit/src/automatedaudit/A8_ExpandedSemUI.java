@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  * Class to create a display to view the expanded SEM data.
@@ -22,6 +26,9 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
 
     private final A6_InitialDataDisplayGUI prevDisplay;
     private A8_ExpandedSemUI currDisplay;
+    private LinkedList semList;
+    private ArrayList errorMessage;
+    private A7_SEM semDataB;
        
     /**
      * Creates new form ExpandedSemUI
@@ -95,6 +102,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         siteLabel = new javax.swing.JLabel();
         siteLabelInput = new javax.swing.JLabel();
         opModeLabelInput = new javax.swing.JLabel();
+        compareButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,8 +241,8 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
 
         emmDataLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         emmDataLabel.setForeground(new java.awt.Color(0, 51, 255));
-        emmDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        emmDataLabel.setText("Click for EMM Data");
+        emmDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emmDataLabel.setText("EMM Data");
 
         commandTimeoutLabelInput1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         commandTimeoutLabelInput1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -292,49 +300,26 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         innerDataPanelLayout.setHorizontalGroup(
             innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(innerDataPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(innerDataPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(versionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(psiLossTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(timeSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerDataPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(autoBootLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(innerDataPanelLayout.createSequentialGroup()
-                        .addGap(118, 118, 118)
+                        .addContainerGap()
                         .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(innerDataPanelLayout.createSequentialGroup()
-                                .addComponent(emmDataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(innerDataPanelLayout.createSequentialGroup()
-                                .addComponent(multiControllerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(17, 17, 17)
+                                .addComponent(versionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(gpsOffsetLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(messageInsertModeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(copyProtectionSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(psiLossTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(commandTimeoutLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(timeSourceLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerDataPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(innerDataPanelLayout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(semPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(controllerPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(semPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(innerDataPanelLayout.createSequentialGroup()
+                                    .addComponent(dectectPsiLossLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(encryptionAlgorithmLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(autoBootLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(autoBootLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(commandTimeoutLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -364,10 +349,32 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                                     .addComponent(highSpeedLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerDataPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(clockRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(clockRateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emmDataLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(innerDataPanelLayout.createSequentialGroup()
+                        .addGap(269, 269, 269)
+                        .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(innerDataPanelLayout.createSequentialGroup()
+                                .addGap(201, 201, 201)
+                                .addComponent(commandTimeoutLabelInput1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(innerDataPanelLayout.createSequentialGroup()
+                                .addComponent(multiControllerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(multiControllerLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, innerDataPanelLayout.createSequentialGroup()
+                                .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(innerDataPanelLayout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(semPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(controllerPortLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(redundancyGroupLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(controllerPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(semPortLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
         innerDataPanelLayout.setVerticalGroup(
@@ -440,7 +447,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                         .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(clockRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(clockRateDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(innerDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(autoBootLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(autoBootLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -494,17 +501,27 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         opModeLabelInput.setText("Operating Mode");
         opModeLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        compareButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        compareButton.setText("Compare");
+        compareButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compareButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout outterDataPanelLayout = new javax.swing.GroupLayout(outterDataPanel);
         outterDataPanel.setLayout(outterDataPanelLayout);
         outterDataPanelLayout.setHorizontalGroup(
             outterDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outterDataPanelLayout.createSequentialGroup()
+            .addGroup(outterDataPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(compareButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outterDataPanelLayout.createSequentialGroup()
+            .addGroup(outterDataPanelLayout.createSequentialGroup()
                 .addGroup(outterDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, outterDataPanelLayout.createSequentialGroup()
                         .addContainerGap()
@@ -552,7 +569,8 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(outterDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(compareButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
@@ -561,18 +579,19 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(outterDataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(outterDataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(outterDataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(outterDataPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(602, 595));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -582,6 +601,10 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
+        this.compareSEM();
+    }//GEN-LAST:event_compareButtonActionPerformed
 
     /**
      * Method to run the display.
@@ -622,7 +645,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
             new A8_ExpandedSemUI(prevDisplay).setVisible(true);
         });
     }
-
+    
     /**
      * Method to bring up the last display.
      * @param prevDisplay The last display
@@ -636,44 +659,152 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     
     /**
      * Makes EMM data text click-able as well function call to run it
-     * @param name The EMM Name
-     * @param outputPid The EMM Output PID
-     * @param caSysId The EMM CA System ID
-     * @param providerId The EMM Provider ID
-     * @param consumerStream The EMM Consumer Stream Boolean
+     * @param sData The specific SEM data
      */
-    public void emmDisplay(String name, String outputPid, 
-            String caSysId, String providerId, String consumerStream){
-        /* Adds a mouse listener to make text click-able */
-        emmDataLabel.addMouseListener(new MouseAdapter(){
-            /**
-             * Method to create a mouse click event
-             * @param ev The mouse click event
-             */
-            @Override
-            public void mouseClicked(MouseEvent ev){
-                /* Creates and initializes a new EMM Dialog Display */
-                A9_EmmDisplay emmDialog = new A9_EmmDisplay(currDisplay);
-                /* Sets all the displays labels */
-                emmDialog.setNameLabel(name);
-                emmDialog.setOutputPidLabel(outputPid);
-                emmDialog.setCaSystemIdLabel(caSysId);
-                emmDialog.setProviderIdLabel(providerId);
-                emmDialog.setConsumerStreamLabel(consumerStream);
-                /* Function call to run the display */
-                emmDialog.runEmmDisplay();
-            }
-        });
+    public void emmDisplay(A7_SEM sData){
+        
+        if(sData.getDataMap().get("Role").equals("Backup")){
+            emmDataLabel.setVisible(false);
+        }
+        else {
+            emmDataLabel.setVisible(true);
+            /* Adds a mouse listener to make text click-able */
+            emmDataLabel.addMouseListener(new MouseAdapter(){
+                /**
+                * Method to create a mouse click event
+                * @param ev The mouse click event
+                */
+                @Override
+                public void mouseClicked(MouseEvent ev){
+                    /* Creates and initializes a new EMM Dialog Display */
+                    A9_EmmDisplay emmDialog = new A9_EmmDisplay(currDisplay);
+                    /*Sets all the displays labels */
+                    emmDialog.setNameLabel((String) sData.getEmmMap().get("EMMStream.Name"));
+                    emmDialog.setOutputPidLabel((String) sData.getEmmMap().get(
+                            "EMMStream.OutputPID"));
+                    emmDialog.setCaSystemIdLabel((String) sData.getEmmMap().get(
+                            "EMMStream.CaSystemID"));
+                    emmDialog.setProviderIdLabel((String) sData.getEmmMap().get(
+                            "EMMStream.EmmProviderID"));
+                    emmDialog.setConsumerStreamLabel((String) sData.getEmmMap().get(
+                            "EMMStream.IsConsumerStream"));
+                    /* Function call to run the display */
+                    emmDialog.runEmmDisplay();
+                }
+            });
+        }
     }
     
+    /**
+     * Method that compares current SEM to rest of the SEM's.  The Primary and
+     * Backup SEM should have the same configuration so this method verifies
+     * both configurations and displays a dialog to display and problems.
+     */
+    private void compareSEM(){
+        errorMessage = new ArrayList();
+        A7_SEM semDataA;
+        
+        int errorCode = 0;//initialize error code to zero for no errors
+        
+        /* Loops through each SEM in the SEM device list */
+        for(int i = 0; i < this.semList.size(); i++){
+            /* Initializes the SEM Data */
+            semDataA = (A7_SEM) semList.get(i);
+            /* Ensures SEM isn't compared to itself */
+            if(semDataA.getSemNumber() != semDataB.getSemNumber()){  
+                /* Checks which SEM Data Map is smaller, then compares data */
+                if(semDataB.getDataMap().size() <=semDataA.getDataMap().size()){
+                    errorCode = compare(semDataB, semDataA);
+                }
+                else errorCode = compare(semDataA, semDataB);
+                /* Function call to display any errors in configurations */
+                comparisonDialogDisplay(errorCode, semDataA, semDataB);
+            }
+        }
+        /* Configurations matched, display match dialog box */
+        if(errorCode == 0){
+            JOptionPane.showMessageDialog(this, "SEM Configurations Match");   
+        }
+    }
+    /**
+     * Method To Compare Two SEM's Configurations.
+     * @param a First SEM to be compared
+     * @param b Second SEM to be compared
+     * @return One for error, Zero for complete match
+     */
+    private int compare(A7_SEM a, A7_SEM b){
+        int code = 0;//initializes the error code
+        /* Creates an Iterator to iterate the SEM data */
+        Iterator<Map.Entry<String, String>> itA = 
+                a.getDataMap().entrySet().iterator();   
+        /* Iterates through Map */
+        while(itA.hasNext()){
+            /* Sets String to next key */
+            String key = itA.next().getKey();
+            /* Checks if data at both keys are not equal and that 
+            the key being checked is not the device Role */
+            if(!a.getDataMap().get(key).equals(b.getDataMap().get(key)) 
+                    && !key.equals("Role")){
+                /* Set specific config setting that was different */
+                errorMessage.add(b.getDataMap().get(key) +"\n");
+                /* Sets error code */
+                code = 1;
+            }
+        }
+        /* Loops through SEM A ClockRates to compare to SEM B */
+        for(int j = 0; j < a.getClockRate().size(); j++ ){
+            /* Checks if ClockRates don't match */
+            if(!a.getClockRate().get(j).equals(b.getClockRate().get(j))){
+                /* Adds data to the error message */
+                errorMessage.add(b.getClockRate().get(j) + "\n");
+                /* Sets error code */
+                code = 1;
+            }
+        }
+        return code;//returns the error code  
+    }
+    /**
+     * Displays Which Devices Had An Error When Comparing Configurations.
+     * @param code Error code from device configuration mismatch
+     * @param a The first device 
+     * @param b The second device
+     */
+    private void comparisonDialogDisplay(int code, A7_SEM a, A7_SEM b){
+        String message;
+        /* If configurations did not match, display which devices and in 
+        what specific configuration did they not match up. */
+        if(code != 0){
+            message = "Difference Detected Between " + a.getName() 
+                    + " and " + b.getName();
+            /* Sets error message string */
+            String errOut = errorMessage.toString().replace("[", "")
+                    .replace(",", "")
+                    .replace("]", "");
+            /* Displays dialog box with error message */
+            JOptionPane.showMessageDialog(this, message + "\n" + errOut);
+        }
+    }
     
+    /**
+     * Current SEM Data Setter.
+     * @param semData The current SEM's data
+     */
+    public void setSemData(A7_SEM semData){
+        semDataB = semData;
+    }
+    /**
+     * SEM Linked List Setter.
+     * @param list The list of all SEM's
+     */
+    public void setSemList(LinkedList list){
+        semList = list;
+    }
     /**
      * Device Label Setter.
      * @param device The Device
-     * @param role The Device Role
      */
-    public void setDeviceLabel(String device, String role){
-        deviceLabel.setText(device + " (" + role + ")");
+    public void setDeviceLabel(String device){
+        deviceLabel.setText(device);
     }
     /**
      * Device Element Group Label Setter.
@@ -800,6 +931,8 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
      * @param clockRate The Device Clock Rate List
      */
     public void setClockRateDropDown(ArrayList clockRate){
+        /* Clears drop down list before adding to */
+        clockRateDropDown.removeAllItems();
         /* Loops through list and adds each rate to drop down menu */
         for(int i = 0; i < clockRate.size(); i++){
            clockRateDropDown.addItem(clockRate.get(i).toString());
@@ -911,6 +1044,7 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     private javax.swing.JLabel commandTimeoutLabel;
     private javax.swing.JLabel commandTimeoutLabelInput;
     private javax.swing.JLabel commandTimeoutLabelInput1;
+    private javax.swing.JButton compareButton;
     private javax.swing.JLabel controllerPortLabel;
     private javax.swing.JLabel controllerPortLabelInput;
     private javax.swing.JLabel copyProtectionSourceLabel;

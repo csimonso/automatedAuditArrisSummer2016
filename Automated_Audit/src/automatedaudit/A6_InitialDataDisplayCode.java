@@ -33,9 +33,9 @@ public class A6_InitialDataDisplayCode {
      * @param muxData The data to be displayed.
      */
     public void displayMUX(A4_MUX muxData){
-        display.displayDataMUX("Server Name: " + muxData.getName());
-        display.displayDataMUX("Server Address: " + muxData.getIPAddress());
-        display.displayDataMUX("Server Version: " + muxData.getVersion());
+        display.displayDataMUX(muxData.getName());
+        display.displayDataMUX(muxData.getIPAddress());
+        display.displayDataMUX(muxData.getVersion());
     }
     
     /**
@@ -47,7 +47,6 @@ public class A6_InitialDataDisplayCode {
         for(int i = 0; i < semList.size(); i++){
             /* Initialize a new SEM data object from the SEM device list */
             A7_SEM semData = (A7_SEM) semList.get(i);
-            
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.createLabel(semData.getName(),
                     semData.getSemNumber(), semData.getDevice());
@@ -57,16 +56,15 @@ public class A6_InitialDataDisplayCode {
             JLabel addressLabel = display.createLabel("Address: " + 
                     semData.getAddress(), 0, semData.getDevice());
             JLabel roleLabel = display.createLabel("Role: " + 
-                    semData.getRole(), 0, semData.getDevice());
-            
+                    semData.getDataMap().get("Role"), 0, semData.getDevice());
             /* Function call to create a panel for the SEM's */
             display.createPanel(nameLabel, typeLabel, addressLabel, roleLabel, 
                     semData.getDevice());
         }
         /* Function call to set the SEM data border */
-        display.setSemBorder("SEM Data (" + semList.size() + " Total)");
+        display.setBorder("SEM Data (" + semList.size() + " Total)", "SEM");
         /* Function call to set the SEM Linked List */
-        display.setSEMList(semList);
+        display.setList(semList, "SEM");
     }
     
     /**
@@ -74,12 +72,10 @@ public class A6_InitialDataDisplayCode {
      * @param tmxList The Linked List of all TMX devices
      */
     public void displayTMX(LinkedList tmxList){
-        
         /* Loop through the list of TMX devices */
         for(int i = 0; i < tmxList.size(); i++){
             /* Initialize a new TMX data object from the TMX device list */
             A7_TMX tmxData = (A7_TMX) tmxList.get(i);
-            
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.createLabel(tmxData.getName(), 
                     tmxData.getTmxNumber(), tmxData.getDevice());
@@ -88,16 +84,15 @@ public class A6_InitialDataDisplayCode {
             JLabel addressLabel = display.createLabel("Address: " + 
                     tmxData.getAddress(), 0, tmxData.getDevice());
             JLabel roleLabel = display.createLabel("Role: " + 
-                    tmxData.getRole(), 0, tmxData.getDevice());
-            
+                    tmxData.getDataMap().get("Role"), 0, tmxData.getDevice());
             /* Function call to create a panel for the TMX device */
             display.createPanel(nameLabel, typeLabel, addressLabel, roleLabel, 
                     tmxData.getDevice());
         }
         /* Function call to set the TMX data border */
-        display.setTmxBorder("TMX Data (" + tmxList.size() + " Total)");
+        display.setBorder("TMX Data (" + tmxList.size() + " Total)", "TMX");
         /* Function call to set the TMX Linked List */
-        display.setTMXList(tmxList);   
+        display.setList(tmxList, "TMX");   
     }
     
     /**
@@ -109,7 +104,6 @@ public class A6_InitialDataDisplayCode {
         for(int i = 0; i < encList.size(); i++){
             /* Initialize a new Encoder data object from the Encoder list */
             A7_Encoder encData = (A7_Encoder) encList.get(i);
-            
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.createLabel(encData.getName(), 
                     encData.getEncNumber(), encData.getDevice());
@@ -119,16 +113,14 @@ public class A6_InitialDataDisplayCode {
                     encData.getAddress(), 0, encData.getDevice());
             JLabel roleLabel = display.createLabel("Role: " + 
                     encData.getRole(), 0, encData.getDevice());
-            
             /* Function call to create a panel for the encoders */
             display.createPanel(nameLabel, typeLabel, addressLabel, roleLabel, 
                     encData.getDevice());
         }
-        
         /* Function call to set the Encoder data border */
-        display.setEncBorder("Encoder Data (" + encList.size() + " Total)");
+        display.setBorder("Encoder Data (" + encList.size() + " Total)", "ENC");
         /* Function call to set the Encoder Linked List */
-        display.setEncList(encList);
+        display.setList(encList, "ENC");
     }
     
     /**

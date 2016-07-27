@@ -65,30 +65,6 @@ public interface A0_EquipmentIdentifiers {
     public void setPriorityNumber(int pNumber);
     
     /**
-     * This method is used to get the device version number.
-     * @return Version
-     */
-    public String getVersion();
-    
-    /**
-     * This method is used to set the device version number.
-     * @param version The device version number
-     */
-    public void setVersion(String version);
-    
-    /**
-     * This method is used to get the device role.
-     * @return Role
-     */
-    public String getRole();
-    
-    /**
-     * This method is used to set the device role.
-     * @param role The device role
-     */
-    public void setRole(String role);
-    
-    /**
      * This method is used to get the device type.
      * @return Type
      */

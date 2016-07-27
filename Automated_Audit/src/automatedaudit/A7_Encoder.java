@@ -53,7 +53,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
             /* Checks if Encoder in list matches specified Encoder device */
             if( eData.getEncNumber() == encNumber) {
                 /* Sets all the device labels for the expanded UI */
-                expEncUI.setDeviceLabel(eData.getName() + "(" + 
+                expEncUI.setDeviceLabel(eData.getName() + " (" + 
                         eData.getRole() + ")");
                 expEncUI.setAddressLabel(eData.getAddress());
                 expEncUI.setSiteLabel(eData.getSite());
@@ -289,7 +289,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      * Encoder Version Getter.
      * @return The Encoder Version Number
      */
-    @Override
     public String getVersion() {
         return version;
     }
@@ -298,7 +297,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      * Encoder Version Setter.
      * @param version The Encoder Version Number
      */
-    @Override
     public void setVersion(String version) {
         this.version = version;
     }
@@ -307,7 +305,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      * Encoder Role Getter.
      * @return The Encoder Role
      */
-    @Override
     public String getRole() {
        return role;
     }
@@ -316,7 +313,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      * Encoder Role Setter.
      * @param role The Encoder Role
      */
-    @Override
     public void setRole(String role) {
         this.role = role;
     }
