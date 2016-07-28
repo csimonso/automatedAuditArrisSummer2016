@@ -29,8 +29,5 @@ public class A1_AutomatedAudit {
 
         /* Function call to run the main GUI display */
         run.runProgram();
-        
-         //TEST FILE LOCATION     
-         //C:\Users\csimonson\Desktop\backup_20160602_135011.tar
     }
 }

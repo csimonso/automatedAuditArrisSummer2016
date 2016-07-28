@@ -16,6 +16,8 @@ package automatedaudit;
 public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
     private final A6_InitialDataDisplayGUI prevDisplay;
+    private A7_Encoder eData;
+    private A8_ExpandedEncUI currDisplay;
     
     /**
      * Creates new form ExpandedEncUI
@@ -50,6 +52,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         elementGroupLabelInput = new javax.swing.JLabel();
         siteLabel = new javax.swing.JLabel();
         siteLabelInput = new javax.swing.JLabel();
+        statMuxButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +144,14 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
 
         siteLabelInput.setText("Site");
 
+        statMuxButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        statMuxButton.setText("StatMux");
+        statMuxButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statMuxButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -165,6 +176,8 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(statMuxButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -175,7 +188,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(deviceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addressLabelInput)
@@ -188,7 +201,8 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statMuxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(330, 330, 330))
         );
 
@@ -220,6 +234,19 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void statMuxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statMuxButtonActionPerformed
+        StatMuxDisplay statMux = new StatMuxDisplay(currDisplay);
+        statMux.setNumberActiveControllersLabel((String) eData.getDataMap().get(
+                "statMuxActiveCtrlr"));
+        statMux.setReceiverAddressLabel((String) eData.getDataMap().get("statMuxRecvGroupAddr"));
+        statMux.setReceiverPortLabel((String) eData.getDataMap().get("statMuxRecvGroupPort"));
+        statMux.setSenderAddressLabel((String) eData.getDataMap().get("statMuxSendGroupAddress"));
+        statMux.setSenderPortLabel((String) eData.getDataMap().get("statMuxSendGroupPort"));
+        statMux.setMinRateLabel((String) eData.getDataMap().get("statMuxMinVideoTsRate"));
+        statMux.setMaxRateLabel((String) eData.getDataMap().get("statMuxMaxVideoTsRate"));
+        statMux.runDisplay();
+    }//GEN-LAST:event_statMuxButtonActionPerformed
 
     /**
      * Method to run the GUI display
@@ -264,6 +291,9 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         prevDisplay.setVisible(true);
         /* Make current display invisible */
         this.setVisible(false);  
+    }
+    public void setEncoderData(A7_Encoder data){
+        eData = data;
     }
     
     /**
@@ -325,5 +355,6 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     private javax.swing.JLabel redundancyGroupLabelInput;
     private javax.swing.JLabel siteLabel;
     private javax.swing.JLabel siteLabelInput;
+    private javax.swing.JButton statMuxButton;
     // End of variables declaration//GEN-END:variables
 }

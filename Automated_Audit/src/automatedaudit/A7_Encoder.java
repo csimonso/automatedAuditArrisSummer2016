@@ -27,7 +27,10 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     private String name, address, version,  type, positionID, device, 
             primaryDevice, encFileLocation, line;
     private final String[] strings = {"Site", "ElementGroup", "Role", 
-        "RedundancyGroup", "EncoderGroup", "ntpPeerIpAddress"};
+        "RedundancyGroup", "EncoderGroup", "ntpPeerIpAddress", 
+        "statMuxActiveCtrlr", "statMuxRecvGroupAddr", "statMuxMaxVideoTsRate", 
+        "statMuxMinVideoTsRate", "statMuxSendGroupPort", "statMuxRecvGroupPort", 
+        "statMuxSendGroupAddress"};
     private final String fileLocation;
     private Path encFilePath;
     private Scanner scan;
@@ -67,6 +70,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                         "RedundancyGroup"));
                 expEncUI.setEncoderGroupLabel((String) eData.results.get(
                         "EncoderGroup"));
+                expEncUI.setEncoderData(eData);
             }
         }
         /* Makes Display Visible */
