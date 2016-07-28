@@ -2,14 +2,16 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -17,24 +19,27 @@ import java.util.Scanner;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A7_Encoder implements A0_EquipmentIdentifiers{
     
     private int encNumber, priorityNumber;
-    private String name, address, version, role, type, site, positionID;
-    private String elementGroup, redundancyGroup, encoderGroup, device;
-    private String primaryDevice, encFileLocation, line;
-    private final String mainFileLocation;
+    private String name, address, version,  type, positionID, device, 
+            primaryDevice, encFileLocation, line;
+    private final String[] strings = {"Site", "ElementGroup", "Role", 
+        "RedundancyGroup", "EncoderGroup", "ntpPeerIpAddress"};
+    private final String fileLocation;
     private Path encFilePath;
-    private Scanner encScan, encData;
+    private Scanner scan;
+    
+    private final Map results = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
      * @param location The main file folder location
      */
     public A7_Encoder(String location){
-        mainFileLocation = location;
+        fileLocation = location;
     }
     
     /**
@@ -45,7 +50,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      */
     public void displayExpandedENC(A8_ExpandedEncUI expEncUI, 
             LinkedList encList, int encNumber){
-        
         /* Loop through the Encoder list to get the specific Encoder data */
         for(int i = 0; i < encList.size(); i++){
             /* Creates a new Encoder Object from the Encoder Object at i */
@@ -54,71 +58,70 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
             if( eData.getEncNumber() == encNumber) {
                 /* Sets all the device labels for the expanded UI */
                 expEncUI.setDeviceLabel(eData.getName() + " (" + 
-                        eData.getRole() + ")");
+                        eData.results.get("Role") + ")");
                 expEncUI.setAddressLabel(eData.getAddress());
-                expEncUI.setSiteLabel(eData.getSite());
-                expEncUI.setElementGroupLabel(eData.getElementGroup());
-                expEncUI.setRedundancyGroupLabel(eData.getRedundancyGroup());
-                expEncUI.setEncoderGroupLabel(eData.getEncoderGroup());
+                expEncUI.setSiteLabel((String) eData.results.get("Site"));
+                expEncUI.setElementGroupLabel((String) eData.results.get(
+                        "ElementGroup"));
+                expEncUI.setRedundancyGroupLabel((String) eData.results.get(
+                        "RedundancyGroup"));
+                expEncUI.setEncoderGroupLabel((String) eData.results.get(
+                        "EncoderGroup"));
             }
         }
         /* Makes Display Visible */
         expEncUI.setVisible(true);
     }
     
-    
     /**
      * Method to parse the specific encoder file to get all the encoder data.
      * @throws IOException If an error occurs
      */
     public void parseEncFile() throws IOException{
+        /* Declare Local Variables */
+        String value;
+        String[] splitString;
         
         /* Concats the encoder file location to the main folders location*/
-        encFileLocation = mainFileLocation.concat("config\\" + positionID);
+        encFileLocation = fileLocation.concat("config\\" + positionID);
         /* Initializes a file path for the encoder file */
         encFilePath = Paths.get(encFileLocation);
         /* Initializes a scanner for the file */
-        encScan = new Scanner(encFilePath);
-        
+        scan = new Scanner(encFilePath);
         /* Loop through each line of the encoder file */
-        while(encScan.hasNextLine()){
+        while(scan.hasNextLine()){
             /* Sets string to the full line */
-            line = encScan.nextLine();
-            
-            /* If statements checking if a line matches the data we need */
-            if(line.contains("Site")){
-                /* Initializes scanner to next "=" */
-                encData = new Scanner(line).useDelimiter("=");
-                encData.next();
-                this.setSite(encData.next());//sets site
-            }
-            else if(line.contains("ElementGroup")){
-                /* Initializes scanner to next "=" */
-                encData = new Scanner(line).useDelimiter("=");
-                encData.next();
-                this.setElementGroup(encData.next());//sets element group
-            }
-            else if(line.contains("Role")){
-                /* Initializes scanner to next "=" */
-                encData = new Scanner(line).useDelimiter("=");
-                encData.next();
-                this.setRole(encData.next());//sets role
-            }
-            else if(line.contains("RedundancyGroup")){
-                /* Initializes scanner to next "=" */
-                encData = new Scanner(line).useDelimiter("=");
-                encData.next();
-                this.setRedundancyGroup(encData.next());//sets redundant group
-            }
-            else if(line.contains("EncoderGroup")){
-                /* Initializes scanner to next "=" */
-                encData = new Scanner(line).useDelimiter("=");
-                encData.next();
-                this.setEncoderGroup(encData.next());//sets encoder group
+            line = scan.nextLine();
+            /* Loops through each member of the strings array */
+            for(String sub:strings){
+                /* Checks if the current line is part of the strings array */
+                if(line.contains(sub)){
+                    /* Splits the string at the equals sign */
+                    splitString = line.split("=");
+                    /* Checks that there is data after the equals sign */
+                    if(splitString.length > 1){
+                        value = splitString[1];
+                    }
+                    else value = "No Data";
+                    /* Checks if data already exists in Map */
+                    if(results.containsKey(sub) && 
+                            results.get(sub).equals("No Data") || 
+                            !results.containsKey(sub)){
+                        /* Adds data to the Map */
+                        results.put(sub, value);
+                    } 
+                }
             }
         }
     }
     
+    /**
+     * Encoder Data Map Getter.
+     * @return Encoder Hash Map
+     */
+    public Map getDataMap(){
+        return results;
+    }
     /**
      * Encoder Priority Number Setter
      * @param pNumber The Encoder priority number(1-primary, 2-backup)
@@ -184,71 +187,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public int getEncNumber(){
         return encNumber;
     }
-    
-    /**
-     * Encoder Site Getter.
-     * @return The Encoder Site
-     */
-    public String getSite() {
-        return site;
-    }
-
-    /**
-     * Encoder Site Setter.
-     * @param encSite The encoder Site
-     */
-    public void setSite(String encSite) {
-        site = encSite;
-    }
-    
-    /**
-     * Encoder Element Group Getter.
-     * @return The Encoder Element Group
-     */
-    public String getElementGroup() {
-        return elementGroup;
-    }
-
-    /**
-     * Encoder Element Group Setter.
-     * @param eGroup The Encoder Element Group
-     */
-    public void setElementGroup(String eGroup) {
-        elementGroup = eGroup;
-    }
-    
-    /**
-     * Encoder Redundancy Group Getter.
-     * @return The Encoder Redundancy Group
-     */
-    public String getRedundancyGroup() {
-        return redundancyGroup;
-    }
-
-    /**
-     * Encoder Redundancy Group Setter.
-     * @param rGroup The Encoder Redundancy Group
-     */
-    public void setRedundancyGroup(String rGroup) {
-        redundancyGroup = rGroup;
-    }
-    
-    /**
-     * Encoder Group Getter.
-     * @return The Encoder Group
-     */
-    public String getEncoderGroup() {
-        return encoderGroup;
-    }
-
-    /**
-     * Encoder Group Setter.
-     * @param eGroup The Encoder Group
-     */
-    public void setEncoderGroup(String eGroup) {
-        encoderGroup = eGroup;
-    }
-    
+ 
     /**
      * Encoder Name Getter.
      * @return The Encoder Name
@@ -300,23 +239,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setVersion(String version) {
         this.version = version;
     }
-
-    /**
-     * Encoder Role Getter.
-     * @return The Encoder Role
-     */
-    public String getRole() {
-       return role;
-    }
-
-    /**
-     * Encoder Role Setter.
-     * @param role The Encoder Role
-     */
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     /**
      * Encoder Type Getter.
      * @return The Encoder Type

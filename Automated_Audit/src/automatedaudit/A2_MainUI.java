@@ -2,15 +2,14 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
-
-import java.io.IOException;
 import javax.swing.JOptionPane;
-
-
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * This class is used to create the main display UI.  Function calls are also
@@ -18,7 +17,7 @@ import javax.swing.JOptionPane;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A2_MainUI extends javax.swing.JFrame {
 
@@ -29,7 +28,6 @@ public class A2_MainUI extends javax.swing.JFrame {
      */
     public A2_MainUI() {      
         initComponents();
-   
     }
 
     /**
@@ -45,6 +43,7 @@ public class A2_MainUI extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         mainTextField = new javax.swing.JTextField();
         mainLabel = new javax.swing.JLabel();
+        chooseFileButton = new javax.swing.JButton();
         mainEnterButton = new javax.swing.JButton();
         mainExitButton = new javax.swing.JButton();
 
@@ -61,15 +60,28 @@ public class A2_MainUI extends javax.swing.JFrame {
         mainLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mainLabel.setText("Enter Backup File Location:");
 
+        chooseFileButton.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        chooseFileButton.setText("Find");
+        chooseFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chooseFileButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(chooseFileButton))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(mainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -79,7 +91,9 @@ public class A2_MainUI extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chooseFileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainEnterButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -156,7 +170,74 @@ public class A2_MainUI extends javax.swing.JFrame {
      * @param evt The button action event
      */
     private void mainEnterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainEnterButtonActionPerformed
+        openFile();
+    }//GEN-LAST:event_mainEnterButtonActionPerformed
 
+    private void mainTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTextFieldActionPerformed
+        /* Allows user to click keyboard enter */
+        if(evt.getSource() == mainTextField){
+            mainEnterButton.doClick();
+        }
+    }//GEN-LAST:event_mainTextFieldActionPerformed
+
+    private void chooseFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileButtonActionPerformed
+        /* Creates a new File Chooser to manually search for a file */
+        JFileChooser chooser = new JFileChooser();
+        /* Sets the filter for the files being searched to only tar files */
+        chooser.setFileFilter(new FileNameExtensionFilter("Tar Files", "tar"));
+        /* Displays the Dialog Box to search */
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            /* Sets the file path of the choosen file */
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            /* Puts the file path into the main text field */
+            mainTextField.setText(path);
+        }
+    }//GEN-LAST:event_chooseFileButtonActionPerformed
+
+    /**
+     * Method to run the main program.
+     */
+    public void runProgram() {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new A2_MainUI().setVisible(true);
+            
+        });   
+    }
+    
+    
+    
+    /**
+     * Method to open file path and begin the automated process.
+     */
+    private void openFile(){
         /* Displays error if no file location was entered */
         if(mainTextField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No File Entered.  "
@@ -195,54 +276,11 @@ public class A2_MainUI extends javax.swing.JFrame {
             /* Sets the cursor focus back to the text box */
             mainTextField.requestFocusInWindow();
         }
-    }//GEN-LAST:event_mainEnterButtonActionPerformed
-
-    private void mainTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainTextFieldActionPerformed
-        
-        if(evt.getSource() == mainTextField){
-            mainEnterButton.doClick();
-        }
-    }//GEN-LAST:event_mainTextFieldActionPerformed
-
-    /**
-     * Method to run the main program.
-     */
-    public void runProgram() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(A2_MainUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new A2_MainUI().setVisible(true);
-            
-        });   
-    }
+   }
  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chooseFileButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton mainEnterButton;
     private javax.swing.JButton mainExitButton;

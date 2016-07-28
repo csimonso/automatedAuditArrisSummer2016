@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class WriteTablesToFile {
     

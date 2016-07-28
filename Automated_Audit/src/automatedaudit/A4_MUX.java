@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -16,7 +16,7 @@ import java.util.Scanner;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A4_MUX implements A0_VirtualIdentifiers {
     
@@ -41,18 +41,15 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     public void parseFile() throws IOException {
         /* Creates new Scanner object of the filePath */
         Scanner scan = new Scanner(filePath).useDelimiter("version=");
-        
         /* Creates new Scanner object for the server version */
         Scanner scanVersion = new Scanner(scan.next()).useDelimiter("name=");
         /* Sets the server version number */
         this.setVersion(scanVersion.next());
-        
         /* Creates new Scanner object for the server name */
         Scanner scanName = 
                 new Scanner(scanVersion.next()).useDelimiter("host=");
         /* Sets the server name */
         this.setName(scanName.next());
-        
         /* Creates new Scanner object for the server ip address */
         Scanner scanAddress = new Scanner(scanName.next());
         /* Sets the server ip address */

@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -15,7 +15,7 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A3_UnpackTar {
     
@@ -28,9 +28,8 @@ public class A3_UnpackTar {
      * @throws FileNotFoundException if file does not exist
      * @throws IOException on error
      */
-    private String unPack(TarArchiveInputStream tarInput, String fileCopyLocation) 
-            throws FileNotFoundException, IOException{
-
+    private String unPack(TarArchiveInputStream tarInput, 
+            String fileCopyLocation) throws FileNotFoundException, IOException{
         /* Creates and Initializes a new TarArchiveEntry */
         TarArchiveEntry entry;
         entry = (TarArchiveEntry) tarInput.getNextTarEntry();
@@ -38,7 +37,6 @@ public class A3_UnpackTar {
         String newFileDirectory = fileCopyLocation.concat(entry.getName());
         /* Loop to read each entry in the Tar file */
         while((entry = (TarArchiveEntry) tarInput.getNextEntry()) != null){
-            
             /* Creates a directory if the current entry is a directory */
             if(entry.isDirectory()){
                 String newDirLocation = fileCopyLocation.concat(entry.getName());
@@ -47,12 +45,10 @@ public class A3_UnpackTar {
                 /* Makes a new directory */
                 file.mkdirs();
             }
-            
             /* Writes file if the current entry is a file */
             else {
                 int count;
-                byte data[] = new byte[BUFFER];//initializes to buffer size
-                
+                byte data[] = new byte[BUFFER];//initializes to buffer size   
                 /* Creates a new FileOutputsStream for the current entry */
                 FileOutputStream out = new FileOutputStream(fileCopyLocation + 
                         entry.getName());
@@ -78,15 +74,14 @@ public class A3_UnpackTar {
      * @return The file folder created
      * @throws IOException If an error occurs
      */
+    @SuppressWarnings("null")
     public String createFiles(String userInput) throws IOException{
-      
         /* Creates and initializes a FileInputStream from the user input */
         FileInputStream backupFile = new FileInputStream(userInput);
         /* Splits the current file location using "\" */
         String[] fileLocation = userInput.split("\\\\");  
         /* Initializes a string for the location of the file copies */
         String fileCopyLocation = null;
-        
         /* Loop through all the files to create copies of them */
         for(int i = 0; i < fileLocation.length - 1; i++){
             if(i == 0){
@@ -98,16 +93,14 @@ public class A3_UnpackTar {
             }
         }
         fileCopyLocation = fileCopyLocation.concat("\\");
-
         /* Creates a BufferedInputStream and saves input file for later use */
         BufferedInputStream bInput = new BufferedInputStream(backupFile);
         /* Creates new input stream that decompresses data from input stream */
-        GzipCompressorInputStream gzInput = new GzipCompressorInputStream(bInput);
-        
+        GzipCompressorInputStream gzInput = 
+                new GzipCompressorInputStream(bInput);
         /* Creates a UNIX tar archive as InputStream */ 
         TarArchiveInputStream tarIn;
         tarIn = new TarArchiveInputStream(gzInput);
-        
         /* Creates a file folder of all folder files */
         fileFolder = this.unPack(tarIn, fileCopyLocation);
         /* Closes the input file */

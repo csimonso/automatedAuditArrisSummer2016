@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -20,14 +20,14 @@ import java.util.Scanner;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A7_TMX implements A0_EquipmentIdentifiers {
 
     private final String fileLocation;
     private String type, name, address, role, positionID, site, version, line;
     private String elementGroup, redundancyGroup, encoderGroup, device, service;
-    private String backupDevice, primaryDevice, osVersion, tmxFileLocation, serviceCompNumber;
+    private String backupDevice, primaryDevice, osVersion, tmxFileLocation;
     private Path tmxFilePath;
     private Scanner tmxScan;
     private int tmxNumber, priorityNumber, statGroupNumber, serviceGroupNumber,
@@ -85,11 +85,31 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                         "AppVersion"));
                 expTmxUI.setOsVersionLabel( (String) tData.results.get(
                         "OSVersion"));
+                /* Checks if current TMX is the primary device */
+                if(tData.getPriorityNumber() == 1){
+                    /* Loop through list to find the backup device */
+                    for(int j = 0; j < tmxList.size(); j++){
+                        A7_TMX otherDevice = (A7_TMX) tmxList.get(j);
+                        /* Sets the Backup Device label */
+                        if(otherDevice.getPriorityNumber() == 2){
+                            expTmxUI.setBackupDeviceLabel(otherDevice.getName());
+                        }
+                    }
+                }
+                else {
+                    /* Loop through list to find the Primary Device */
+                    for(int j = 0; j < tmxList.size(); j++){
+                        A7_TMX otherDevice = (A7_TMX) tmxList.get(j);
+                        /* Sets the Primary Device Label */
+                        if(otherDevice.getPriorityNumber() == 1){
+                            expTmxUI.setPrimaryDeviceLabel(otherDevice.getName());
+                        }
+                    }
+                }
                 /* Sets the Stat Group Drop Down Menu */
                 expTmxUI.setStatGroupDropDown(tData);
                 /* Creates the Service Display Dialog Box */
                 expTmxUI.serviceDisplay(tData);
-                
                 expTmxUI.pack();
             }
         }
@@ -129,7 +149,7 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
             line = tmxScan.nextLine();
             /* Loops through each member of the strings array */
             for(String sub:strings){
-                /* Checks if the current line is part of the rstrings array */
+                /* Checks if the current line is part of the strings array */
                 if(line.contains(sub)){
                     /* Splits the string at the equals sign */
                     splitString = line.split("=");
@@ -184,7 +204,8 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                                         //componentGroupNumber++;
                                         componentNumber.add(componentLine[2]);
                                     }
-                                    comp = service + "Component" + componentLine[2] + comp;
+                                    comp = service + "Component" + 
+                                            componentLine[2] + comp;
                                     componentResults.put(comp, value);
                                     
                                 }

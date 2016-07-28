@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -20,7 +20,7 @@ import java.util.Scanner;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A7_SEM implements A0_EquipmentIdentifiers {
     
@@ -29,8 +29,8 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
     private Scanner scan, data;
     private int semNumber, clockRateNumber, priorityNumber;
     private String name, address, type, fileLocation, line, positionID, device;
-    private final String[] strings = new String[]{"Role", "ElementGroup", "Site", 
-        "RedundancyGroup", "HostAppVersion", "InputFailureAlarm", 
+    private final String[] strings = new String[]{"Role", "ElementGroup", 
+        "Site", "RedundancyGroup", "HostAppVersion", "InputFailureAlarm", 
         "OperatingMode", "BootMethod", "AutoBoot", "MultiController",
         "ControllerPort", "SemPort", "CommandTimeOut", "DetectPsiLoss", 
         "PsiLossTimeout", "EncryptionAlgorithm", "CopyProtectionSource", 

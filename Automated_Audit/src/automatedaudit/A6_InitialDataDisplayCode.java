@@ -2,7 +2,7 @@
  * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Christopher Simonson <chris.simonson@arris.com>, July 2016
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -14,11 +14,12 @@ import javax.swing.JLabel;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 2016-07-01
+ * @since 2016-08-01
  */
 public class A6_InitialDataDisplayCode {
     
     private final A6_InitialDataDisplayGUI display;
+    private String ntpIpAddress;
     
     /**
      * Class Constructor to initialize the GUI.
@@ -36,6 +37,7 @@ public class A6_InitialDataDisplayCode {
         display.displayDataMUX(muxData.getName());
         display.displayDataMUX(muxData.getIPAddress());
         display.displayDataMUX(muxData.getVersion());
+        display.displayDataMUX("NTP IP Address: " + ntpIpAddress);
     }
     
     /**
@@ -104,6 +106,8 @@ public class A6_InitialDataDisplayCode {
         for(int i = 0; i < encList.size(); i++){
             /* Initialize a new Encoder data object from the Encoder list */
             A7_Encoder encData = (A7_Encoder) encList.get(i);
+            /* Set the NTP IP Address for the System */
+            ntpIpAddress = (String)encData.getDataMap().get("ntpPeerIpAddress");
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.createLabel(encData.getName(), 
                     encData.getEncNumber(), encData.getDevice());
@@ -112,7 +116,7 @@ public class A6_InitialDataDisplayCode {
             JLabel addressLabel = display.createLabel("Address: " + 
                     encData.getAddress(), 0, encData.getDevice());
             JLabel roleLabel = display.createLabel("Role: " + 
-                    encData.getRole(), 0, encData.getDevice());
+                    encData.getDataMap().get("Role"), 0, encData.getDevice());
             /* Function call to create a panel for the encoders */
             display.createPanel(nameLabel, typeLabel, addressLabel, roleLabel, 
                     encData.getDevice());

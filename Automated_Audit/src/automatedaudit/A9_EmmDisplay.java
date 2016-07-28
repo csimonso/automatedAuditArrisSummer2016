@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ /*
+ * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
@@ -12,7 +13,7 @@ import java.awt.Color;
  * 
  * @author Christopher Simonson
  * @version 1.0
- * @since 
+ * @since 2016-08-01
  */
 public class A9_EmmDisplay extends javax.swing.JDialog {
 
