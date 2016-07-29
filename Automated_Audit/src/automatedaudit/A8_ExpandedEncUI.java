@@ -6,6 +6,9 @@
  */
 package automatedaudit;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  * Class to create a display to view the expanded SEM data.
  * 
@@ -43,6 +46,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         encoderGroupLabel = new javax.swing.JLabel();
         redundancyGroupLabelInput = new javax.swing.JLabel();
         encoderGroupLabelInput = new javax.swing.JLabel();
+        audioLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         deviceLabel = new javax.swing.JLabel();
         exitButton = new javax.swing.JButton();
@@ -76,15 +80,23 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         encoderGroupLabelInput.setText("Encoder Group");
         encoderGroupLabelInput.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
+        audioLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        audioLabel.setForeground(new java.awt.Color(0, 51, 255));
+        audioLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        audioLabel.setText("Endcoder Audio");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(redundancyGroupLabel)
-                .addGap(4, 4, 4)
-                .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(audioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(redundancyGroupLabel)
+                        .addGap(4, 4, 4)
+                        .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -100,7 +112,9 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                     .addComponent(redundancyGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(audioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         backButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -199,10 +213,11 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(statMuxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(statMuxButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(330, 330, 330))
         );
 
@@ -282,6 +297,24 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         });
     }
     
+    public void audioDisplay(){
+        audioLabel.addMouseListener(new MouseAdapter(){
+            /**
+            * Method to create a mouse click event
+            * @param ev The mouse click event
+            */
+            @Override
+            public void mouseClicked(MouseEvent ev){
+                /* Creates and initializes a new EMM Dialog Display */
+                EncoderAudioConfig audioDialog = 
+                    new EncoderAudioConfig(currDisplay);
+                audioDialog.setTableRows(eData);
+                /* Function call to run the display */
+                audioDialog.runDisplay();
+            }
+        });
+    }
+    
     /**
      * Method to bring up the last display.
      * @param prevDisplay The last display
@@ -342,6 +375,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
     private javax.swing.JLabel addressLabelInput;
+    private javax.swing.JLabel audioLabel;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel deviceLabel;
     private javax.swing.JLabel elementGroupLabel;

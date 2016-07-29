@@ -359,8 +359,6 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
                     A9_ServiceDisplay serviceDialog = 
                             new A9_ServiceDisplay(currDisplay);
                     serviceDialog.setTableRows(tData);
-                    //serviceDialog.setTableRows(tData.getServiceGroupNumber(), 
-                    //        tData.getServiceMap(), tData.getServiceNumber());
                 
                     /* Function call to run the display */
                     serviceDialog.runServiceDisplay();

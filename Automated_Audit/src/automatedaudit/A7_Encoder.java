@@ -30,12 +30,16 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
         "RedundancyGroup", "EncoderGroup", "ntpPeerIpAddress", 
         "statMuxActiveCtrlr", "statMuxRecvGroupAddr", "statMuxMaxVideoTsRate", 
         "statMuxMinVideoTsRate", "statMuxSendGroupPort", "statMuxRecvGroupPort", 
-        "statMuxSendGroupAddress"};
+        "statMuxSendGroupAddress", "audioMainTable/audioEnable", 
+        "audioMainTable/audioStandard", "audioMainTable/audioRate", 
+        "audioMainTable/audioDialogNormalization", 
+        "audioMainTable/audioGroupId"};
     private final String fileLocation;
     private Path encFilePath;
     private Scanner scan;
     
     private final Map results = new HashMap<>();
+    private final Map audioResults = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
@@ -71,6 +75,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                 expEncUI.setEncoderGroupLabel((String) eData.results.get(
                         "EncoderGroup"));
                 expEncUI.setEncoderData(eData);
+                expEncUI.audioDisplay();
             }
         }
         /* Makes Display Visible */
@@ -107,6 +112,16 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                         value = splitString[1];
                     }
                     else value = "No Data";
+                    /* Checks for Encoder Audio Data */
+                    if(sub.contains("audioMainTable")){
+                        /* Function call to set the Audio channel to key */
+                        sub = setChannels(sub, splitString[0]);
+                        audioResults.put(sub, value);
+                    }
+                    
+                    
+                    
+                    
                     /* Checks if data already exists in Map */
                     if(results.containsKey(sub) && 
                             results.get(sub).equals("No Data") || 
@@ -120,12 +135,35 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     }
     
     /**
+     * Method to get the Audio Channel from the parsed line.
+     * @param key The current Hash Map Key
+     * @param currLine The current line being parsed
+     * @return The new Hash Map key
+     */
+    private String setChannels(String key, String currLine){
+        /* Splits the current line being parsed */
+        String[] split = currLine.split("/| ");
+        /* Sets the new key to include the Audio Channel */
+        key = key + "/" + split[3] + "/" + split[4];
+        /* Returns the new key */
+        return key;
+    }
+    
+    /**
      * Encoder Data Map Getter.
      * @return Encoder Hash Map
      */
     public Map getDataMap(){
         return results;
     }
+    /**
+     * Encoder Audio Data Map Getter.
+     * @return Encoder Audio Hash Map
+     */
+    public Map getAudioMap(){
+        return audioResults;
+    }
+    
     /**
      * Encoder Priority Number Setter
      * @param pNumber The Encoder priority number(1-primary, 2-backup)

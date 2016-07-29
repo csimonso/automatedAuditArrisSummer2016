@@ -241,7 +241,7 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
      * @param dataMap The Map with all the data
      * @param sNumber The List of the Service Numbers
      */
-   // public void setTableRows(int count, Map dataMap, ArrayList sNumber){
+   
     public void setTableRows(A7_TMX data){
         
         tData = data;
