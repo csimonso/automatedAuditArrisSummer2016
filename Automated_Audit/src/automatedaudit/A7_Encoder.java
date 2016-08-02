@@ -30,16 +30,28 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
         "RedundancyGroup", "EncoderGroup", "ntpPeerIpAddress", 
         "statMuxActiveCtrlr", "statMuxRecvGroupAddr", "statMuxMaxVideoTsRate", 
         "statMuxMinVideoTsRate", "statMuxSendGroupPort", "statMuxRecvGroupPort", 
-        "statMuxSendGroupAddress", "audioMainTable/audioEnable", 
+        "statMuxSendGroupAddr", "audioMainTable/audioEnable", 
         "audioMainTable/audioStandard", "audioMainTable/audioRate", 
-        "audioMainTable/audioDialogNormalization", 
-        "audioMainTable/audioGroupId"};
+        "audioMainTable/audioDialogNormalization", "audioProxyTable/ProxyAudioPID",
+        "audioProxyTable/PipAudioBitrate", "audioProxyTable/PipAudioHold",
+        "audioProxyTable/PipAudioMode", "audioProxyTable/PipAudioCompressType",
+        "audioProxyTable/PipAudioAC3DialogNorm", "audioProxyTable/PipAudioEnable",
+        "audioProxyTable/PipAudioChannel","audioMainTable/audioGroupId", 
+        "audioMainTable/atsc_audioOutPid", "audioProxyTable/PipAudioDelay", 
+        "mainAvcTable/avcScaledWidth", "mainAvcTable/avcScaledHeight", 
+        "mainAvcTable/avcIFramePeriod", "mainAvcTable/avcDeblocking", 
+        "mainAvcTable/avcDeblockingAlphaOffset","mainAvcTable/avcIDRFrequencty",
+        "mainAvcTable/avcDeblockingBetaOffset", "mainAvcTable/avcMCTFEnable", 
+        "mainAvcTable/avcPvpEnable", "mainAvcTable/avcPvp3DNoiseFilter", 
+        "mainAvcTable/avcPvpADPFilter"};
+    
     private final String fileLocation;
     private Path encFilePath;
     private Scanner scan;
     
     private final Map results = new HashMap<>();
     private final Map audioResults = new HashMap<>();
+    private final Map videoResults = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
@@ -115,10 +127,13 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                     /* Checks for Encoder Audio Data */
                     if(sub.contains("audioMainTable")){
                         /* Function call to set the Audio channel to key */
-                        sub = setChannels(sub, splitString[0]);
+                        sub = setChannels(sub, splitString[0], "Audio");
                         audioResults.put(sub, value);
                     }
-                    
+                    if(sub.contains("mainAvcTable")){
+                        sub = setChannels(sub, splitString[0], "Video");
+                        videoResults.put(sub, value);
+                    }
                     
                     
                     
@@ -138,13 +153,20 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      * Method to get the Audio Channel from the parsed line.
      * @param key The current Hash Map Key
      * @param currLine The current line being parsed
+     * @param type The type of channel
      * @return The new Hash Map key
      */
-    private String setChannels(String key, String currLine){
+    private String setChannels(String key, String currLine, String type){
         /* Splits the current line being parsed */
         String[] split = currLine.split("/| ");
-        /* Sets the new key to include the Audio Channel */
-        key = key + "/" + split[3] + "/" + split[4];
+        if(type.equals("Audio")){
+            /* Sets the new key to include the Audio Channel */
+            key = key + "/" + split[3] + "/" + split[4];
+        }
+        else if(type.equals("Video")){
+            /* Sets the new key to include the Video Channel */
+            key = key + "/" + split[4];
+        }
         /* Returns the new key */
         return key;
     }
@@ -162,6 +184,13 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
      */
     public Map getAudioMap(){
         return audioResults;
+    }
+    /**
+     * Encoder Video Data Map Getter.
+     * @return Encoder Audio Hash Map
+     */
+    public Map getVideoMap(){
+        return videoResults;
     }
     
     /**

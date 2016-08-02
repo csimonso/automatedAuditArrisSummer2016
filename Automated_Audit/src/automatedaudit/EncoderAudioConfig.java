@@ -1,26 +1,31 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author csimonson
+ * Class to create a display to view the Encoder Audio Configuration.
+ * 
+ * @author Christopher Simonson
+ * @version 1.0
+ * @since 2016-08-01
  */
 public class EncoderAudioConfig extends javax.swing.JDialog {
 
-    DefaultTableModel model;
-    private A7_Encoder eData;
-    private final String[] tableHeader = {"Channel", "Active", "Out PID", "Hold PID", 
-        "Compression Type", "Bit Rate", "Dialog Normalization", "Source"}; 
-    private final Map<String, String> rateMap = new HashMap<String, String>() {{ 
+    DefaultTableModel audioModel;
+    DefaultTableModel proxyModel;
+    private final String[] audioHeader = {"Channel", "Active", "Out PID", 
+        "Hold PID", "Compression Type", "Bit Rate", "Dialog Normalization", 
+        "Source"}; 
+    private final Map<String, String> rateMap = new HashMap<String, String>() 
+        {{ 
             put(" 0", "96K"); put(" 1", "112K"); put(" 2", "128K"); 
             put(" 3", "160K"); put(" 4", "192K"); put(" 5", "224K");
             put(" 6", "256K"); put(" 7", "320K"); put(" 8", "384K"); 
@@ -30,14 +35,16 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
             put(" 19", "32K");
         }};
     private final Map<String, String> compressionMap = 
-            new HashMap<String, String>() {{ put(" 1", "PassThrough AC-3"); 
-            put(" 2", "Encode MPEG 1 Layer II"); 
-            put(" 4", "Encode Pulse Pro AAC"); 
-            put(" 10", "Encode AC-3"); put(" 12", "PassThrough DD+Pro"); 
+            new HashMap<String, String>() 
+        {{ 
+            put(" 1", "PassThrough AC-3"); put(" 2", "Encode MPEG 1 Layer II"); 
+            put(" 4", "Encode Pulse Pro AAC"); put(" 10", "Encode AC-3"); 
+            put(" 12", "PassThrough DD+Pro"); 
             put(" 17", "Downsample To Stereo AC-3"); 
             put(" 18", "Downsample To PulsePro AAC"); 
         }};
-    private final Map<String, String> sourceMap = new HashMap<String, String>() {{ 
+    private final Map<String, String> sourceMap = new HashMap<String, String>() 
+        {{ 
             put(" 2", "SDI Group1 Ch 1/2"); put(" 3", "SDI Group1 Ch 3/4"); 
             put(" 4", "SDI Group2 Ch 5/6"); put(" 5", "SDI Group2 Ch 7/8"); 
             put(" 6", "AES Input 1"); put(" 7", "AES Input 2");
@@ -46,16 +53,31 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
             put(" 51", "SDI Group4 Ch 15/16"); 
         }};
     
+    /*
+    private final String[] proxyHeader = {"Proxy Channel", "Enable", "Out PID", 
+        "Hold", "Compression Type", "Bit Rate", "Mode", "Dialog Normalization", 
+        "Delay"}; 
+    private final Map<String, String> proxyCompression = new HashMap<String, String>()
+        {{
+           put(" 1", "Encode Pulse Pro AAC"); put(" 2", "Encode AC-3"); 
+           put(" 12", "Downsample to Stereo AC-3"); 
+           put(" 13", "Downsample to Pulse Pro AAC"); 
+           put(" 0", "Encode MPEG1 Layer II"); 
+        }}; */
+    
     /**
      * Creates new form EncoderAudioConfig
+     * @param parent The parent display
      */
     public EncoderAudioConfig(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        audioTable.setRowSelectionAllowed(true);
-        model = new DefaultTableModel(0, 0);
-        model.setColumnIdentifiers(tableHeader);
-        audioTable.setModel(model);
+        audioModel = new DefaultTableModel(0, 0);
+        audioModel.setColumnIdentifiers(audioHeader);
+        audioTable.setModel(audioModel);
+        //proxyModel = new DefaultTableModel(0, 0);
+        //proxyModel.setColumnIdentifiers(proxyHeader);
+        //proxyTable.setModel(proxyModel);
     }
 
     /**
@@ -68,8 +90,9 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
         audioTable = new javax.swing.JTable();
+        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,7 +122,7 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(audioTable);
+        jScrollPane3.setViewportView(audioTable);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -107,36 +130,59 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        closeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(685, 685, 685)
+                .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(82, 82, 82))
+                .addGap(255, 255, 255)
+                .addComponent(closeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(21, 21, 21)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(155, Short.MAX_VALUE)))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(792, 338));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
      * 
@@ -166,17 +212,16 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EncoderAudioConfig dialog = new EncoderAudioConfig(new javax.swing.JFrame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(false);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            EncoderAudioConfig dialog = 
+                    new EncoderAudioConfig(new javax.swing.JFrame());
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(false);
         });
     }
     
@@ -187,55 +232,119 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
         this.setVisible(true);
     }
     
-    public void setTableRows(A7_Encoder data){
-        
-        eData = data;
-        
+    /**
+     * Method to set the data in the audio table rows.
+     * @param eData The Encoders Data
+     */
+    public void setTableRows(A7_Encoder eData){
+        /* Gets the audio Map from current encoder */
         Map audioMap = eData.getAudioMap();
-        
-        
-        
         /* Loops through all 8 channels of Audio */
         for(int j = 0; j < 8; j++){
             /* Sets string to the current channel */
             String channel = Integer.toString(j+1);
-            /* Appends channel to map key */
+            
+            /* Sets the Audio Table Keys */
             String enable = "audioMainTable/audioEnable/1/" + channel;
+            String outPid = "audioMainTable/atsc_audioOutPid/1/" + channel;
             String compression = "audioMainTable/audioStandard/1/" + channel;
             String bitRate = "audioMainTable/audioRate/1/" + channel;
             String dialNorm = "audioMainTable/audioDialogNormalization/1/" + channel;
             String source = "audioMainTable/audioGroupId/1/" + channel;
             String hold = "audioMainTable/audioHold/1/" + channel;
+            
+            /* KEYS FOR PROXY AUDIO IF NEEDED
+            String proxyPid = "audioProxyTable/ProxyAudioPID/1/" + channel;
+            String proxyBitrate = "audioProxyTable/PipAudioBitrate/1/" + channel;
+            String proxyHold = "audioProxyTable/PipAudioHold/1/" + channel;
+            String proxyMode = "audioProxyTable/PipAudioMode/1/" + channel;
+            String proxyCompress = "audioProxyTable/PipAudioCompressType/1/" + channel;
+            String proxyNorm = "audioProxyTable/PipAudioAC3DialogNorm/1/" + channel;
+            String proxyEnable = "audioProxyTable/PipAudioEnable/1/" + channel;
+            String proxyChannel = "audioProxyTable/PipAudioChannel/1/" + channel;
+            String proxyDelay = "audioProxyTable/PipAudioDelay/1/" + channel; */
+            
+            /* Sets the Audio Table data */
             if(audioMap.containsKey(enable)){
-                model.addRow(new Object[] {"No Data", "Disabled", "No Data", 
+                audioModel.addRow(new Object[] {"No Data", "Disabled", "No Data", 
                     "Disabled", "No Data", "No Data", "No Data", "No Data"});
-                model.setValueAt(channel, j, 0);
+                audioModel.setValueAt(channel, j, 0);
                 if(audioMap.get(enable).equals(" 1")){
-                    model.setValueAt("enabled", j, 1);
+                    audioModel.setValueAt("enabled", j, 1);
                 }
-                else model.setValueAt("disabled", j, 1);
-            }
-            if(audioMap.containsKey(compression) && !audioMap.get(compression).equals("No Data")){
-                String comp = compression((String) audioMap.get(compression));
-                model.setValueAt(comp, j, 4);
-            }
-            if(audioMap.containsKey(bitRate) && !audioMap.get(compression).equals("No Data")){
-                String rate = bitRate((String) audioMap.get(bitRate));
-                model.setValueAt(rate, j, 5);
-            }
-            if(audioMap.containsKey(dialNorm) && !audioMap.get(dialNorm).equals("No Data")){
-                String normalization = "-" + (String) audioMap.get(dialNorm) + "dB";
-                model.setValueAt(normalization, j, 6);
-            }
-            if(audioMap.containsKey(source) && !audioMap.get(source).equals("No Data")){
-                String src = source((String) audioMap.get(source));
-                model.setValueAt(src, j, 7);
-            }
-            if(audioMap.containsKey(hold) && !audioMap.get(hold).equals("No Data")){
-                if(audioMap.get(hold).equals(" 1")){
-                   model.setValueAt("Enabled", j, 3); 
+                else audioModel.setValueAt("disabled", j, 1);
+                
+                if(audioMap.containsKey(compression) && !audioMap.get(compression).equals("No Data")){
+                    String comp = compression((String) audioMap.get(compression));
+                    audioModel.setValueAt(comp, j, 4);
+                }
+                if(audioMap.containsKey(bitRate) && !audioMap.get(bitRate).equals("No Data")){
+                    String rate = bitRate((String) audioMap.get(bitRate));
+                    audioModel.setValueAt(rate, j, 5);
+                }
+                if(audioMap.containsKey(dialNorm) && !audioMap.get(dialNorm).equals("No Data")){
+                    String normalization = "-" + (String) audioMap.get(dialNorm) + "dB";
+                    audioModel.setValueAt(normalization, j, 6);
+                }
+                if(audioMap.containsKey(source) && !audioMap.get(source).equals("No Data")){
+                    String src = source((String) audioMap.get(source));
+                    audioModel.setValueAt(src, j, 7);
+                }
+                if(audioMap.containsKey(hold) && !audioMap.get(hold).equals("No Data")){
+                    if(audioMap.get(hold).equals(" 1")){
+                        audioModel.setValueAt("Enabled", j, 3); 
+                    }
+                }
+                if(audioMap.containsKey(outPid) && !audioMap.get(outPid).equals("No Data")){
+                    String pid = (String) audioMap.get(outPid);
+                    audioModel.setValueAt(pid, j, 2);
                 }
             }
+            
+            
+            /* DATA FOR PROXY AUDIO IF EVER NEEDED
+            if(audioMap.containsKey(proxyPid)){
+                proxyModel.addRow(new Object[] {"No Data", "Disabled", "No Data", 
+                    "Disabled", "No Data", "No Data", "No Data", "No Data", "No Data"});
+                String pid = (String) audioMap.get(proxyPid);
+                proxyModel.setValueAt(pid, j, 2); 
+                
+                if(audioMap.containsKey(proxyBitrate) && !audioMap.get(proxyBitrate).equals("No Data")){
+                    String bitrate = (String) audioMap.get(proxyBitrate);
+                    proxyModel.setValueAt(bitrate, j, 5);
+                }
+                if(audioMap.containsKey(proxyHold) && !audioMap.get(proxyHold).equals("No Data")){
+                    if(audioMap.get(proxyHold).equals(" 1")){
+                        proxyModel.setValueAt("Enabled", j, 3); 
+                    }
+                }
+                if(audioMap.containsKey(proxyMode) && !audioMap.get(proxyMode).equals("No Data")){
+                    String mode = mode((String) audioMap.get(proxyMode));
+                    proxyModel.setValueAt(mode, j, 6);
+                }
+                if(audioMap.containsKey(proxyCompress) && !audioMap.get(proxyCompress).equals("No Data")){
+                    String compress = proxyCompression((String) audioMap.get(proxyCompress));
+                    proxyModel.setValueAt(compress, j, 4);
+                }
+                if(audioMap.containsKey(proxyNorm) && !audioMap.get(proxyNorm).equals("No Data")){
+                    String norm = "-" + (String) audioMap.get(proxyNorm) + "dB";
+                    proxyModel.setValueAt(norm, j, 7);
+                }
+                if(audioMap.containsKey(proxyEnable) && !audioMap.get(proxyEnable).equals("No Data")){
+                    if(audioMap.get(proxyEnable).equals(" 1")){
+                        proxyModel.setValueAt("Enabled", j, 1); 
+                    }
+                }
+                if(audioMap.containsKey(proxyChannel) && !audioMap.get(proxyChannel).equals("No Data")){
+                    String pChannel = (String) audioMap.get(proxyChannel);
+                    proxyModel.setValueAt(pChannel, j, 0);
+                }
+                if(audioMap.containsKey(proxyDelay) && !audioMap.get(proxyDelay).equals("No Data")){
+                    String delay = (String) audioMap.get(proxyDelay) + " ms";
+                    proxyModel.setValueAt(delay, j, 8);
+                }
+            } */
+            
         }    
     }
     
@@ -265,10 +374,42 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
     private String bitRate(String value){
         return rateMap.get(value);
     }
+    
+    
+    
+    
+    
+    /**
+     * Method to determine the mode of the Proxy Audio Compression.
+     * @param value The number value of the compression setting
+     * @return The compression setting
+     *
+    private String proxyCompression(String value){
+        return proxyCompression.get(value);
+    }*/
+    
+    /**
+     * Method to determine the mode of the Proxy Channel.
+     * @param value The mode setting value
+     * @return The mode setting
+     *
+    private String mode(String value){
+        switch (value) {
+            case " 0":
+                return "Stereo";
+            case " 1":
+                return "Stereo Joint";
+            case " 2":
+                return "Stereo Dual";
+            default:
+                return "No Data";
+        }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable audioTable;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }
