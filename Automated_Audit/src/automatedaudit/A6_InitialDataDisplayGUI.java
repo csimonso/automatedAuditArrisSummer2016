@@ -6,7 +6,6 @@
  */
 package automatedaudit;
 
-
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -32,7 +31,6 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     private final A8_ExpandedEncUI expandedEncUI;
     private LinkedList semList, tmxList, encList;
     String fileLocation;
-    
     A6_InitialDataDisplayGUI currDisplay;
     
     /**
@@ -145,6 +143,10 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event to exit the program.
+     * @param evt 
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed

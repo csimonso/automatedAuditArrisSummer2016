@@ -63,6 +63,7 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
             A7_SEM sData = (A7_SEM) semList.get(i);
             /* Checks if SEM in list matches specified SEM device */
             if(sData.getSemNumber() == semNumber){
+                
                 /* Sets all the device labels for the expanded UI */
                 expSemUI.setDeviceLabel(sData.getName() + " (" + 
                         sData.results.get("Role") + ")");
@@ -109,6 +110,7 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                         "TimeSource"));
                 expSemUI.setVersionLabel((String) sData.results.get(
                         "HostAppVersion"));
+                
                 /* Sets the values in the drop down menu for the ClockRates */
                 expSemUI.setClockRateDropDown(sData.getClockRate());
                 /* Function call to create the EMM dialog box */
@@ -167,25 +169,7 @@ public class A7_SEM implements A0_EquipmentIdentifiers {
                     else results.put(sub, value);
                 }  
             }
-        }
-
-            
-   /***********IN PROGRESS FOR OUTPUT DATA **********************************         
-            /* Output Configuration Data *
-            else if(line.contains("Transport") && line.contains("Name")){
-                /* Initializes scanner to next "=" *
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.transportName = data.next();//sets transport name
-            }
-            else if(line.contains("Transport") &&
-                    line.contains("PATInsertionRate")){
-                /* Initializes scanner to next "=" *
-                data = new Scanner(line).useDelimiter("=");
-                data.next();
-                this.transportPatInsertRate = data.next();//sets transport name
-            }
-    /************************************************************************/            
+        }           
     }
     
     /**

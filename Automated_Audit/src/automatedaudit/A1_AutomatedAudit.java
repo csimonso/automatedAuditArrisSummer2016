@@ -6,7 +6,6 @@
  */
 package automatedaudit;
 
-
 /**
  * The AutomatedAudit program implements an application that reviews a backup
  * file from the server and outputs all relevant data and information.

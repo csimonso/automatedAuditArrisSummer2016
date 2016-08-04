@@ -232,8 +232,6 @@ public class A2_MainUI extends javax.swing.JFrame {
         });   
     }
     
-    
-    
     /**
      * Method to open file path and begin the automated process.
      */
@@ -277,7 +275,6 @@ public class A2_MainUI extends javax.swing.JFrame {
             mainTextField.requestFocusInWindow();
         }
    }
- 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseFileButton;

@@ -12,7 +12,7 @@ import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * This class is used to write any tables to a excel file.
+ * This class is used to write any tables to a Excel File.
  * 
  * @author Christopher Simonson
  * @version 1.0
@@ -24,7 +24,7 @@ public class WriteTablesToFile {
     private String fileName;
     
     /**
-     * Constructor.
+     * Class Constructor.
      * @param table The table to be written to file.
      */
     public WriteTablesToFile(DefaultTableModel table){
@@ -34,7 +34,7 @@ public class WriteTablesToFile {
     /**
      * Method to write the table to a file
      * @param name The name of the file being written
-     * @throws IOException 
+     * @throws IOException If error occurs
      */
     public void writeTable(String name) throws IOException{
         /* Sets the format for the output file */
@@ -51,7 +51,8 @@ public class WriteTablesToFile {
             /* Loops through each row and column to write to excel file */
             for(int row = 0; row < model.getRowCount(); row++){
                 for(int col = 0; col < model.getColumnCount(); col++){
-                    excelFile.write(model.getValueAt(row, col).toString() + "\t");
+                    excelFile.write(model.getValueAt(row, col).toString() +
+                            "\t");
                 }
                 excelFile.write("\n");
             }

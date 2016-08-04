@@ -174,6 +174,10 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to close the current display.
+     * @param evt The action event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         /* Closes the dialog box when pressed */
         dispose();
@@ -225,7 +229,6 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
     public void runEmmDisplay(){
         this.setVisible(true);
     }
-    
     /**
      * EMM Name Label Setter.
      * @param name The EMM Name
@@ -233,7 +236,6 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
     public void setNameLabel(String name){
         nameLabelInput.setText(name);    
     }
-    
     /**
      * EMM Output PID Label Setter.
      * @param outputPid The EMM Output PID
@@ -241,7 +243,6 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
     public void setOutputPidLabel(String outputPid){
         outputPidLabelInput.setText(outputPid);
     }
-    
     /**
      * EMM CA System ID Label Setter.
      * @param caSystemId The EMM CA System ID
@@ -249,7 +250,6 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
     public void setCaSystemIdLabel(String caSystemId){
         caSystemIdLabelInput.setText(caSystemId);
     }
-    
     /**
      * EMM Provider ID Label Setter.
      * @param providerId The EMM Provider ID
@@ -257,7 +257,6 @@ public class A9_EmmDisplay extends javax.swing.JDialog {
     public void setProviderIdLabel(String providerId){
         providerIdLabelInput.setText(providerId);
     }
-    
     /**
      * EMM Consumer Stream Label Setter.
      * @param consumerStream The EMM Consumer Stream

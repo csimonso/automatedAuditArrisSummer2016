@@ -31,7 +31,7 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     private Path tmxFilePath;
     private Scanner tmxScan;
     private int tmxNumber, priorityNumber, statGroupNumber, serviceGroupNumber,
-            componentGroupNumber, totalComponents;
+            componentGroupNumber;
     private ArrayList statGroupList, serviceNumber, componentNumber;
     
     private final String[] strings = {"Role","Site", "ElementGroup",
@@ -142,7 +142,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
         statGroupNumber = 0;
         serviceGroupNumber = 0;
         componentGroupNumber = 0;
-        totalComponents = 0;
         /* Loops through each line of the file */
         while(tmxScan.hasNextLine()){
             /* Sets the string to the next line */
@@ -181,7 +180,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                                     /* Adds new Service ID to List */
                                     if(serv.equals("Name")){
                                         /* Increment Total Service's */
-                                       
                                         serviceGroupNumber++;
                                         serviceNumber.add(serviceLine[2]);
                                         service = serviceLine[2];
@@ -200,14 +198,11 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                                     componentLine = line.split("\\.");
                                     /* Adds new Component ID to List */
                                     if(comp.equals("Name")){
-                                        
-                                        //componentGroupNumber++;
                                         componentNumber.add(componentLine[2]);
                                     }
                                     comp = service + "Component" + 
                                             componentLine[2] + comp;
                                     componentResults.put(comp, value);
-                                    
                                 }
                             } break;
                         default:
@@ -217,38 +212,71 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                 }
             }
         }
-        
     }
     
+    /**
+     * TMX Data Map Getter.
+     * @return TMX Data Map
+     */
     public Map getDataMap(){
         return results;
     }
+    /**
+     * TMX STAT Group List Getter.
+     * @return TMX STAT Group List
+     */
     public ArrayList getStatGroupList(){
         return statGroupList;
     }
+    /**
+     * TMX STAT Group Setter.
+     * @param list The TMX STAT Group List
+     */
     public void setStatGroupList(ArrayList list){
         statGroupList = list;
     }
+    /**
+     * TMX Service Map Getter.
+     * @return TMX Service Map
+     */
     public Map getServiceMap(){
         return serviceResults;
     }
+    /**
+     * TMX Service Group Number Getter.
+     * @return TMX Service Group Number
+     */
     public int getServiceGroupNumber(){
         return serviceGroupNumber;
     }
+    /**
+     * TMX Service Number Getter.
+     * @return TMX Service Number
+     */
     public ArrayList getServiceNumber(){
         return serviceNumber;
     }
+    /**
+     * TMX Component Map Getter.
+     * @return TMX Component Map
+     */
     public Map getComponentMap(){
         return componentResults;
     }
+    /**
+     * TMX Component Group Number Getter.
+     * @return TMX Component Group Number
+     */
     public int getComponentGroupNumber(){
         return componentGroupNumber;
     }
+    /**
+     * TMX Component Number List Getter.
+     * @return TMX Component Number List
+     */
     public ArrayList getComponentNumber(){
         return componentNumber;
     }
-   
-    
     /**
      * TMX Priority Number Setter
      * @param pNumber The TMX priority number(1-primary, 2-backup)
@@ -265,7 +293,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public int getPriorityNumber(){
         return priorityNumber;
     }
-    
     /**
      * Setter for the type of device.
      * @param dev The type of device(TMX)
@@ -282,7 +309,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getDevice(){
         return device;
     }
-    
     /**
      * TMX Number Setter
      * @param number The TMX Number
@@ -290,7 +316,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setTmxNumber(int number){
         tmxNumber = number;
     }
-    
     /**
      * TMX Number Getter.
      * @return The TMX Number
@@ -298,7 +323,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public int getTmxNumber(){
         return tmxNumber;
     }
-    
     /**
      * TMX Name Getter.
      * @return The TMX Name
@@ -307,7 +331,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getName() {
         return name;
     }
-
     /**
      * TMX Name Setter.
      * @param name The TMX Name
@@ -316,7 +339,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * TMX IP Address Getter.
      * @return The TMX IP Address
@@ -325,7 +347,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getAddress() {
        return address;
     }
-
     /**
      * TMX IP Address Setter.
      * @param address The TMX IP Address
@@ -334,7 +355,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setAddress(String address) {
        this.address = address;
     }
-
     /**
      * TMX AppVersion Getter.
      * @return The TMX AppVersion Number
@@ -342,7 +362,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getVersion() {
         return version;
     }
-
     /**
      * TMX AppVersion Setter.
      * @param appVersion The TMX AppVersion Number
@@ -350,7 +369,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setVersion(String appVersion) {
         version = appVersion;
     }
-
     /**
      * TMX Role Getter.
      * @return The TMX Role
@@ -358,7 +376,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getRole() {
        return role;
     }
-
     /**
      * TMX Role Setter.
      * @param role The TMX Role
@@ -366,7 +383,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setRole(String role) {
         this.role = role;
     }
-
     /**
      * TMX Type Getter.
      * @return The TMX Type
@@ -375,7 +391,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getType() {
         return type;
     }
-
     /**
      * TMX Type Setter.
      * @param type The TMX Type
@@ -384,7 +399,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public void setType(String type) {
         this.type = type;
     }
-
     /**
      * TMX Position ID Getter.
      * @return The TMX Position ID
@@ -393,7 +407,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getPositionID() {
         return positionID;
     }
-
     /**
      * TMX Position ID Setter.
      * @param positionID The TMX Position ID
@@ -401,8 +414,7 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     @Override
     public void setPositionID(String positionID) {
         this.positionID = positionID;
-    }
-    
+    } 
     /**
      * TMX Site Getter.
      * @return The TMX Site
@@ -410,15 +422,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getSite() {
         return site;
     }
-
     /**
      * TMX Site Setter.
      * @param tmxSite The TMX Site
      */
     public void setSite(String tmxSite) {
         site = tmxSite;
-    }
-    
+    }  
     /**
      * TMX Element Group Getter.
      * @return The TMX Element Group
@@ -426,15 +436,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getElementGroup() {
         return elementGroup;
     }
-
     /**
      * TMX Element Group Setter.
      * @param eGroup The TMX Element Group
      */
     public void setElementGroup(String eGroup) {
         elementGroup = eGroup;
-    }
-    
+    } 
     /**
      * TMX Redundancy Group Getter.
      * @return The TMX Redundancy Group
@@ -442,15 +450,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getRedundancyGroup() {
         return redundancyGroup;
     }
-
     /**
      * TMX Redundancy Group Setter.
      * @param rGroup The TMX Redundancy Group
      */
     public void setRedundancyGroup(String rGroup) {
         redundancyGroup = rGroup;
-    }
-    
+    } 
     /**
      * TMX Encoder Group Getter.
      * @return The TMX Encoder Group
@@ -458,15 +464,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getEncoderGroup() {
         return encoderGroup;
     }
-
     /**
      * TMX Encoder Group Setter.
      * @param eGroup The TMX Encoder Group
      */
     public void setEncoderGroup(String eGroup) {
         encoderGroup = eGroup;
-    }
-    
+    } 
     /**
      * TMX Backup Device Getter.
      * @return The TMX Backup Device
@@ -474,15 +478,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getBackupDevice() {
         return backupDevice;
     }
-
     /**
      * TMX Backup Device Setter.
      * @param backup The TMX Backup Device
      */
     public void setBackupDevice(String backup) {
         backupDevice = backup;
-    }
-    
+    } 
     /**
      * TMX Primary Device Getter.
      * @return The TMX Primary Device
@@ -490,15 +492,13 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getPrimaryDevice() {
         return primaryDevice;
     }
-
     /**
      * TMX Primary Device Setter.
      * @param primary The TMX Primary Device
      */
     public void setPrimaryDevice(String primary) {
         primaryDevice = primary;
-    }
-    
+    }  
     /**
      * TMX OS Version Getter.
      * @return The TMX OS Version Number
@@ -506,7 +506,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     public String getOsVersion() {
         return osVersion;
     }
-
     /**
      * TMX OS Version Setter.
      * @param oVersion The TMX OS Version Number

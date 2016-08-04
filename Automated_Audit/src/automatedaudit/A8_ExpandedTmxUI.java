@@ -21,7 +21,6 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
     private final A6_InitialDataDisplayGUI prevDisplay;
     private A8_ExpandedTmxUI currDisplay;
     
-    
     /**
      * Creates new form ExpandedTmxUI
      * @param pDisplay The previous display
@@ -293,18 +292,26 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 262, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(586, 322));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to go back to previous display.
+     * @param evt The Action event.
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.goBack(prevDisplay);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Action Event Method to exit the program.
+     * @param evt The Action Event.
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
@@ -359,7 +366,6 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
                     A9_ServiceDisplay serviceDialog = 
                             new A9_ServiceDisplay(currDisplay);
                     serviceDialog.setTableRows(tData);
-                
                     /* Function call to run the display */
                     serviceDialog.runServiceDisplay();
                 }
@@ -377,16 +383,31 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         /* Make current display invisible */
         this.setVisible(false);  
     }
-    
+    /**
+     * Method to set the data in the STAT Group Drop Down List.
+     * @param tData The TMX data
+     */
     public void setStatGroupDropDown(A7_TMX tData){
-        statGroupDropDown.removeAllItems();
-        
-        for(int i = 1; i <= tData.getStatGroupList().size(); i++){
-            String key = "StatGroup.Name" + i;
-            statGroupDropDown.addItem((String) tData.getDataMap().get(key));
+        /* Checks if device is a backup device */
+        if(tData.getDataMap().get("Role").equals("Backup")){
+            /* Sets Label and Drop down to false since thats for Primary only */
+            statGroupLabel.setVisible(false);
+            statGroupDropDown.setVisible(false);
+        }
+        else{
+            statGroupLabel.setVisible(true);
+            statGroupDropDown.setVisible(true);
+            /* Removes any previous items in drop down */
+            statGroupDropDown.removeAllItems();
+            /* Loops through STAT MUX List */
+            for(int i = 1; i <= tData.getStatGroupList().size(); i++){
+                /* Creates a key for the hash map */
+                String key = "StatGroup.Name" + i;
+                /* Adds item to drop down list */
+                statGroupDropDown.addItem((String) tData.getDataMap().get(key));
+            }
         }
     }
-    
     /**
      * Device Label Setter.
      * @param device The Device
@@ -459,7 +480,6 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
     public void setOsVersionLabel(String oVersion){
         osVersionLabelInput.setText(oVersion);
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;

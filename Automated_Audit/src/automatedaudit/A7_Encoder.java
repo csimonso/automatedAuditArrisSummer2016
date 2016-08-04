@@ -32,18 +32,15 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
         "statMuxMinVideoTsRate", "statMuxSendGroupPort", "statMuxRecvGroupPort", 
         "statMuxSendGroupAddr", "audioMainTable/audioEnable", 
         "audioMainTable/audioStandard", "audioMainTable/audioRate", 
-        "audioMainTable/audioDialogNormalization", "audioProxyTable/ProxyAudioPID",
-        "audioProxyTable/PipAudioBitrate", "audioProxyTable/PipAudioHold",
-        "audioProxyTable/PipAudioMode", "audioProxyTable/PipAudioCompressType",
-        "audioProxyTable/PipAudioAC3DialogNorm", "audioProxyTable/PipAudioEnable",
-        "audioProxyTable/PipAudioChannel","audioMainTable/audioGroupId", 
-        "audioMainTable/atsc_audioOutPid", "audioProxyTable/PipAudioDelay", 
-        "mainAvcTable/avcScaledWidth", "mainAvcTable/avcScaledHeight", 
-        "mainAvcTable/avcIFramePeriod", "mainAvcTable/avcDeblocking", 
-        "mainAvcTable/avcDeblockingAlphaOffset","mainAvcTable/avcIDRFrequencty",
-        "mainAvcTable/avcDeblockingBetaOffset", "mainAvcTable/avcMCTFEnable", 
-        "mainAvcTable/avcPvpEnable", "mainAvcTable/avcPvp3DNoiseFilter", 
-        "mainAvcTable/avcPvpADPFilter"};
+        "audioMainTable/audioDialogNormalization", 
+        "audioMainTable/atsc_audioOutPid", "audioMainTable/audioHold",
+        "audioMainTable/audioGroupId","mainAvcTable/avcSourceWidth", 
+        "mainAvcTable/avcSourceHeight", "mainAvcTable/avcIFramePeriod", 
+        "mainAvcTable/avcDeblocking", "mainAvcTable/avcDeblockingAlphaOffset",
+        "mainAvcTable/avcIDRFrequency","mainAvcTable/avcDeblockingBetaOffset",
+        "mainAvcTable/avcMCTFEnable", "mainAvcTable/avcPvpEnable", 
+        "mainAvcTable/avcPvp3DNoiseFilter", "mainAvcTable/avcPvpADPFilter", 
+        "mainAvcTable/avcBitrateType","channelParms/Enable3DSignalling"};
     
     private final String fileLocation;
     private Path encFilePath;
@@ -52,6 +49,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     private final Map results = new HashMap<>();
     private final Map audioResults = new HashMap<>();
     private final Map videoResults = new HashMap<>();
+    private final Map channelResults = new HashMap<>();
     
     /**
      * Class constructor that sets the main file folder location
@@ -87,7 +85,10 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                 expEncUI.setEncoderGroupLabel((String) eData.results.get(
                         "EncoderGroup"));
                 expEncUI.setEncoderData(eData);
+                /* Function call to create audio display */
                 expEncUI.audioDisplay();
+                /* Function call to create video display */
+                expEncUI.videoDisplay();
             }
         }
         /* Makes Display Visible */
@@ -130,13 +131,16 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                         sub = setChannels(sub, splitString[0], "Audio");
                         audioResults.put(sub, value);
                     }
+                    /* Checks for Encoder Video Data */
                     if(sub.contains("mainAvcTable")){
                         sub = setChannels(sub, splitString[0], "Video");
                         videoResults.put(sub, value);
                     }
-                    
-                    
-                    
+                    /* Checks for Encoder Video Channel Data */
+                    if(sub.contains("channelParms")){
+                        sub = setChannels(sub, splitString[0], "Channel");
+                        channelResults.put(sub, value);
+                    }
                     /* Checks if data already exists in Map */
                     if(results.containsKey(sub) && 
                             results.get(sub).equals("No Data") || 
@@ -159,13 +163,21 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     private String setChannels(String key, String currLine, String type){
         /* Splits the current line being parsed */
         String[] split = currLine.split("/| ");
-        if(type.equals("Audio")){
-            /* Sets the new key to include the Audio Channel */
-            key = key + "/" + split[3] + "/" + split[4];
-        }
-        else if(type.equals("Video")){
-            /* Sets the new key to include the Video Channel */
-            key = key + "/" + split[4];
+        switch (type) {
+            case "Audio":
+                /* Sets the new key to include the Audio Channel */
+                key = key + "/" + split[3] + "/" + split[4];
+                break;
+            case "Video":
+                /* Sets the new key to include the Video Channel */
+                key = key + "/" + split[4];
+                break;
+                /* Sets the new key to include the Channel Parameter */
+            case "Channel":
+                key = key + "/" + split[3];
+                break;
+            default:
+                break;
         }
         /* Returns the new key */
         return key;
@@ -192,7 +204,13 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public Map getVideoMap(){
         return videoResults;
     }
-    
+    /**
+     * Encoder Channel Data Map Getter.
+     * @return Encoder Channel Hash Map
+     */
+    public Map getChannelMap(){
+        return channelResults;
+    }
     /**
      * Encoder Priority Number Setter
      * @param pNumber The Encoder priority number(1-primary, 2-backup)
@@ -209,7 +227,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public int getPriorityNumber(){
         return priorityNumber;
     }
-    
     /**
      * Setter for the type of device.
      * @param dev The type of device(Encoder)
@@ -226,7 +243,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getDevice(){
         return device;
     }
-    
     /**
      * Encoder Primary Device Getter.
      * @return The Encoder Primary Device
@@ -234,7 +250,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getPrimaryDevice() {
         return primaryDevice;
     }
-
     /**
      * Encoder Primary Device Setter.
      * @param primary The Encoder Primary Device
@@ -242,7 +257,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setPrimaryDevice(String primary) {
         primaryDevice = primary;
     }
-    
     /**
      * Encoder Number Setter
      * @param number The Encoder Number
@@ -250,7 +264,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setEncNumber(int number){
         encNumber = number;
     }
-    
     /**
      * Encoder Number Getter.
      * @return The Encoder Number
@@ -258,7 +271,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public int getEncNumber(){
         return encNumber;
     }
- 
     /**
      * Encoder Name Getter.
      * @return The Encoder Name
@@ -267,7 +279,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getName() {
         return name;
     }
-
     /**
      * Encoder Name Setter.
      * @param name The Encoder Name
@@ -276,7 +287,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * Encoder IP Address Getter.
      * @return The Encoder IP Address
@@ -285,7 +295,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getAddress() {
        return address;
     }
-
     /**
      * Encoder IP Address Setter.
      * @param address The Encoder IP Address
@@ -294,7 +303,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setAddress(String address) {
        this.address = address;
     }
-
     /**
      * Encoder Version Getter.
      * @return The Encoder Version Number
@@ -302,7 +310,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getVersion() {
         return version;
     }
-
     /**
      * Encoder Version Setter.
      * @param version The Encoder Version Number
@@ -318,7 +325,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getType() {
         return type;
     }
-
     /**
      * Encoder Type Setter.
      * @param type The Encoder Type
@@ -327,7 +333,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public void setType(String type) {
         this.type = type;
     }
-
     /**
      * Encoder Position ID Getter.
      * @return The Encoder Position ID
@@ -336,7 +341,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
     public String getPositionID() {
         return positionID;
     }
-
     /**
      * Encoder Position ID Setter.
      * @param positionID The Encoder Position ID

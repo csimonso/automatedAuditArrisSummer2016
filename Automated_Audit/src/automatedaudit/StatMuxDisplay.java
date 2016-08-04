@@ -1,13 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
 /**
- *
- * @author csimonson
+ * This class is used to display the STAT MUX Dialog Box.
+ * 
+ * @author Christopher Simonson
+ * @version 1.0
+ * @since 2016-08-01
  */
 public class StatMuxDisplay extends javax.swing.JDialog {
 
@@ -198,13 +202,17 @@ public class StatMuxDisplay extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to close the display.
+     * @param evt The action event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         /* Closes the dialog box when pressed */
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
-     * 
+     * Method to run the display.
      */
     public void run() {
         /* Set the Nimbus look and feel */
@@ -233,7 +241,8 @@ public class StatMuxDisplay extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            StatMuxDisplay dialog = new StatMuxDisplay(new javax.swing.JFrame());
+            StatMuxDisplay dialog = 
+                    new StatMuxDisplay(new javax.swing.JFrame());
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -250,7 +259,6 @@ public class StatMuxDisplay extends javax.swing.JDialog {
     public void runDisplay(){
         this.setVisible(true);
     }
-    
     /**
      * StatMux Number Active Controller Label Setter.
      * @param number The Number of Active Controllers

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,10 +24,11 @@ import javax.swing.table.DefaultTableModel;
 public class A9_ServiceDisplay extends javax.swing.JDialog {
 
     DefaultTableModel model;
+    DefaultTableCellRenderer render;
     private A7_TMX tData;
     Frame p;
-    private final String[] tableHeader = {"Number", "Name", "Type", "PMT PID", 
-        "Bit Rate", "Target PCR PID"}; 
+    private final String[] tableHeader = {"NUM", "Name", "Type", "PMT PID", 
+        "Bitrate", "TRGT PCR PID"}; 
     
     /**
      * Creates new form A9_ServiceDisplay
@@ -39,6 +41,8 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
         serviceTable.setRowSelectionAllowed(true);
         model = new DefaultTableModel(0, 0);
         model.setColumnIdentifiers(tableHeader);
+        render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
         serviceTable.setModel(model);
     }
 
@@ -115,7 +119,7 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
         });
 
         componentButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        componentButton.setText("View Components");
+        componentButton.setText(" Components");
         componentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 componentButtonActionPerformed(evt);
@@ -157,34 +161,50 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to close the current display.
+     * @param evt The action event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
+    /**
+     * Action Event Method to write table data to an Excel File.
+     * @param evt The action event
+     */
     private void writeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeButtonActionPerformed
+        /* Initialize the class object to write data to file */
         WriteTablesToFile write = new WriteTablesToFile(model);
+        /* Tries to write the table data to file */
         try {
             write.writeTable("ServiceTable");
-            JOptionPane.showMessageDialog(this, "Table Written To File Successfully");
+            JOptionPane.showMessageDialog(this, 
+                    "Table Written To File Successfully");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error Writing To File");
         } 
     }//GEN-LAST:event_writeButtonActionPerformed
 
+    /**
+     * Action Event Method to display the services component data.
+     * @param evt The action event
+     */
     private void componentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_componentButtonActionPerformed
+        /* Gets the selected row number */
         int rowNumber = serviceTable.getSelectedRow();
         if(rowNumber >= 0){
+            /* Gets the service number of selected row */
             String serviceNumber = (String) model.getValueAt(rowNumber, 0);
-        
-        
+            /* Initializes a new component display object */
             A9_ComponentDisplay componentDisplay = new A9_ComponentDisplay(p);
+            /* Sets the component display table rows */
             componentDisplay.setTableRows(serviceNumber, tData.getComponentMap(), 
                     tData.getComponentNumber());
-        
             componentDisplay.pack();
+            /* Runs the component display */
             componentDisplay.runComponentDisplay(); 
-        }
-        
+        } 
     }//GEN-LAST:event_componentButtonActionPerformed
 
     /**
@@ -234,14 +254,10 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
     public void runServiceDisplay(){
         this.setVisible(true);
     }
-    
     /**
      * Method to set the data in each row of the table.
-     * @param count The total count of the rows needed
-     * @param dataMap The Map with all the data
-     * @param sNumber The List of the Service Numbers
+     * @param data The TMX Data
      */
-   
     public void setTableRows(A7_TMX data){
         
         tData = data;
@@ -265,53 +281,83 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
             String bitRateKey = "Service" + serviceNumber + "BitRate";
             String targetPcrKey = "Service" + serviceNumber + "TargetPcrPid";
             
-            /* Sets the values of the current row */
-            model.setValueAt(serviceNumber, j, 0);
-            model.setValueAt(dataMap.get(nameKey), j, 1);
-            model.setValueAt(dataMap.get(typeKey), j, 2);
-            model.setValueAt(dataMap.get(pmtPidKey), j, 3);
-            model.setValueAt(dataMap.get(bitRateKey), j, 4);
-            model.setValueAt(dataMap.get(targetPcrKey), j, 5);
-            
-            /* Inserts the components Name and ID to the table */
+            /* Inserts the service data to table */
             if(dataMap.containsKey(nameKey)){
+                /* Inserts the service number into table */
                 model.setValueAt(serviceNumber, j, 0);
+                serviceTable.getColumnModel().getColumn(0).setMinWidth(40);
+                serviceTable.getColumnModel().getColumn(0).setMaxWidth(50);
+                serviceTable.getColumnModel().getColumn(0)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(0).setResizable(true);
+                
+                /* Adds the service name to the table */
                 model.setValueAt(dataMap.get(nameKey), j, 1); 
-            }
-            /* Inserts the type of component to the table */
-            if(dataMap.containsKey(typeKey)){
-                model.setValueAt(dataMap.get(nameKey), j, 2); 
-            }
-            /* Inserts the components PMT PID to the table */
-            if(dataMap.containsKey(pmtPidKey)){
-                /* Sets the PMT PID to a String */
-                String pmtPid = (String) dataMap.get(pmtPidKey);
-                /* Checks if its a hexadecimal value */
-                if(pmtPid.contains("0x")){
-                    /* Splits the String */
-                    String[] pmtPidArr = pmtPid.split("x");
-                    /* Inserts the hex value and decimal value to table */
-                    model.setValueAt(dataMap.get(pmtPidKey) + "(" +
-                            Integer.valueOf(pmtPidArr[1], 16) + ")", j, 3);
-                }else model.setValueAt(dataMap.get(pmtPidKey), j, 3);
-            }
-            /* Inserts the components Bit Rate to the table */
-            if(dataMap.containsKey(bitRateKey)){
-                model.setValueAt(dataMap.get(bitRateKey), j, 4); 
-            }
-            /* Inserts the components Target PCR PID to the table */
-            if(dataMap.containsKey(targetPcrKey)){
-                /* Sets the Target PCR PID to a String */
-                String targetPcrPid = (String) dataMap.get(pmtPidKey);
-                /* Checks if its a hexadecimal value */
-                if(targetPcrPid.contains("0x")){
-                    /* Splits the String */
-                    String[] targetPcrPidArr = targetPcrPid.split("x");
-                    /* Inserts the hex value and decimal value to table */
-                    model.setValueAt(dataMap.get(targetPcrKey) + "(" +
-                            Integer.valueOf(targetPcrPidArr[1], 16) + ")", j, 5);
+                serviceTable.getColumnModel().getColumn(1).setMinWidth(100);
+                serviceTable.getColumnModel().getColumn(1).setMaxWidth(150);
+                serviceTable.getColumnModel().getColumn(1)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(1).setResizable(true);
+                
+                /* Inserts the type of component to the table */
+                if(dataMap.containsKey(typeKey)){
+                    model.setValueAt(dataMap.get(nameKey), j, 2); 
                 }
-                else model.setValueAt(dataMap.get(targetPcrKey), j, 5);
+                serviceTable.getColumnModel().getColumn(2).setMinWidth(100);
+                serviceTable.getColumnModel().getColumn(2).setMaxWidth(150);
+                serviceTable.getColumnModel().getColumn(2)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(2).setResizable(true);
+                
+                /* Inserts the components PMT PID to the table */
+                if(dataMap.containsKey(pmtPidKey)){
+                    /* Sets the PMT PID to a String */
+                    String pmtPid = (String) dataMap.get(pmtPidKey);
+                    /* Checks if its a hexadecimal value */
+                    if(pmtPid.contains("0x")){
+                        /* Splits the String */
+                        String[] pmtPidArr = pmtPid.split("x");
+                        /* Inserts the hex value and decimal value to table */
+                        model.setValueAt(dataMap.get(pmtPidKey) + "(" +
+                                Integer.valueOf(pmtPidArr[1], 16) + ")", j, 3);
+                    }else model.setValueAt(dataMap.get(pmtPidKey), j, 3);
+                }
+                serviceTable.getColumnModel().getColumn(3).setMinWidth(80);
+                serviceTable.getColumnModel().getColumn(3).setMaxWidth(100);
+                serviceTable.getColumnModel().getColumn(3)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(3).setResizable(true);
+                
+                /* Inserts the components Bit Rate to the table */
+                if(dataMap.containsKey(bitRateKey)){
+                    model.setValueAt(dataMap.get(bitRateKey), j, 4); 
+                }
+                serviceTable.getColumnModel().getColumn(4).setMinWidth(80);
+                serviceTable.getColumnModel().getColumn(4).setMaxWidth(100);
+                serviceTable.getColumnModel().getColumn(4)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(4).setResizable(true);
+                
+                /* Inserts the components Target PCR PID to the table */
+                if(dataMap.containsKey(targetPcrKey)){
+                    /* Sets the Target PCR PID to a String */
+                    String targetPcrPid = (String) dataMap.get(pmtPidKey);
+                    /* Checks if its a hexadecimal value */
+                    if(targetPcrPid.contains("0x")){
+                        /* Splits the String */
+                        String[] targetPcrPidArr = targetPcrPid.split("x");
+                        /* Inserts the hex value and decimal value to table */
+                        model.setValueAt(dataMap.get(targetPcrKey) + "(" +
+                            Integer.valueOf(targetPcrPidArr[1], 16) + ")", 
+                                j, 5);
+                    }
+                    else model.setValueAt(dataMap.get(targetPcrKey), j, 5);
+                }
+                serviceTable.getColumnModel().getColumn(5).setMinWidth(100);
+                serviceTable.getColumnModel().getColumn(5).setMaxWidth(120);
+                serviceTable.getColumnModel().getColumn(5)
+                        .setCellRenderer(render);
+                serviceTable.getColumnModel().getColumn(5).setResizable(true);
             }
         }
     }

@@ -210,7 +210,7 @@
                   <Color blue="ff" green="33" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Endcoder Audio"/>
+                <Property name="text" type="java.lang.String" value="Encoder Audio"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="videoLabel">
@@ -222,7 +222,7 @@
                   <Color blue="ff" green="33" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Endcoder Video"/>
+                <Property name="text" type="java.lang.String" value="Encoder Video"/>
               </Properties>
             </Component>
           </SubComponents>

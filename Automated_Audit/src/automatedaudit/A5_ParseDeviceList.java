@@ -158,13 +158,6 @@ public class A5_ParseDeviceList {
             }
             return 0;
         });
-        /* Primary TMX has the Stat Group Configuration. Sets that configuration 
-        to the backup as well since backup will assume the same config. */
-        //for(int i = 0; i < tmxList.size(); i++){
-          //  if(tmxList.get(i).getDataMap().get("Role").equals("Backup")){
-           //     tmxList.get(i).setStatGroupList(statGroupList);
-           // }
-       // }
         /* Function call to display SEM data on GUI */
         display.displaySEM(semList);
         /* Function call to display TMX data on GUI */

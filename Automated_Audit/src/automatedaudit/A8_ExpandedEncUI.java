@@ -84,12 +84,12 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         audioLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         audioLabel.setForeground(new java.awt.Color(0, 51, 255));
         audioLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        audioLabel.setText("Endcoder Audio");
+        audioLabel.setText("Encoder Audio");
 
         videoLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         videoLabel.setForeground(new java.awt.Color(0, 51, 255));
         videoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        videoLabel.setText("Endcoder Video");
+        videoLabel.setText("Encoder Video");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -250,14 +250,26 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to go back to previous display.
+     * @param evt 
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.goBack();
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Action Event Method to Close the program.
+     * @param evt 
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    /**
+     * Action Event Method to display the STAT MUX Data.
+     * @param evt 
+     */
     private void statMuxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statMuxButtonActionPerformed
         StatMuxDisplay statMux = new StatMuxDisplay(currDisplay);
         statMux.setNumberActiveControllersLabel((String) eData.getDataMap().get(
@@ -305,6 +317,10 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Method to allow the Audio Display text to be clicked as well as creating
+     * and initializing the Audio Dialog Display.
+     */
     public void audioDisplay(){
         audioLabel.addMouseListener(new MouseAdapter(){
             /**
@@ -322,7 +338,27 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
             }
         });
     }
-    
+    /**
+     * Method to allow the Video Display text to be clicked as well as creating
+     * and initializing the Video Dialog Display.
+     */
+    public void videoDisplay(){
+        videoLabel.addMouseListener(new MouseAdapter(){
+            /**
+            * Method to create a mouse click event
+            * @param ev The mouse click event
+            */
+            @Override
+            public void mouseClicked(MouseEvent ev){
+                /* Creates and initializes a new EMM Dialog Display */
+                EncoderVideoConfig videoDialog = 
+                    new EncoderVideoConfig(currDisplay);
+                videoDialog.setTableRows(eData);
+                /* Function call to run the display */
+                videoDialog.runDisplay();
+            }
+        });
+    }
     /**
      * Method to bring up the last display.
      * @param prevDisplay The last display
@@ -333,10 +369,13 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         /* Make current display invisible */
         this.setVisible(false);  
     }
+    /**
+     * Encoder Data Setter.
+     * @param data The Encoder Data
+     */
     public void setEncoderData(A7_Encoder data){
         eData = data;
     }
-    
     /**
      * Device Label Setter.
      * @param device The Device

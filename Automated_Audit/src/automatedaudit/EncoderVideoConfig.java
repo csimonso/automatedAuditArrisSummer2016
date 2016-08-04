@@ -1,32 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ /*
+ * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author csimonson
+ * Class to create a display for the Encoder Video data.
+ * 
+ * @author Christopher Simonson
+ * @version 1.0
+ * @since 2016-07-01
  */
 public class EncoderVideoConfig extends javax.swing.JDialog {
 
     DefaultTableModel videoModel;
-    private final String[] videoHeader = {"Output Resolution", "Aspect Ratio", "GOP", 
-        "I-Frame Period", "Bitrate Type", "Deblocking Filter", "Alpha/Beta Offset", 
-        "IDR Rate", "MCT Filter", "Enable PVP", "3D Noise Reduction", "ADP Filter"}; 
+    DefaultTableCellRenderer render;
+    private final String[] videoHeader = {"CH", "Output RES", "I-Frame", 
+        "Bitrate Type", "DBLCK FLTR", "Alpha/Beta OFST", "IDR Rate", "MCT FLTR",
+        "ENBL PVP", "3D SIG" ,"3D Noise RED", "ADP FLTR"}; 
+    
+    private final Map<String, String> filterMap = new HashMap<String, String>() 
+        {{ 
+            put(" 0", "PassThrough"); put(" 1", "Strongest"); put(" 2", 
+                    "Strong"); 
+            put(" 3", "Medium"); put(" 4", "Weak"); put(" 5", "Weakest");
+        }};
+    private final Map<String, String> mctfMap = new HashMap<String, String>() 
+        {{ 
+            put(" 0", "PassThrough"); put(" 1", "Strong"); put(" 3", "Weakest"); 
+            put(" 4", "Weak"); put(" 5", "Medium"); put(" 6", "Strongest");
+        }};
     
     /**
      * Creates new form EncoderVideoConfig
+     * @param parent The Parent display
      */
     public EncoderVideoConfig(java.awt.Frame parent) {
         super(parent);
         initComponents();
         videoModel = new DefaultTableModel(0, 0);
         videoModel.setColumnIdentifiers(videoHeader);
+        render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
         videoTable.setModel(videoModel);
     }
 
@@ -43,6 +67,7 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
         mainPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         videoTable = new javax.swing.JTable();
+        writeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,17 +84,17 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
         videoTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         videoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"No Data", null, "No Data", "No Data", "No Data", "No Data", "No Data", null, null, null, null, null}
+
             },
             new String [] {
-                "Output Resolution", "Aspect Ratio", "GOP", "I-Frame Period", "Bitrate Type", "Deblocking Filter", "Alpha/Beta Offset", "IDR Rate", "MCT Filter", "Enable PVP", "3D Noise Reduction", "ADP Filter"
+                "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -80,6 +105,8 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        videoTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        videoTable.setMinimumSize(new java.awt.Dimension(500, 0));
         jScrollPane3.setViewportView(videoTable);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -88,7 +115,7 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1033, Short.MAX_VALUE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -99,38 +126,71 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        writeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        writeButton.setText("Write");
+        writeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                writeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(writeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(writeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1091, 224));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to close the current display.
+     * @param evt The action event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
-     * 
+     * Action Event Method to write table data to an Excel File.
+     * @param evt The action event
+     */
+    private void writeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeButtonActionPerformed
+        /* Initializes the class object to write the table data to a file */       
+        WriteTablesToFile write = new WriteTablesToFile(videoModel);
+        /* Tries to write data to file */
+        try {
+            write.writeTable("VideoTable");
+            JOptionPane.showMessageDialog(this, 
+                    "Table Written To File Successfully");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error Writing To File");
+        } 
+    }//GEN-LAST:event_writeButtonActionPerformed
+
+    /**
+     * Method to run the display.
      */
     public void run() {
         /* Set the Nimbus look and feel */
@@ -158,7 +218,8 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(() -> {
-            EncoderVideoConfig dialog = new EncoderVideoConfig(new javax.swing.JFrame());
+            EncoderVideoConfig dialog = new EncoderVideoConfig(
+                    new javax.swing.JFrame());
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -176,9 +237,179 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
     public void setTableRows(A7_Encoder eData){
         /* Gets the video Map from current encoder */
         Map videoMap = eData.getVideoMap();
+        /* Gets the channel Map from the current encoder */
+        Map channelMap = eData.getChannelMap();
         
+        /* Loops through all 8 channels of Audio */
+        for(int j = 0; j < 2; j++){
+            /* Sets string to the current channel */
+            String channel = Integer.toString(j+1);
         
+            /* Sets the Audio Table Keys */
+            String width = "mainAvcTable/avcSourceWidth/" + channel;
+            String height = "mainAvcTable/avcSourceHeight/" + channel;
+            String iFrame = "mainAvcTable/avcIFramePeriod/" + channel;
+            String deblocking = "mainAvcTable/avcDeblocking/" + channel;
+            String alphaOffset = "mainAvcTable/avcDeblockingAlphaOffset/" + 
+                    channel;
+            String idrFrequency = "mainAvcTable/avcIDRFrequency/" + channel;
+            String betaOffset = "mainAvcTable/avcDeblockingBetaOffset/" + 
+                    channel;
+            String mctfEnable = "mainAvcTable/avcMCTFEnable/" + channel;
+            String pvpEnable = "mainAvcTable/avcPvpEnable/" + channel;
+            String noiseFilter = "mainAvcTable/avcPvp3DNoiseFilter/" + channel;
+            String adpFilter = "mainAvcTable/avcPvpADPFilter/" + channel;
+            String bitrateType = "mainAvcTable/avcBitrateType/" + channel;
+            String signalling = "channelParms/Enable3DSignalling/" + channel;
         
+            /* Sets the Video Table data */
+            if(videoMap.containsKey(width)){
+                /* Adds a new row to the table */
+                videoModel.addRow(new Object[] {"UNK", "UNK", "UNK", 
+                    "UNK", "UNK", "UNK", "UNK", "UNK", 
+                    "UNK", "UNK", "UNK", "UNK"});
+                
+                /* Adds the current channel to the table, sets column size */
+                videoModel.setValueAt(channel, j, 0);
+                videoTable.getColumnModel().getColumn(0).setMinWidth(40);
+                videoTable.getColumnModel().getColumn(0).setMaxWidth(50);
+                videoTable.getColumnModel().getColumn(0)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(0).setResizable(true);
+            
+                /* Sets Video Resolution setting, sets column size */
+                String resolution = videoMap.get(width) + " x" +
+                        videoMap.get(height);
+                videoModel.setValueAt(resolution, j, 1);
+                videoTable.getColumnModel().getColumn(1).setMinWidth(80);
+                videoTable.getColumnModel().getColumn(1).setMaxWidth(100);
+                videoTable.getColumnModel().getColumn(1)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(1).setResizable(true);
+                
+                /* Sets I-Frame value, sets column size */
+                if(videoMap.containsKey(iFrame) && 
+                        !videoMap.get(iFrame).equals("UNK")){
+                    videoModel.setValueAt(videoMap.get(iFrame), j, 2);
+                }
+                videoTable.getColumnModel().getColumn(2).setMinWidth(60);
+                videoTable.getColumnModel().getColumn(2).setMaxWidth(70);
+                videoTable.getColumnModel().getColumn(2)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(2).setResizable(true);
+                
+                /* Sets Bitrate Type, sets column size */
+                if(videoMap.containsKey(bitrateType) &&
+                        !videoMap.get(bitrateType).equals("UNK")){
+                    String bType = bitRateType(
+                            (String) videoMap.get(bitrateType));
+                    videoModel.setValueAt(bType, j, 3);
+                }
+                videoTable.getColumnModel().getColumn(3).setMinWidth(100);
+                videoTable.getColumnModel().getColumn(3).setMaxWidth(120);
+                videoTable.getColumnModel().getColumn(3)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(3).setResizable(true);
+                
+                /* Sets Deblocking setting, sets column size */
+                if(videoMap.get(deblocking).equals(" 1"))
+                    videoModel.setValueAt("ENBLD", j, 4);
+                else if (videoMap.get(deblocking).equals(" 0"))
+                    videoModel.setValueAt("DSBLD", j, 4);
+                videoTable.getColumnModel().getColumn(4).setMinWidth(90);
+                videoTable.getColumnModel().getColumn(4).setMaxWidth(100);
+                videoTable.getColumnModel().getColumn(4)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(4).setResizable(true);
+                
+                /* Sets the alpha and beta offset values, sets column size */
+                if(videoMap.containsKey(alphaOffset) && 
+                        videoMap.containsKey(betaOffset) &&
+                        !videoMap.get(iFrame).equals("UNK")){
+                    String offset = videoMap.get(alphaOffset) + " /" +
+                            videoMap.get(betaOffset);
+                    videoModel.setValueAt(offset, j, 5);
+                }
+                videoTable.getColumnModel().getColumn(5).setMinWidth(110);
+                videoTable.getColumnModel().getColumn(5).setMaxWidth(130);
+                videoTable.getColumnModel().getColumn(5)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(5).setResizable(true);
+                
+                /* Sets the IDR Frequency setting, sets column size */
+                if(videoMap.containsKey(idrFrequency) && 
+                        !videoMap.get(idrFrequency).equals("UNK")){
+                    String idr = idrFreq((String) videoMap.get(idrFrequency));
+                    videoModel.setValueAt(idr, j, 6);
+                }
+                videoTable.getColumnModel().getColumn(6).setMinWidth(120);
+                videoTable.getColumnModel().getColumn(6).setMaxWidth(140);
+                videoTable.getColumnModel().getColumn(6)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(6).setResizable(true);
+                
+                /* Sets the MCT Filter setting, sets column size */
+                if(videoMap.containsKey(mctfEnable) && 
+                        !videoMap.get(mctfEnable).equals("UNK")){
+                    String mctf = mctFilter((String) videoMap.get(mctfEnable));
+                    videoModel.setValueAt(mctf, j, 7);
+                }
+                videoTable.getColumnModel().getColumn(7).setMinWidth(70);
+                videoTable.getColumnModel().getColumn(7).setMaxWidth(80);
+                videoTable.getColumnModel().getColumn(7)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(7).setResizable(true);
+                
+                /* Sets PVP Enable setting, sets column size */
+                if(videoMap.get(pvpEnable).equals(" 1"))
+                    videoModel.setValueAt("ENBLD", j, 8);
+                else if (videoMap.get(pvpEnable).equals(" 0"))
+                    videoModel.setValueAt("DSBLD", j, 8);
+                videoTable.getColumnModel().getColumn(8).setMinWidth(70);
+                videoTable.getColumnModel().getColumn(8).setMaxWidth(80);
+                videoTable.getColumnModel().getColumn(8)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(8).setResizable(true);
+                
+                /* Sets 3D Signalling setting, sets column size */
+                if(channelMap.containsKey(signalling) && 
+                        !channelMap.get(signalling).equals("UNK")){
+                    if(channelMap.get(signalling).equals(" 1"))
+                        videoModel.setValueAt("ENBLD", j, 9);
+                    else if (channelMap.get(signalling).equals(" 0"))
+                        videoModel.setValueAt("DSBLD", j, 9);
+                }
+                videoTable.getColumnModel().getColumn(9).setMinWidth(90);
+                videoTable.getColumnModel().getColumn(9).setMaxWidth(100);
+                videoTable.getColumnModel().getColumn(9)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(9).setResizable(true);
+                
+                /* Sets the 3D Noise Filter setting, sets column size */
+                if(videoMap.containsKey(noiseFilter) && 
+                        !videoMap.get(noiseFilter).equals("UNK")){
+                    String noise = filter((String) videoMap.get(noiseFilter));
+                    videoModel.setValueAt(noise, j, 10);
+                }
+                videoTable.getColumnModel().getColumn(10).setMinWidth(100);
+                videoTable.getColumnModel().getColumn(10).setMaxWidth(120);
+                videoTable.getColumnModel().getColumn(10)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(10).setResizable(true);
+                
+                /* Sets the ADP Filter setting, sets column size */
+                if(videoMap.containsKey(adpFilter) && 
+                        !videoMap.get(adpFilter).equals("UNK")){
+                    String adp = filter((String) videoMap.get(adpFilter));
+                    videoModel.setValueAt(adp, j, 11);
+                }
+                videoTable.getColumnModel().getColumn(11).setMinWidth(100);
+                videoTable.getColumnModel().getColumn(11).setMaxWidth(120);
+                videoTable.getColumnModel().getColumn(11)
+                        .setCellRenderer(render);
+                videoTable.getColumnModel().getColumn(11).setResizable(true);
+            }
+        }
     }    
     
     /**
@@ -187,11 +418,52 @@ public class EncoderVideoConfig extends javax.swing.JDialog {
     public void runDisplay(){
         this.setVisible(true);
     }
+    /**
+     * Method to determine the setting for 3D Noise Filter and ADP Filter.
+     * @param value The number value of the filter setting
+     * @return The filter setting
+     */
+    private String filter(String value){
+        if(filterMap.containsKey(value))
+            return filterMap.get(value);
+        else return "UNK";
+    }
+    /**
+     * Method to determine the setting for Motion Compensated Temporal Filter.
+     * @param value The number value of the filter setting
+     * @return The filter setting
+     */
+    private String mctFilter(String value){
+        if(mctfMap.containsKey(value))
+            return mctfMap.get(value);
+        else return "UNK";
+    }
+    /**
+     * Method to determine the IDR Frequency.
+     * @param value The number value of the filter setting
+     * @return The filter setting
+     */
+    private String idrFreq(String value){
+        if(value.equals(" 0"))
+            return "One at Beginning";
+        else return "After every" + value;
+    }
+    /**
+     * Method to determine the Bit rate Type.
+     * @param value The number value of the Bit rate type setting
+     * @return The filter setting
+     */
+    private String bitRateType(String value){
+        if(value.equals(" 0"))
+            return "TRNSPRT STRM";
+        else return "VID STRM";
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTable videoTable;
+    private javax.swing.JButton writeButton;
     // End of variables declaration//GEN-END:variables
 }

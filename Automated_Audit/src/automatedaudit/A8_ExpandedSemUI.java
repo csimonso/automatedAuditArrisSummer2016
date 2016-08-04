@@ -597,14 +597,26 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action Event Method to go back to previous display.
+     * @param evt The action event
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.goBack();
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Action Event Method to exit the program.
+     * @param evt The action event
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    /**
+     * Action Event Method to call the compare SEM Method.
+     * @param evt The action event
+     */
     private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
         this.compareSEM();
     }//GEN-LAST:event_compareButtonActionPerformed
@@ -659,7 +671,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
         /* Make current display invisible */
         this.setVisible(false);  
     }
-    
     /**
      * Makes EMM data text click-able as well function call to run it
      * @param sData The specific SEM data
@@ -699,7 +710,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
             });
         }
     }
-    
     /**
      * Method that compares current SEM to rest of the SEM's.  The Primary and
      * Backup SEM should have the same configuration so this method verifies
@@ -789,7 +799,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, message + "\n" + errOut);
         }
     }
-    
     /**
      * Current SEM Data Setter.
      * @param semData The current SEM's data
@@ -825,7 +834,6 @@ public class A8_ExpandedSemUI extends javax.swing.JFrame {
     public void setSiteLabel(String site){
         siteLabelInput.setText(site);
     }
-    
     /**
      * Device Redundancy Group Label Setter.
      * @param redundancyGroup The Device Redundancy Group

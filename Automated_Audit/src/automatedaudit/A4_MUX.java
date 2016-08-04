@@ -55,7 +55,7 @@ public class A4_MUX implements A0_VirtualIdentifiers {
         /* Sets the server ip address */
         this.setIPAddress(scanAddress.next()); 
     }
-
+    
     /**
      * MUX Version Setter.
      * @param version The MUX Version Number
@@ -63,15 +63,13 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     public void setVersion(String version) {
         this.version = version;
     }
-    
     /**
      * MUX Version Getter.
      * @return The MUX Version Number
      */
     public String getVersion(){
         return version;
-    }
-    
+    } 
     /**
      * MUX Name Getter.
      * @return The MUX Name
@@ -80,7 +78,6 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     public String getName() {
         return name;
     }
-
     /**
      * MUX Name Setter.
      * @param name The MUX Name
@@ -89,7 +86,6 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * MUX IP Address Getter.
      * @return The MUX IP Address
@@ -98,7 +94,6 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     public String getIPAddress() {
         return address;
     }
-
     /**
      * MUX IP Address Setter
      * @param address The MUX IP Address
