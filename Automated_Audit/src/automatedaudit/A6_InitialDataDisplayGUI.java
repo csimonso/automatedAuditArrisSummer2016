@@ -45,11 +45,13 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         expandedSemUI = new A8_ExpandedSemUI(this);
         expandedTmxUI = new A8_ExpandedTmxUI(this);
         expandedEncUI = new A8_ExpandedEncUI(this);
+        
         /* Sets the layouts of each panel */
         displayPanelTMX.setLayout(new GridLayout(0, 2, 5, 5));
         displayPanelSEM.setLayout(new GridLayout(0, 2, 5, 5));
         displayPanelENC.setLayout(new GridLayout(0, 4, 4, 3));
-        displayPanelMUX.setLayout(new GridLayout(4,1));
+        displayPanelSAT.setLayout(new GridLayout(0, 4, 4, 3));
+        displayPanelMUX.setLayout(new GridLayout(5,1));
     }
 
     /**
@@ -67,6 +69,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         displayPanelSEM = new javax.swing.JPanel();
         displayPanelMUX = new javax.swing.JPanel();
         exitButton = new javax.swing.JButton();
+        displayPanelSAT = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(6);
@@ -109,7 +112,8 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                     .addComponent(displayPanelTMX, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                     .addComponent(displayPanelSEM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(displayPanelENC, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(displayPanelENC, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         exitButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -120,14 +124,21 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
             }
         });
 
+        displayPanelSAT.setBorder(javax.swing.BorderFactory.createTitledBorder("Satellite Data"));
+        displayPanelSAT.setLayout(new javax.swing.BoxLayout(displayPanelSAT, javax.swing.BoxLayout.LINE_AXIS));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(displayPanelSAT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -135,11 +146,13 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(displayPanelSAT, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(386, 506));
+        setSize(new java.awt.Dimension(386, 641));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,7 +265,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                                     deviceNumber);
                             break;
                         case "Encoder":
-                            /* Creates a new Encdisplay object */
+                            /* Creates a new Enc display object */
                             A7_Encoder encData = new A7_Encoder(fileLocation);
                             /* Function call to display the Encoder data */
                             encData.displayExpandedENC(expandedEncUI, encList,
@@ -267,6 +280,34 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         /* Makes new label visible */
         newLabel.setVisible(true);
         /* Returns the new label created */
+        return newLabel;
+    }
+    public JLabel createSatLabel(String input, int deviceNumber, A7_SATELLITE satData){
+        /* Creates an initializes a new label */
+        JLabel newLabel = new JLabel();
+        /* Sets the text of the new label */
+        newLabel.setText(input);
+        /* Makes the label clickable for the "name" variable */
+        if(deviceNumber >= 1){
+            /* Adds a tool tip to label */
+            newLabel.setToolTipText("Click to view " + input + " data");
+            /* Sets text color to blue */
+            newLabel.setForeground(Color.blue);
+            /* Adds a mouse listener to label */
+            newLabel.addMouseListener(new MouseAdapter(){
+                /**
+                 * Method to allow the "name" label to be clicked.
+                 * @param ev The mouse click event
+                 */
+                @Override
+                public void mouseClicked(MouseEvent ev){
+                    A8_ExpandedSatelliteUI expSatUI = 
+                            new A8_ExpandedSatelliteUI(satData);
+                    expSatUI.displaySetup(deviceNumber);
+                    expSatUI.showDisplay();
+                }
+            });
+        }
         return newLabel;
     }
     
@@ -311,6 +352,21 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         newPanel.setVisible(true);
     }
     
+    public void createSatPanel(JLabel name, JLabel fullName, JLabel hemisphere,
+            JLabel polarization){
+        /* Creates and initializes a new panel */
+        JPanel newPanel = new JPanel();
+        /* Sets the layout of the panel */
+        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+        newPanel.add(name);
+        newPanel.add(fullName);
+        newPanel.add(hemisphere);
+        newPanel.add(polarization);
+        this.pack();
+        displayPanelSAT.add(newPanel);
+        newPanel.setVisible(true);
+    }
+    
     /**
      * Device Linked List Setter.
      * @param list The Device Linked List
@@ -331,6 +387,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
                 break;
         }
     } 
+    
     /**
      * Panel Border Setter.
      * @param borderName The Border Name
@@ -360,6 +417,7 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel displayPanelENC;
     private javax.swing.JPanel displayPanelMUX;
+    private javax.swing.JPanel displayPanelSAT;
     private javax.swing.JPanel displayPanelSEM;
     private javax.swing.JPanel displayPanelTMX;
     private javax.swing.JButton exitButton;

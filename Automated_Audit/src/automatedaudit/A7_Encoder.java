@@ -32,15 +32,15 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
         "statMuxMinVideoTsRate", "statMuxSendGroupPort", "statMuxRecvGroupPort", 
         "statMuxSendGroupAddr", "audioMainTable/audioEnable", 
         "audioMainTable/audioStandard", "audioMainTable/audioRate", 
-        "audioMainTable/audioDialogNormalization", 
+        "audioMainTable/audioDialnormEncode", 
         "audioMainTable/atsc_audioOutPid", "audioMainTable/audioHold",
-        "audioMainTable/audioGroupId","mainAvcTable/avcSourceWidth", 
-        "mainAvcTable/avcSourceHeight", "mainAvcTable/avcIFramePeriod", 
-        "mainAvcTable/avcDeblocking", "mainAvcTable/avcDeblockingAlphaOffset",
-        "mainAvcTable/avcIDRFrequency","mainAvcTable/avcDeblockingBetaOffset",
-        "mainAvcTable/avcMCTFEnable", "mainAvcTable/avcPvpEnable", 
-        "mainAvcTable/avcPvp3DNoiseFilter", "mainAvcTable/avcPvpADPFilter", 
-        "mainAvcTable/avcBitrateType","channelParms/Enable3DSignalling"};
+        "audioMainTable/audioGroupId","mainAvcTable/avcSourceWidth/", 
+        "mainAvcTable/avcSourceHeight/", "mainAvcTable/avcIFramePeriod/", 
+        "mainAvcTable/avcDeblocking/", "mainAvcTable/avcDeblockingAlphaOffset/",
+        "mainAvcTable/avcIDRFrequency/","mainAvcTable/avcDeblockingBetaOffset/",
+        "mainAvcTable/avcMCTFEnable/", "mainAvcTable/avcPvpEnable/", 
+        "mainAvcTable/avcPvp3DNoiseFilter/", "mainAvcTable/avcPvpADPFilter/", 
+        "mainAvcTable/avcBitrateType/","channelParms/Enable3DSignalling"};
     
     private final String fileLocation;
     private Path encFilePath;
@@ -73,6 +73,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
             A7_Encoder eData = (A7_Encoder) encList.get(i);
             /* Checks if Encoder in list matches specified Encoder device */
             if( eData.getEncNumber() == encNumber) {
+                
                 /* Sets all the device labels for the expanded UI */
                 expEncUI.setDeviceLabel(eData.getName() + " (" + 
                         eData.results.get("Role") + ")");
@@ -135,6 +136,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                     if(sub.contains("mainAvcTable")){
                         sub = setChannels(sub, splitString[0], "Video");
                         videoResults.put(sub, value);
+                        System.out.println(sub + "::: " + value);
                     }
                     /* Checks for Encoder Video Channel Data */
                     if(sub.contains("channelParms")){
@@ -170,7 +172,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                 break;
             case "Video":
                 /* Sets the new key to include the Video Channel */
-                key = key + "/" + split[4];
+                key = key + split[4];
                 break;
                 /* Sets the new key to include the Channel Parameter */
             case "Channel":

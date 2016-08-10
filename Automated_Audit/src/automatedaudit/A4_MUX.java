@@ -35,10 +35,10 @@ public class A4_MUX implements A0_VirtualIdentifiers {
     }
     
     /**
-     * This method parses the file with all the MUX data.
+     * This method parses the "server.info" file using Scanner Objects.
      * @throws IOException on error
      */
-    public void parseFile() throws IOException {
+    public void parseServerFile() throws IOException {
         /* Creates new Scanner object of the filePath */
         Scanner scan = new Scanner(filePath).useDelimiter("version=");
         /* Creates new Scanner object for the server version */

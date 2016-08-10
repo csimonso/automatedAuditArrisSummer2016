@@ -350,7 +350,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
             */
             @Override
             public void mouseClicked(MouseEvent ev){
-                /* Creates and initializes a new EMM Dialog Display */
+                /* Creates and initializes a new video Dialog Display */
                 EncoderVideoConfig videoDialog = 
                     new EncoderVideoConfig(currDisplay);
                 videoDialog.setTableRows(eData);

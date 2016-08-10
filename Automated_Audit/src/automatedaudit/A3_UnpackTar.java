@@ -11,7 +11,9 @@ import org.apache.commons.compress.archivers.tar.*;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 /**
- * This class is used to unpack the backup Tar files.
+ * This class is used to unpack the backup Tar files.  The unpack process uses
+ * apache.commons jar files.  These files must be included in distribution in
+ * order to unpack files correctly.
  * 
  * @author Christopher Simonson
  * @version 1.0
@@ -21,52 +23,6 @@ public class A3_UnpackTar {
     
     final int BUFFER = 2048;//sets the buffer size
     private String fileFolder;
-    
-    /**
-     * This method unpacks the Tar file.
-     * @param tarInput The Tar file to be unpacked
-     * @throws FileNotFoundException if file does not exist
-     * @throws IOException on error
-     */
-    private String unPack(TarArchiveInputStream tarInput, 
-            String fileCopyLocation) throws FileNotFoundException, IOException{
-        /* Creates and Initializes a new TarArchiveEntry */
-        TarArchiveEntry entry;
-        entry = (TarArchiveEntry) tarInput.getNextTarEntry();
-        /* Sets a string to the file location */
-        String newFileDirectory = fileCopyLocation.concat(entry.getName());
-        /* Loop to read each entry in the Tar file */
-        while((entry = (TarArchiveEntry) tarInput.getNextEntry()) != null){
-            /* Creates a directory if the current entry is a directory */
-            if(entry.isDirectory()){
-                String newDirLocation = fileCopyLocation.concat(entry.getName());
-                /* Creates and initializes a new file */
-                File file = new File(newDirLocation);
-                /* Makes a new directory */
-                file.mkdirs();
-            }
-            /* Writes file if the current entry is a file */
-            else {
-                int count;
-                byte data[] = new byte[BUFFER];//initializes to buffer size   
-                /* Creates a new FileOutputsStream for the current entry */
-                FileOutputStream out = new FileOutputStream(fileCopyLocation + 
-                        entry.getName());
-                /* Creates a new BufferedOutputStream to save for later use */
-                BufferedOutputStream destination; 
-                /* Initializes the BufferedOutputStream */
-                destination = new BufferedOutputStream(out,BUFFER);
-                
-                /* Loops through the file to write data to destination */
-                while((count = tarInput.read(data, 0, BUFFER)) != -1){
-                    destination.write(data, 0, count);
-                }
-                /* Closes BufferedOutputStream */
-                destination.close();
-            }
-        }
-        return newFileDirectory;//returns the new directory
-    }
     
     /**
      * Method to create each file thats being unpacked.
@@ -108,4 +64,48 @@ public class A3_UnpackTar {
         /* Returns the new file folder */
         return fileFolder;
     }
+    
+    /**
+     * This method unpacks the Tar file.
+     * @param tarInput The Tar file to be unpacked
+     * @throws FileNotFoundException if file does not exist
+     * @throws IOException on error
+     */
+    private String unPack(TarArchiveInputStream tarInput, 
+            String fileCopyLocation) throws FileNotFoundException, IOException{
+        /* Creates and Initializes a new TarArchiveEntry */
+        TarArchiveEntry entry = (TarArchiveEntry) tarInput.getNextTarEntry();
+        /* Creates a string of the file location */
+        String newFileDirectory = fileCopyLocation.concat(entry.getName());
+        /* Loop to read each entry in the Tar file */
+        while((entry = (TarArchiveEntry) tarInput.getNextEntry()) != null){
+            /* Creates a directory if the current entry is a directory */
+            if(entry.isDirectory()){
+                String newDirLocation = fileCopyLocation.concat(entry.getName());
+                /* Creates and initializes a new file */
+                File file = new File(newDirLocation);
+                /* Makes a new directory */
+                file.mkdirs();
+            }
+            /* Writes file if the current entry is a file */
+            else {
+                int count;
+                byte data[] = new byte[BUFFER];//initializes to buffer size   
+                /* Creates a new FileOutputsStream for the current entry */
+                FileOutputStream out = new FileOutputStream(fileCopyLocation + 
+                        entry.getName());
+                /* Creates a new BufferedOutputStream to save for later use */
+                BufferedOutputStream destination; 
+                /* Initializes the BufferedOutputStream */
+                destination = new BufferedOutputStream(out,BUFFER);
+                /* Loops through the file to write data to destination */
+                while((count = tarInput.read(data, 0, BUFFER)) != -1){
+                    destination.write(data, 0, count);
+                }
+                /* Closes BufferedOutputStream */
+                destination.close();
+            }
+        }
+        return newFileDirectory;//returns the new directory
+    }   
 }

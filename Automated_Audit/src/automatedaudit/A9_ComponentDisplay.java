@@ -150,6 +150,7 @@ public class A9_ComponentDisplay extends javax.swing.JDialog {
      * @param evt The action event
      */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 

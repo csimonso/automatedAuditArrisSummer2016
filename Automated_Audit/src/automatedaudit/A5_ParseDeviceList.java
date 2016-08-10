@@ -158,6 +158,11 @@ public class A5_ParseDeviceList {
             }
             return 0;
         });
+        
+        A7_SATELLITE satData = new A7_SATELLITE(mainFolderLocation);
+        satData.parseConfigFile();
+        display.setOperatorGroup(satData.getOperatorGroup());
+        display.displaySAT(satData);
         /* Function call to display SEM data on GUI */
         display.displaySEM(semList);
         /* Function call to display TMX data on GUI */

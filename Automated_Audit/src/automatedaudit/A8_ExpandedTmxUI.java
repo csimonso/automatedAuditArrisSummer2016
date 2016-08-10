@@ -373,7 +373,7 @@ public class A8_ExpandedTmxUI extends javax.swing.JFrame {
         }
     }
     
-    /**
+    /** 
      * Method to bring up the last display.
      * @param prevDisplay The last display
      */

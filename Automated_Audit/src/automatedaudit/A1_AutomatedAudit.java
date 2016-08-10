@@ -6,9 +6,12 @@
  */
 package automatedaudit;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * The AutomatedAudit program implements an application that reviews a backup
- * file from the server and outputs all relevant data and information.
+ * The AutomatedAudit program extracts the data from a backup file.  These files
+ * are then parsed in order to display all relevant information to the screen.
  * 
  * @author Christopher Simonson
  * @version 1.0
@@ -23,10 +26,18 @@ public class A1_AutomatedAudit {
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        
+        /* A delay in program startup to allow for a splash screen */
+        try{
+            Thread.sleep(4000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(A1_AutomatedAudit.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
         /* Creates a new GUI object */
-        A2_MainUI run = new A2_MainUI();
+        A2_MainDisplay run = new A2_MainDisplay();
 
-        /* Function call to run the main GUI display */
+        /* Run the main GUI display */
         run.runProgram();
     }
 }

@@ -157,7 +157,7 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                         value = splitString[1];
                     }
                     /* If no data, sets value to represent that */
-                    else value = "No Data"; 
+                    else value = "NO DATA"; 
                     /* Checks for Stat Group, Service and Component data */
                     switch (sub) {
                         /* Stat Group Data */

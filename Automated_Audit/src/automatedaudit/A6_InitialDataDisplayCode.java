@@ -6,7 +6,9 @@
  */
 package automatedaudit;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import javax.swing.JLabel;
 
 /**
@@ -19,7 +21,7 @@ import javax.swing.JLabel;
 public class A6_InitialDataDisplayCode {
     
     private final A6_InitialDataDisplayGUI display;
-    private String ntpIpAddress;
+    private String ntpIpAddress, operatorGroup;
     
     /**
      * Class Constructor to initialize the GUI.
@@ -38,6 +40,7 @@ public class A6_InitialDataDisplayCode {
         display.displayDataMUX(muxData.getIPAddress());
         display.displayDataMUX(muxData.getVersion());
         display.displayDataMUX("NTP IP Address: " + ntpIpAddress);
+        display.displayDataMUX("Operator Group: " + operatorGroup);
     }
     
     /**
@@ -106,8 +109,11 @@ public class A6_InitialDataDisplayCode {
         for(int i = 0; i < encList.size(); i++){
             /* Initialize a new Encoder data object from the Encoder list */
             A7_Encoder encData = (A7_Encoder) encList.get(i);
-            /* Set the NTP IP Address for the System */
-            ntpIpAddress = (String)encData.getDataMap().get("ntpPeerIpAddress");
+            if(encData.getDataMap().get("Role").equals("Primary")){
+                /* Set the NTP IP Address for the System */
+                ntpIpAddress = (String)encData.getDataMap()
+                        .get("ntpPeerIpAddress");
+            }
             /* Create new labels with each piece of data */
             JLabel nameLabel = display.createLabel(encData.getName(), 
                     encData.getEncNumber(), encData.getDevice());
@@ -128,9 +134,43 @@ public class A6_InitialDataDisplayCode {
     }
     
     /**
+     * Method to display relevant Satellite data.
+     * @param satData The Satellite data
+     */
+    public void displaySAT(A7_SATELLITE satData){
+        Map satMap = satData.getDataMap();
+        ArrayList satList = satData.getSatList();
+        
+        for(int i = 0; i < satList.size(); i++){
+            int satNumber = Integer.parseInt((String)satList.get(i));
+            
+            JLabel nameLabel = display.createSatLabel((String) satMap.get(
+                    "Satellite" + satNumber + "Name"), satNumber, satData);
+            JLabel fullNameLabel = display.createSatLabel("Name: " + satMap.get(
+                    "Satellite" + satNumber + "FullName"), 0, satData);
+            JLabel hemisphereLabel = display.createSatLabel(
+                    "Hemi: " + satMap.get("Satellite" + satNumber + 
+                            "Hemisphere"), 0, satData);
+            JLabel polarizationLabel = display.createSatLabel(
+                    "Polar: " + satMap.get("Satellite" + satNumber + 
+                            "Polarization"), 0, satData);
+            
+            display.createSatPanel(nameLabel, fullNameLabel, hemisphereLabel, 
+                    polarizationLabel);
+        } 
+    }
+    
+    /**
      * Method to make the display visible
      */
     public void runDisplay(){
         display.setVisible(true);
+    }
+    /**
+     * Operator Group Setter.
+     * @param opGroup The Operator Group
+     */
+    public void setOperatorGroup(String opGroup){
+        operatorGroup = opGroup;
     }
 }

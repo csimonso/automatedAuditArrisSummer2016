@@ -270,7 +270,7 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
             String outPid = "audioMainTable/atsc_audioOutPid/1/" + channel;
             String compression = "audioMainTable/audioStandard/1/" + channel;
             String bitRate = "audioMainTable/audioRate/1/" + channel;
-            String dialNorm = "audioMainTable/audioDialogNormalization/1/" + 
+            String dialNorm = "audioMainTable/audioDialnormEncode/1/" + 
                     channel;
             String source = "audioMainTable/audioGroupId/1/" + channel;
             String hold = "audioMainTable/audioHold/1/" + channel;
