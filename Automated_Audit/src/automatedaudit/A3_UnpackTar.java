@@ -81,7 +81,8 @@ public class A3_UnpackTar {
         while((entry = (TarArchiveEntry) tarInput.getNextEntry()) != null){
             /* Creates a directory if the current entry is a directory */
             if(entry.isDirectory()){
-                String newDirLocation = fileCopyLocation.concat(entry.getName());
+                String newDirLocation = 
+                        fileCopyLocation.concat(entry.getName());
                 /* Creates and initializes a new file */
                 File file = new File(newDirLocation);
                 /* Makes a new directory */

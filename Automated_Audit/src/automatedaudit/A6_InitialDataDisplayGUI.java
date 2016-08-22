@@ -282,7 +282,16 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         /* Returns the new label created */
         return newLabel;
     }
-    public JLabel createSatLabel(String input, int deviceNumber, A7_SATELLITE satData){
+    
+    /**
+     * Creates a label for Satellite data.
+     * @param input The input
+     * @param deviceNumber The Satellite number
+     * @param satData The Satellite data.
+     * @return 
+     */
+    public JLabel createSatLabel(String input, int deviceNumber,
+            A7_SATELLITE satData){
         /* Creates an initializes a new label */
         JLabel newLabel = new JLabel();
         /* Sets the text of the new label */
@@ -352,6 +361,13 @@ public class A6_InitialDataDisplayGUI extends javax.swing.JFrame {
         newPanel.setVisible(true);
     }
     
+    /**
+     * Creates a panel for the Satellite labels.
+     * @param name Short name of the Satellite
+     * @param fullName Full name of the Satellite
+     * @param hemisphere Satellites Hemisphere
+     * @param polarization  Satellites polarization
+     */
     public void createSatPanel(JLabel name, JLabel fullName, JLabel hemisphere,
             JLabel polarization){
         /* Creates and initializes a new panel */

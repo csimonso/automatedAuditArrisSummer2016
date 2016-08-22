@@ -200,7 +200,7 @@ public class A9_ServiceDisplay extends javax.swing.JDialog {
             /* Initializes a new component display object */
             A9_ComponentDisplay componentDisplay = new A9_ComponentDisplay(p);
             /* Sets the component display table rows */
-            componentDisplay.setTableRows(serviceNumber, tData.getComponentMap(), 
+            componentDisplay.setTableRows(serviceNumber,tData.getComponentMap(), 
                     tData.getComponentNumber());
             componentDisplay.pack();
             /* Runs the component display */

@@ -9,7 +9,6 @@ package automatedaudit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -32,7 +31,6 @@ public class A5_ParseDeviceList {
     private final LinkedList<A7_SEM> semList;
     private final LinkedList<A7_TMX> tmxList;
     private final LinkedList<A7_Encoder> encoderList;
-    private ArrayList statGroupList;
     
     /**
      * Class constructor that creates a file path for the ~positions file.
@@ -81,7 +79,6 @@ public class A5_ParseDeviceList {
                     /* Sets Priority Number of TMX(1-Primary, 2-Backup) */
                     if(tmxData.getDataMap().get("Role").equals("Primary")){
                         tmxData.setPriorityNumber(1);//Primary
-                        statGroupList = tmxData.getStatGroupList();
                     }
                     else tmxData.setPriorityNumber(2);//Backup
                     /* Adds device to linked list */

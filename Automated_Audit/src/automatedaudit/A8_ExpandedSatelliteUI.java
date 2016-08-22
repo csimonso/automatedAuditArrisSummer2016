@@ -1,39 +1,40 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) ARRIS Solutions Inc. - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Christopher Simonson <chris.simonson@arris.com>, August 2016
  */
 package automatedaudit;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author csimonson
+ * Class to initialize the Satellite data display.
+ * 
+ * @author Christopher Simonson
+ * @version 1.0
+ * @since 2016-08-01
  */
 public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
 
-    private A7_SATELLITE satData;
+    private final A7_SATELLITE satData;
     DefaultTableModel vctModel;
     DefaultTableModel transModel;
     DefaultTableCellRenderer render;
-    private String transponderVctNumber;
     private int satNumber;
     private final String[] tableHeader = {"CH Name", "SAT", "Source", 
         "CH Type", "Carrier", "Transport"};
-    private final String[] transTableHeader = {"Name", "Frequency", "Polarization", 
-        "Transport Type", "Modulation", "VCT"};
+    private final String[] transTableHeader = {"Name", "Frequency", 
+        "Polarization", "Transport Type", "Modulation", "VCT"};
     
     /**
      * Creates new form A9_ExpandedSatelliteUI
+     * @param data Satellite Data
      */
     public A8_ExpandedSatelliteUI(A7_SATELLITE data) {
         initComponents();
@@ -70,6 +71,7 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         closeButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         vctTable = new javax.swing.JTable();
+        writeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,6 +172,14 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(vctTable);
 
+        writeButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        writeButton.setText("Write");
+        writeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                writeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout outterDataPanelLayout = new javax.swing.GroupLayout(outterDataPanel);
         outterDataPanel.setLayout(outterDataPanelLayout);
         outterDataPanelLayout.setHorizontalGroup(
@@ -200,6 +210,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                         .addGap(23, 23, 23))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outterDataPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(writeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +237,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(outterDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(writeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -245,19 +258,46 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 .addGap(57, 57, 57))
         );
 
-        setSize(new java.awt.Dimension(724, 439));
+        setSize(new java.awt.Dimension(724, 387));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Closes the display
+     * @param evt The action event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
+    /**
+     * Exits the program
+     * @param evt The action event
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
+     * Writes the table data to an Excel file.
+     * @param evt The action event
+     */
+    private void writeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_writeButtonActionPerformed
+        WriteTablesToFile writeVCT = new WriteTablesToFile(vctModel);
+        WriteTablesToFile writeTrans = new WriteTablesToFile(transModel);
+        
+        try {
+            writeVCT.writeTable("VCTTable");
+            writeTrans.writeTable("TransponderTable");
+            JOptionPane.showMessageDialog(this, 
+                    "Tables Written To File Successfully");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error Writing To File");
+        }
+    }//GEN-LAST:event_writeButtonActionPerformed
+
+    /**
+     * Runs the display.
      */
     public void run() {
         /* Set the Nimbus look and feel */
@@ -285,13 +325,15 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new A8_ExpandedSatelliteUI(satData).setVisible(false);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new A8_ExpandedSatelliteUI(satData).setVisible(false);
         });
     }
     
+    /**
+     * Sets up the initial display for Satellite information
+     * @param deviceNumber 
+     */
     public void displaySetup(int deviceNumber){
         ArrayList satList = satData.getSatList();
         Map satMap = satData.getDataMap();
@@ -312,13 +354,17 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
             }
         }
     }
-    
-    
-    
+  
+    /**
+     * Makes display visible.
+     */
     public void showDisplay(){
         this.setVisible(true);
     }
     
+    /**
+     * Sets data for VCT table.
+     */
     private void setVctTableRows(){
         /* Gets the VCT Map */
         Map vctMap = satData.getVctMap();
@@ -327,7 +373,7 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         
         for(int j = 0; j < vctList.size(); j++){
             String vctNumber = (String) vctList.get(j);
-            System.out.println(vctNumber);
+            
             String nameKey = vctNumber + "Name";
             String satKey = vctNumber + "Satellite";
             String sourceKey = vctNumber + "Source";
@@ -395,6 +441,9 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Sets data for transponder table.
+     */
     private void setTransponderTableRows(){
         /* Gets the VCT Map */
         Map transMap = satData.getTransMap();
@@ -405,12 +454,18 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
         for(int j = 0; j < transList.size(); j++){
             String transNumber = (String) transList.get(j);
             
-            String nameKey = "Satellite" + satNumber + "Transponder" + transNumber + "Name";
-            String freqKey = "Satellite" + satNumber + "Transponder" + transNumber + "Frequency";
-            String polarKey = "Satellite" + satNumber + "Transponder" + transNumber + "Polarization";
-            String transportTypeKey = "Satellite" + satNumber + "Transponder" + transNumber + "TransportType";
-            String modulationKey = "Satellite" + satNumber + "Transponder" + transNumber + "Modulation";
-            String vctKey = "Satellite" + satNumber + "Transponder" + transNumber + "VCT";
+            String nameKey = "Satellite" + satNumber + "Transponder" + 
+                    transNumber + "Name";
+            String freqKey = "Satellite" + satNumber + "Transponder" +
+                    transNumber + "Frequency";
+            String polarKey = "Satellite" + satNumber + "Transponder" + 
+                    transNumber + "Polarization";
+            String transportTypeKey = "Satellite" + satNumber + "Transponder" + 
+                    transNumber + "TransportType";
+            String modulationKey = "Satellite" + satNumber + "Transponder" + 
+                    transNumber + "Modulation";
+            String vctKey = "Satellite" + satNumber + "Transponder" + 
+                    transNumber + "VCT";
             
             if(transMap.containsKey(nameKey)){
                 /* Adds a new row to the table */
@@ -422,7 +477,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 transponderTable.getColumnModel().getColumn(0).setMaxWidth(80);
                 transponderTable.getColumnModel().getColumn(0)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(0).setResizable(true);
+                transponderTable.getColumnModel().getColumn(0)
+                        .setResizable(true);
                 
                 if(transMap.containsKey(freqKey)){
                     transModel.setValueAt(transMap.get(freqKey), row, 1);
@@ -431,7 +487,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 transponderTable.getColumnModel().getColumn(1).setMaxWidth(140);
                 transponderTable.getColumnModel().getColumn(1)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(1).setResizable(true);
+                transponderTable.getColumnModel().getColumn(1)
+                        .setResizable(true);
                 
                 if(transMap.containsKey(polarKey)){
                     transModel.setValueAt(transMap.get(polarKey), row, 2);
@@ -440,16 +497,19 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 transponderTable.getColumnModel().getColumn(2).setMaxWidth(120);
                 transponderTable.getColumnModel().getColumn(2)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(2).setResizable(true);
+                transponderTable.getColumnModel().getColumn(2)
+                        .setResizable(true);
                 
                 if(transMap.containsKey(transportTypeKey)){
-                    transModel.setValueAt(transMap.get(transportTypeKey), row, 3);
+                    transModel.setValueAt(transMap.get(transportTypeKey), 
+                            row, 3);
                 }
                 transponderTable.getColumnModel().getColumn(3).setMinWidth(80);
                 transponderTable.getColumnModel().getColumn(3).setMaxWidth(100);
                 transponderTable.getColumnModel().getColumn(3)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(3).setResizable(true);
+                transponderTable.getColumnModel().getColumn(3)
+                        .setResizable(true);
                 
                 if(transMap.containsKey(modulationKey)){
                     transModel.setValueAt(transMap.get(modulationKey), row, 4);
@@ -458,7 +518,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 transponderTable.getColumnModel().getColumn(4).setMaxWidth(170);
                 transponderTable.getColumnModel().getColumn(4)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(4).setResizable(true);
+                transponderTable.getColumnModel().getColumn(4)
+                        .setResizable(true);
                 
                 if(transMap.containsKey(vctKey)){
                     transModel.setValueAt(transMap.get(vctKey), row, 5);
@@ -468,7 +529,8 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
                 transponderTable.getColumnModel().getColumn(5).setMaxWidth(80);
                 transponderTable.getColumnModel().getColumn(5)
                         .setCellRenderer(render);
-                transponderTable.getColumnModel().getColumn(5).setResizable(true);
+                transponderTable.getColumnModel().getColumn(5)
+                        .setResizable(true);
                 
                 row++;
             }
@@ -489,5 +551,6 @@ public class A8_ExpandedSatelliteUI extends javax.swing.JFrame {
     private javax.swing.JLabel satelliteLabel;
     private javax.swing.JTable transponderTable;
     private javax.swing.JTable vctTable;
+    private javax.swing.JButton writeButton;
     // End of variables declaration//GEN-END:variables
 }

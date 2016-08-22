@@ -108,8 +108,7 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(encoderGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(encoderGroupLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                     .addComponent(videoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -188,14 +187,14 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
                         .addComponent(addressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addressLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(elementGroupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(elementGroupLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(46, 46, 46)
                         .addComponent(siteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siteLabelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(siteLabelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(deviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -274,12 +273,18 @@ public class A8_ExpandedEncUI extends javax.swing.JFrame {
         StatMuxDisplay statMux = new StatMuxDisplay(currDisplay);
         statMux.setNumberActiveControllersLabel((String) eData.getDataMap().get(
                 "statMuxActiveCtrlr"));
-        statMux.setReceiverAddressLabel((String) eData.getDataMap().get("statMuxRecvGroupAddr"));
-        statMux.setReceiverPortLabel((String) eData.getDataMap().get("statMuxRecvGroupPort"));
-        statMux.setSenderAddressLabel((String) eData.getDataMap().get("statMuxSendGroupAddr"));
-        statMux.setSenderPortLabel((String) eData.getDataMap().get("statMuxSendGroupPort"));
-        statMux.setMinRateLabel((String) eData.getDataMap().get("statMuxMinVideoTsRate"));
-        statMux.setMaxRateLabel((String) eData.getDataMap().get("statMuxMaxVideoTsRate"));
+        statMux.setReceiverAddressLabel((String) eData.getDataMap()
+                .get("statMuxRecvGroupAddr"));
+        statMux.setReceiverPortLabel((String) eData.getDataMap()
+                .get("statMuxRecvGroupPort"));
+        statMux.setSenderAddressLabel((String) eData.getDataMap()
+                .get("statMuxSendGroupAddr"));
+        statMux.setSenderPortLabel((String) eData.getDataMap()
+                .get("statMuxSendGroupPort"));
+        statMux.setMinRateLabel((String) eData.getDataMap()
+                .get("statMuxMinVideoTsRate"));
+        statMux.setMaxRateLabel((String) eData.getDataMap()
+                .get("statMuxMaxVideoTsRate"));
         statMux.runDisplay();
     }//GEN-LAST:event_statMuxButtonActionPerformed
 

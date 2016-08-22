@@ -92,6 +92,7 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                 expEncUI.videoDisplay();
             }
         }
+        expEncUI.pack();
         /* Makes Display Visible */
         expEncUI.setVisible(true);
     }
@@ -136,7 +137,6 @@ public class A7_Encoder implements A0_EquipmentIdentifiers{
                     if(sub.contains("mainAvcTable")){
                         sub = setChannels(sub, splitString[0], "Video");
                         videoResults.put(sub, value);
-                        System.out.println(sub + "::: " + value);
                     }
                     /* Checks for Encoder Video Channel Data */
                     if(sub.contains("channelParms")){

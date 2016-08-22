@@ -92,7 +92,8 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                         A7_TMX otherDevice = (A7_TMX) tmxList.get(j);
                         /* Sets the Backup Device label */
                         if(otherDevice.getPriorityNumber() == 2){
-                            expTmxUI.setBackupDeviceLabel(otherDevice.getName());
+                            expTmxUI.setBackupDeviceLabel(
+                                    otherDevice.getName());
                         }
                     }
                 }
@@ -102,7 +103,8 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
                         A7_TMX otherDevice = (A7_TMX) tmxList.get(j);
                         /* Sets the Primary Device Label */
                         if(otherDevice.getPriorityNumber() == 1){
-                            expTmxUI.setPrimaryDeviceLabel(otherDevice.getName());
+                            expTmxUI.setPrimaryDeviceLabel(
+                                    otherDevice.getName());
                         }
                     }
                 }

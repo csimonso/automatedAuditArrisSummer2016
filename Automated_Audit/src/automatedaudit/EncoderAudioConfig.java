@@ -330,7 +330,7 @@ public class EncoderAudioConfig extends javax.swing.JDialog {
                 /* Adds the Audio Compression Type to table, sets column size */
                 if(audioMap.containsKey(compression) && 
                         !audioMap.get(compression).equals("UNK")){
-                    String comp = compression((String) audioMap.get(compression));
+                    String comp =compression((String)audioMap.get(compression));
                     audioModel.setValueAt(comp, j, 4);
                 }
                 audioTable.getColumnModel().getColumn(4).setMinWidth(150);
