@@ -43,7 +43,6 @@ public class A7_TMX implements A0_EquipmentIdentifiers {
     private final String[] serviceStrings = {"Name", "PmtPID", "BitRate", 
         "Type", "TargetPcrPid"};
     
-    
     private final Map results = new HashMap<>();
     private final Map serviceResults = new HashMap<>();
     private final Map componentResults = new HashMap<>();

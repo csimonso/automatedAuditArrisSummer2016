@@ -27,13 +27,6 @@ public class A1_AutomatedAudit {
      */
     public static void main(String[] args) {
         
-        /* A delay in program startup to allow for a splash screen */
-        try{
-            Thread.sleep(4000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(A1_AutomatedAudit.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
         /* Creates a new GUI object */
         A2_MainDisplay run = new A2_MainDisplay();
 
